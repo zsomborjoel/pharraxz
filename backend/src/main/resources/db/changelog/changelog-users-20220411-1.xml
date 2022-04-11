@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+    <changeSet author="zsomborjoel" id="9adac4f4-b9d8-11ec-8422-0242ac120002">
+        <createTable tableName="users">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)"/>
+            <column name="lastname" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(50)"/>
+            <column name="password" type="VARCHAR(50)"/>
+            <column name="enabled" type="BOOLEAN"/>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet author="zsomborjoel" id="54633390-b9dc-11ec-8422-0242ac120002">
+        <createTable tableName="user_positions">
+            <column name="user_position_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+            </column>
+            <column name="position_name" type="VARCHAR(255)"/>
+            <column name="position_description" type="VARCHAR(2000)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="zsomborjoel" id="5f936a5a-b9dc-11ec-8422-0242ac120002">
+        <createTable tableName="authorities">
+            <column name="username" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+            </column>
+            <column name="authority" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
