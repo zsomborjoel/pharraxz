@@ -5,14 +5,41 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
-    <changeSet author="zsomborjoel" id="9adac4f4-b9d8-11ec-8422-0242ac120002">
-        <createTable tableName="users">
+    <changeSet author="zsomborjoel" id="e21b15d0-bb59-11ec-8422-0242ac120002">
+        <createTable tableName="pharma_products">
             <column name="id" type="UUID">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pharma_products"/>
             </column>
-            <column name="firstname" type="VARCHAR(255)"/>
-            <column name="lastname" type="VARCHAR(255)"/>
-            <column name="twitter" type="VARCHAR(15)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="atc" type="VARCHAR(50)"/>
+            <column name="supplier_id" type="UUID"/>
+            <column name="register_number" type="VARCHAR(50)"/>
+            <column name="packaging" type="VARCHAR(50)"/>
+            <column name="product_description" type="VARCHAR(2000)"/>
+            <column name="inn" type="VARCHAR(50)"/>
+            <column name="releasable" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="zsomborjoel" id="ecf66a36-bb59-11ec-8422-0242ac120002">
+        <createTable tableName="atc_codes">
+            <column name="atc" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_atc_codes"/>
+            </column>
+            <column name="atc_description" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="zsomborjoel" id="33752556-bb5a-11ec-8422-0242ac120002">
+        <createTable tableName="suppliers">
+            <column name="supplier_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pharma_products"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(50)"/>
+            <column name="supplier_description" type="VARCHAR(2000)"/>
+            <column name="email" type="VARCHAR(50)"/>
+            <column name="phone" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

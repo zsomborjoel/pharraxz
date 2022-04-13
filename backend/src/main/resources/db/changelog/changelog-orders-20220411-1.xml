@@ -5,14 +5,28 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
-    <changeSet author="zsomborjoel" id="9adac4f4-b9d8-11ec-8422-0242ac120002">
-        <createTable tableName="users">
-            <column name="id" type="UUID">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+    <changeSet author="zsomborjoel" id="ad200b92-bb5a-11ec-8422-0242ac120002">
+        <createTable tableName="pharma_orders">
+            <column name="order_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pharma_orders"/>
             </column>
-            <column name="firstname" type="VARCHAR(255)"/>
-            <column name="lastname" type="VARCHAR(255)"/>
-            <column name="twitter" type="VARCHAR(15)"/>
+            <column name="order_description" type="VARCHAR(2000)"/>
+            <column name="created" type="TIMESTAMP"/>
+            <column name="modified" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="zsomborjoel" id="b86afd1a-bb5c-11ec-8422-0242ac120002">
+        <createTable tableName="pharma_order_details">
+            <column name="order_details_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_pharma_order_details"/>
+            </column>
+            <column name="order_id" type="UUID"/>
+            <column name="pharma_product_id" type="UUID"/>
+            <column name="quantity" type="INTEGER"/>
+            <column name="order_type" type="VARCHAR(50)"/>
+            <column name="start_date" type="DATE"/>
+            <column name="end_date" type="DATE"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
