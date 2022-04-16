@@ -1,58 +1,58 @@
 databaseChangeLog:
 
-    - - changeSet:
-          id: e21b15d0-bb59-11ec-8422-0242ac120002
-          author: zsomborjoel
-          changes:
-            - createTable:
-                schema: public
-                tableName: pharma_products
-                columns:
-                  - column:
-                      name: pharma_product_id
-                      type: int
-                      autoIncrement: true
-                      startWith: 100
-                      constraints:
-                        primaryKey: true
-                        nullable: false
-                  - column:
-                      name: name
-                      type: varchar(255)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: atc
-                      type: varchar(50)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: supplier_id
-                      type: int
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: register_number
-                      type: varchar(50)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: packaging
-                      type: varchar(50)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: product_description
-                      type: varchar(5000)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: inn
-                      type: varchar(50)
-                      constraints:
-                        nullable: false
-                  - column:
-                      name: releasable
-                      type: boolean
-                      constraints:
-                        nullable: false
+  - changeSet:
+      id: e21b15d0-bb59-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: pharma_products
+            columns:
+              - column:
+                  name: pharma_product_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: atc
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: supplier_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: register_number
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: packaging
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(5000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: inn
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: releasable
+                  type: boolean
+                  constraints:
+                    nullable: false

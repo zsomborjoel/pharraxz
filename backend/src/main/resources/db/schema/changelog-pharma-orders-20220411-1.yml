@@ -6,7 +6,7 @@ databaseChangeLog:
       changes:
         - createTable:
             schema: public
-            tableName: authorities
+            tableName: pharma-orders
             columns:
               - column:
                   name: order_id

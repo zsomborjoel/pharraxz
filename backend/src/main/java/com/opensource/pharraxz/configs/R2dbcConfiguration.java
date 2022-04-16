@@ -1,10 +1,11 @@
 package com.opensource.pharraxz.configs;
 
 
+import com.opensource.pharraxz.configs.properties.DatabaseProperties;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -13,34 +14,21 @@ import org.springframework.lang.NonNull;
 
 @Configuration
 @Profile(value = "!test")
+@RequiredArgsConstructor
 public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
 
-    @Value("${database.name}")
-    private String database;
-
-    @Value("${database.host}")
-    private String host;
-
-    @Value("${database.port:5432}")
-    private int port;
-
-    @Value("${database.username}")
-    private String username;
-
-    @Value("${database.password}")
-    private String password;
+    private final DatabaseProperties databaseProperties;
 
     @Override
     @Bean
     @NonNull
     public ConnectionFactory connectionFactory() {
-
         return new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
-                .host(host)
-                .port(port)
-                .username(username)
-                .password(password)
-                .database(database)
+                .host(databaseProperties.getHost())
+                .port(databaseProperties.getPort())
+                .username(databaseProperties.getUsername())
+                .password(databaseProperties.getPassword())
+                .database(databaseProperties.getDatabase())
                 .build());
     }
 

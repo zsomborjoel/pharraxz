@@ -9,7 +9,7 @@ databaseChangeLog:
             tableName: pharma_order_details
             columns:
               - column:
-                  name: order_details_id
+                  name: order_detail_id
                   type: int
                   autoIncrement: true
                   startWith: 100
