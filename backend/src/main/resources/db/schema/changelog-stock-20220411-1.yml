@@ -21,11 +21,15 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_stock_pharma_product_id
+                    references: pharma_products(pharma_product_id)
               - column:
                   name: ward_id
                   type: int
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_stock_ward_id
+                    references: hospital_ward(ward_id)
               - column:
                   name: quantity
                   type: int

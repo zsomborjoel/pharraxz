@@ -34,4 +34,7 @@ public class User {
     @Column("enabled")
     private Boolean enabled;
 
+    @Column("user_position_id")
+    private Long userPositionId;
+
 }

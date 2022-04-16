@@ -25,32 +25,26 @@ databaseChangeLog:
                   name: atc
                   type: varchar(50)
                   constraints:
-                    nullable: false
+                    foreignKeyName: fk_pharma_products_atc
+                    references: atc_codes(atc)
               - column:
                   name: supplier_id
                   type: int
                   constraints:
-                    nullable: false
+                    foreignKeyName: fk_pharma_products_supplier_id
+                    references: suppliers(supplier_id)
               - column:
                   name: register_number
                   type: varchar(50)
-                  constraints:
-                    nullable: false
               - column:
                   name: packaging
                   type: varchar(50)
-                  constraints:
-                    nullable: false
               - column:
                   name: description
                   type: varchar(5000)
-                  constraints:
-                    nullable: false
               - column:
                   name: inn
                   type: varchar(50)
-                  constraints:
-                    nullable: false
               - column:
                   name: releasable
                   type: boolean

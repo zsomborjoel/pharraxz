@@ -41,3 +41,10 @@ databaseChangeLog:
                   type: boolean
                   constraints:
                     nullable: false
+              - column:
+                  name: user_position_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_users_user_position_id
+                    references: user_positions(user_position_id)

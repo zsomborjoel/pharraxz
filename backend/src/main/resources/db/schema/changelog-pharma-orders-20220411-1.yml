@@ -6,7 +6,7 @@ databaseChangeLog:
       changes:
         - createTable:
             schema: public
-            tableName: pharma-orders
+            tableName: pharma_orders
             columns:
               - column:
                   name: order_id
@@ -17,10 +17,14 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_pharma_orders_user_id
+                    references: users(user_id)
+              - column:
                   name: description
                   type: varchar(4000)
-                  constraints:
-                    nullable: false
               - column:
                   name: created_date
                   type: timestamp
@@ -31,5 +35,3 @@ databaseChangeLog:
                   name: last_modified_date
                   type: timestamp
                   defaultValueComputed: CURRENT_TIMESTAMP
-                  constraints:
-                    nullable: false

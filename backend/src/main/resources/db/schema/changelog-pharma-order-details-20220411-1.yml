@@ -21,11 +21,15 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_pharma_order_order_id
+                    references: pharma_orders(order_id)
               - column:
                   name: pharma_product_id
                   type: int
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_pharma_order_details_pharma_product_id
+                    references: pharma_products(pharma_product_id)
               - column:
                   name: quantity
                   type: int

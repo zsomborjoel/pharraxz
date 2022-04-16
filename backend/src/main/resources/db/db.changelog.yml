@@ -1,3 +1,21 @@
 databaseChangeLog:
-  - includeAll:
-      path: classpath*:db/schema
+  - include:
+      file: classpath*:db/schema/changelog-atc-codes-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-authorities-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-hospital-ward-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-suppliers-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-user-positions-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-pharma-products-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-stock-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-users-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-pharma-orders-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-pharma-order-details-20220411-1.yml

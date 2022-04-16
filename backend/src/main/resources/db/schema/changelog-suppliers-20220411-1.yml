@@ -24,13 +24,9 @@ databaseChangeLog:
               - column:
                   name: address
                   type: varchar(50)
-                  constraints:
-                    nullable: false
               - column:
                   name: description
                   type: varchar(4000)
-                  constraints:
-                    nullable: false
               - column:
                   name: email
                   type: varchar(50)
@@ -39,5 +35,3 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: varchar(50)
-                  constraints:
-                    nullable: false

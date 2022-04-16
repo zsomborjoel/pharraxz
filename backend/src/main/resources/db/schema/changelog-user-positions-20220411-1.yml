@@ -24,5 +24,3 @@ databaseChangeLog:
               - column:
                   name: description
                   type: varchar(4000)
-                  constraints:
-                    nullable: false
