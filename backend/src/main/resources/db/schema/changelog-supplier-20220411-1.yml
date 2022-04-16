@@ -1,0 +1,43 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 33752556-bb5a-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: suppliers
+            columns:
+              - column:
+                  name: supplier_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(4000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(50)
+                  constraints:
+                    nullable: false

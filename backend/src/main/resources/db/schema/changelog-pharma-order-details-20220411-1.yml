@@ -1,0 +1,48 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: b86afd1a-bb5c-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: pharma_order_details
+            columns:
+              - column:
+                  name: order_details_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pharma_product_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: date
+                  constraints:
+                    nullable: false

@@ -1,0 +1,21 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 5f936a5a-b9dc-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: authorities
+            columns:
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(50)
+                  constraints:
+                    nullable: false

@@ -1,0 +1,23 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 88f7fca7-b9dc-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: hospital_ward
+            columns:
+              - column:
+                  name: ward_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false

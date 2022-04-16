@@ -1,0 +1,21 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: ecf66a36-bb59-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: pharma_products
+            columns:
+              - column:
+                  name: atc
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(4000)
+                  constraints:
+                    nullable: false
