@@ -37,11 +37,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: enabled
-                  type: boolean
-                  constraints:
-                    nullable: false
-              - column:
                   name: user_position_id
                   type: int
                   constraints:

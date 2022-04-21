@@ -1,21 +1,23 @@
 databaseChangeLog:
 
   - changeSet:
-      id: 5f936a5a-b9dc-11ec-8422-0242ac120002
+      id: 53bff913-405a-4f1d-9177-85c06f6d1dfa
       author: zsomborjoel
       changes:
         - createTable:
             schema: public
-            tableName: authorities
+            tableName: roles
             columns:
               - column:
-                  name: username
-                  type: varchar(50)
+                  name: role_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: authority
+                  name: role_name
                   type: varchar(50)
                   constraints:
                     nullable: false

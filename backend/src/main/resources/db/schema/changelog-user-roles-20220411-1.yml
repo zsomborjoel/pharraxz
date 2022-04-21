@@ -1,0 +1,24 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 140d4edc-3a25-488b-8fdc-368132c1f3e2
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_roles_user
+                    references: users(user_id)
+              - column:
+                  name: role_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_roles_role
+                    references: roles(role_id)

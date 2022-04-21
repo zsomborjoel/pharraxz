@@ -1,6 +1,6 @@
 package com.opensource.pharraxz.utils;
 
-import com.opensource.pharraxz.entities.User;
+import com.opensource.pharraxz.configs.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -46,9 +46,9 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
+    public String generateToken(CustomUserDetails user) {
         final Map<String, Object> claims = new HashMap<>();
-        claims.put("role", user.getRoles());
+        claims.put("role", user.getRoleNames());
         return doGenerateToken(claims, user.getUsername());
     }
 

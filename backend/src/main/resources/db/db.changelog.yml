@@ -2,7 +2,7 @@ databaseChangeLog:
   - include:
       file: classpath*:db/schema/changelog-atc-codes-20220411-1.yml
   - include:
-      file: classpath*:db/schema/changelog-authorities-20220411-1.yml
+      file: classpath*:db/schema/changelog-roles-20220411-1.yml
   - include:
       file: classpath*:db/schema/changelog-hospital-ward-20220411-1.yml
   - include:
@@ -19,3 +19,5 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-pharma-orders-20220411-1.yml
   - include:
       file: classpath*:db/schema/changelog-pharma-order-details-20220411-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-user-roles-20220411-1.yml
