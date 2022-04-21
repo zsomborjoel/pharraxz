@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.security;
+package com.opensource.pharraxz.routers.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthResponse {
+public class AuthResponseDTO {
     private String token;
 }

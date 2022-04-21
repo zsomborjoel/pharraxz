@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.security;
+package com.opensource.pharraxz.utils;
 
 import com.opensource.pharraxz.entities.User;
 import io.jsonwebtoken.Claims;

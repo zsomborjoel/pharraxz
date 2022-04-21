@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.security;
+package com.opensource.pharraxz.routers.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

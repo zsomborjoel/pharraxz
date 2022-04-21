@@ -2,7 +2,7 @@ package com.opensource.pharraxz.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.opensource.pharraxz.security.Role;
+import com.opensource.pharraxz.configs.security.Role;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
     private Long userPositionId;
 
     @Transient
-    private List<Role> roles;
+    private List<Role> roles = List.of(Role.ROLE_USER);
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

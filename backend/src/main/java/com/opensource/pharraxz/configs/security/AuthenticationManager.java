@@ -1,5 +1,6 @@
-package com.opensource.pharraxz.security;
+package com.opensource.pharraxz.configs.security;
 
+import com.opensource.pharraxz.utils.JWTUtil;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -33,7 +33,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
                     return new UsernamePasswordAuthenticationToken(
                             username,
                             null,
-                            rolesMap.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                            rolesMap.stream().map(SimpleGrantedAuthority::new).toList()
                     );
                 });
     }
