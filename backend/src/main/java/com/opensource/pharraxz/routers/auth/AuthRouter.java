@@ -15,7 +15,8 @@ public class AuthRouter {
 
     @Bean
     public RouterFunction<ServerResponse> loginRouter(AuthHandler authHandler) {
-        return route(POST("/login").and(accept(MediaType.ALL)), authHandler::handleLogin);
+        return route(POST("/login").and(accept(MediaType.ALL)), authHandler::handleLogin)
+                .andRoute(POST("/refresh").and(accept(MediaType.ALL)), authHandler::handleRefresh);
     }
 
 }

@@ -20,7 +20,7 @@ public class JWTUtil {
     private String secret;
 
     @Value("${security.jjwt.expiration}")
-    private String expirationTime;
+    private long expirationTime;
 
     private Key key;
 
@@ -53,9 +53,8 @@ public class JWTUtil {
     }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
-        final long expirationTimeLong = Long.parseLong(expirationTime);
         final Date createdDate = new Date();
-        final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);
+        final Date expirationDate = new Date(createdDate.getTime() + expirationTime * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)

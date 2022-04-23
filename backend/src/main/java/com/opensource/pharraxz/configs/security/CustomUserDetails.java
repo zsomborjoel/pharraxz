@@ -1,9 +1,6 @@
 package com.opensource.pharraxz.configs.security;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,15 +10,18 @@ import java.util.List;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
+    private Long userId;
     private List<RoleName> roleNames;
     private String username;
     private String password;
 
-    public CustomUserDetails(String username, String password) {
+    public CustomUserDetails(Long userId, String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
     }
