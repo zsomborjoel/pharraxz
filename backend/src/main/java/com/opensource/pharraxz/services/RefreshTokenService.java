@@ -2,6 +2,7 @@ package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.configs.security.CustomUserDetails;
 import com.opensource.pharraxz.entities.RefreshToken;
+import com.opensource.pharraxz.exceptions.TokenRefreshException;
 import com.opensource.pharraxz.repositories.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,11 +35,12 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(refreshToken);
     }
 
-    public void verifyExpiration(final RefreshToken token) {
+    public Mono<Boolean> verifyExpiration(final RefreshToken token) {
         if (token.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(token);
-            throw new RuntimeException("Token expired");
+            throw new TokenRefreshException(token.getToken(), "Refresh token was expired. Please make a new signin request");
         }
+        return Mono.just(true);
     }
 
 }
