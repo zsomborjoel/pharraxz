@@ -1,0 +1,33 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 9adac4f4-b9d8-11ec-8422-0242ac120002
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: refresh_tokens
+            columns:
+              - column:
+                  name: refresh_token_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: expiry_date
+                  type: timestamp
+              - column:
+                  name: token
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_refresh_token_user_id
+                    references: users(user_id)

@@ -21,20 +21,19 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         final String authToken = authentication.getCredentials().toString();
-        final String username = jwtUtil.getUsernameFromToken(authToken);
+        final boolean validToken = jwtUtil.validateToken(authToken);
+        if (validToken) {
+            final String username = jwtUtil.getUsernameFromToken(authToken);
+            final Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
+            final List<String> rolesMap = claims.get("role", List.class);
 
-        return Mono.just(jwtUtil.validateToken(authToken))
-                .filter(valid -> valid)
-                .switchIfEmpty(Mono.empty())
-                .map(valid -> {
-                    final Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
-                    final List<String> rolesMap = claims.get("role", List.class);
-
-                    return new UsernamePasswordAuthenticationToken(
-                            username,
-                            null,
-                            rolesMap.stream().map(SimpleGrantedAuthority::new).toList()
-                    );
-                });
+            return Mono.just(new UsernamePasswordAuthenticationToken(
+                    username,
+                    null,
+                    rolesMap.stream().map(SimpleGrantedAuthority::new).toList()
+            ));
+        }
+        return Mono.empty();
     }
+
 }
