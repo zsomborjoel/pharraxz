@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.routers.user;
+package com.opensource.pharraxz.controllers.user;
 
 import com.opensource.pharraxz.entities.User;
 import org.mapstruct.Mapper;

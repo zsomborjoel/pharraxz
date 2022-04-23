@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.routers.auth;
+package com.opensource.pharraxz.controllers.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RefreshTokenDTO {
+public class AuthResponseDTO {
     private String jwtToken;
     private String refreshToken;
 }

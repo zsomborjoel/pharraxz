@@ -1,8 +1,8 @@
 package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.entities.User;
+import com.opensource.pharraxz.exceptions.EntityNotFoundException;
 import com.opensource.pharraxz.repositories.UserRepository;
-import com.opensource.pharraxz.routers.auth.AuthRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -15,15 +15,17 @@ public class UserService {
     private final UserRepository userRepository;
 
     public Mono<User> findById(Long userId) {
-        return userRepository.findById(userId);
+        return userRepository.findById(userId)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
     }
 
     public Flux<User> findAll() {
         return userRepository.findAll();
     }
 
-    public Mono<User> getUserFromRequest(AuthRequest authRequest) {
-        return userRepository.findByUsername(authRequest.getUsername());
+    public Mono<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
     }
 
 }

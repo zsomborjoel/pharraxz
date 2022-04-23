@@ -1,11 +1,16 @@
 package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.configs.security.CustomUserDetails;
-import com.opensource.pharraxz.routers.auth.AuthResponseDTO;
+import com.opensource.pharraxz.controllers.auth.AuthResponseDTO;
+import com.opensource.pharraxz.controllers.auth.RefreshTokenDTO;
+import com.opensource.pharraxz.entities.RefreshToken;
+import com.opensource.pharraxz.entities.User;
 import com.opensource.pharraxz.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +35,24 @@ public class AuthService {
                         .refreshToken(result.getT2().getToken())
                         .jwtToken(jwtUtil.generateToken(result.getT1()))
                         .build());
+    }
+
+    public Pair<RefreshTokenDTO, User> getRefreshTokenDTOUserPair(Tuple2<RefreshToken, User> tuple) {
+        return Pair.of(
+                RefreshTokenDTO.builder().refreshToken(tuple.getT1().getToken()).build(),
+                tuple.getT2()
+        );
+    }
+
+    public RefreshTokenDTO generateNewJwtByUser(Pair<RefreshTokenDTO, User> pair) {
+        RefreshTokenDTO refreshTokenDTO = pair.getFirst();
+        User user = pair.getSecond();
+
+        CustomUserDetails userDetails = new CustomUserDetails(user.getUserId(), user.getUsername(), user.getPassword());
+        loadRolesToUserDetails(userDetails);
+        refreshTokenDTO.setJwtToken(jwtUtil.generateToken(userDetails));
+
+        return refreshTokenDTO;
     }
 
 }

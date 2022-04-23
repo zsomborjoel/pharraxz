@@ -1,15 +1,12 @@
-package com.opensource.pharraxz.routers.auth;
+package com.opensource.pharraxz.controllers.auth;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthResponseDTO {
-    private String jwtToken;
+public class RefreshRequest {
     private String refreshToken;
 }
