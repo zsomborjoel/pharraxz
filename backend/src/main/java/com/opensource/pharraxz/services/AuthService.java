@@ -34,7 +34,7 @@ public class AuthService {
                 });
     }
 
-    public Mono<AuthResponseDTO> getAuthResponseFromUserDetails(final CustomUserDetails userDetails) {
+    public Mono<AuthResponseDTO> getAuthResponseDTOFromUserDetails(final CustomUserDetails userDetails) {
         return Mono.just(userDetails)
                 .zipWith(refreshTokenService.createRefreshToken(userDetails))
                 .map(result -> AuthResponseDTO.builder()
@@ -50,7 +50,7 @@ public class AuthService {
         );
     }
 
-    public RefreshTokenDTO generateNewJwtByUser(final Pair<RefreshTokenDTO, User> pair) {
+    public RefreshTokenDTO generateJwtByUser(final Pair<RefreshTokenDTO, User> pair) {
         RefreshTokenDTO refreshTokenDTO = pair.getFirst();
         User user = pair.getSecond();
 

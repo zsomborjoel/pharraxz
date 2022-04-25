@@ -28,7 +28,7 @@ public class AuthController {
                 .filter(user -> authService.isValidUser(request, user))
                 .map(authService::mapToUserDetails)
                 .flatMap(authService::loadRolesToUserDetails)
-                .flatMap(authService::getAuthResponseFromUserDetails);
+                .flatMap(authService::getAuthResponseDTOFromUserDetails);
     }
 
     @PostMapping("/refresh")
@@ -37,7 +37,7 @@ public class AuthController {
                 .filterWhen(refreshTokenService::verifyExpiration)
                 .zipWhen(rt -> userService.findById(rt.getUserId()))
                 .map(authService::getRefreshTokenDTOUserPair)
-                .map(authService::generateNewJwtByUser);
+                .map(authService::generateJwtByUser);
     }
 
 }
