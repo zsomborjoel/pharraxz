@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Box } from '@mui/material'
 import logo from './logo.svg';
 import './App.css';
+import Header from './components/header/Header';
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
+    <Box>
+        <Header />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -18,8 +21,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
-    </div>
+    </Box>
   );
 }
 
