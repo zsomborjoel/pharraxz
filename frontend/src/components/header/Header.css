@@ -1,0 +1,12 @@
+.link {
+    margin: 10px;
+    color:darkgoldenrod;
+}
+
+.title {
+    float: left;
+}
+
+.nav-list{
+    float: right;
+}
