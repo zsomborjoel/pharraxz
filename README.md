@@ -1,2 +1,2 @@
 # pharraxz
-Pharmacy Management Systems
+Pharmacy Management System
