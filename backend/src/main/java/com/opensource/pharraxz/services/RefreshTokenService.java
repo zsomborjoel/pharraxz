@@ -26,7 +26,7 @@ public class RefreshTokenService {
     }
 
     public Mono<RefreshToken> createRefreshToken(final CustomUserDetails userDetails) {
-        RefreshToken refreshToken = RefreshToken.builder()
+        final RefreshToken refreshToken = RefreshToken.builder()
                 .expiryDate(Instant.now().plusMillis(refreshExpirationTime))
                 .token(UUID.randomUUID().toString())
                 .userId(userDetails.getUserId())

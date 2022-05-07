@@ -29,30 +29,30 @@ public class JWTUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(final String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getUsernameFromToken(final String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
 
-    public Date getExpirationDateFromToken(String token) {
+    public Date getExpirationDateFromToken(final String token) {
         return getAllClaimsFromToken(token).getExpiration();
     }
 
-    public Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(final String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
-    public String generateToken(CustomUserDetails user) {
+    public String generateToken(final CustomUserDetails user) {
         final Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRoleNames());
         return doGenerateToken(claims, user.getUsername());
     }
 
-    private String doGenerateToken(Map<String, Object> claims, String username) {
+    private String doGenerateToken(final Map<String, Object> claims, final String username) {
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTime * 1000);
 
@@ -65,7 +65,7 @@ public class JWTUtil {
                 .compact();
     }
 
-    public Boolean validateToken(String token) {
+    public Boolean validateToken(final String token) {
         return !isTokenExpired(token);
     }
 

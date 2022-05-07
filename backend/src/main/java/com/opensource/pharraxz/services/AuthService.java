@@ -51,10 +51,10 @@ public class AuthService {
     }
 
     public RefreshTokenDTO generateJwtByUser(final Pair<RefreshTokenDTO, User> pair) {
-        RefreshTokenDTO refreshTokenDTO = pair.getFirst();
-        User user = pair.getSecond();
+        final RefreshTokenDTO refreshTokenDTO = pair.getFirst();
+        final User user = pair.getSecond();
 
-        CustomUserDetails userDetails = new CustomUserDetails(user.getUserId(), user.getUsername(), user.getPassword());
+        final CustomUserDetails userDetails = new CustomUserDetails(user.getUserId(), user.getUsername(), user.getPassword());
         loadRolesToUserDetails(userDetails);
         refreshTokenDTO.setJwtToken(jwtUtil.generateToken(userDetails));
 
