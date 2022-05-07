@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import Toolbar from '@mui/material/Toolbar'
 import AppBar from '@mui/material/AppBar'
 import { Router, Link } from 'react-router-dom'
-import { Grid, Avatar, IconButton, Typography } from '@mui/material'
+import { Grid, Avatar, IconButton, Typography, Button } from '@mui/material'
 import MainMenu from './MainMenu'
 import logo from './logo.svg'
 import './Header.css'
@@ -20,7 +20,7 @@ const Header: FC<HeaderProps> = () => {
                         <Typography ml={1} className="title">Pharraxz</Typography>
                     </Grid>
                     <Grid item xs={9} display="flex" flexDirection="row-reverse" alignItems="center">
-                        Sign out
+                        <Button variant="contained" color="warning">Sign in</Button> 
                     </Grid>
                 </Grid>
             </Toolbar>
