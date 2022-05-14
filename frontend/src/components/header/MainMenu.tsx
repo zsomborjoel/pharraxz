@@ -15,9 +15,9 @@ export type MainMenuProps = {}
 const menuItems = [
     {
         id: 0,
-        menuLabel: 'Menu 1',
+        menuLabel: 'Order',
         menuIcon: ArticleIcon,
-        link: '/menu1',
+        link: '/order',
     },
     {
         id: 1,
