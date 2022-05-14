@@ -1,8 +1,12 @@
 import React, { FC } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/header/Header';
-import NotFound from './components/NotFound';
-import Login from './components/Login';
+import NotFound from './pages/notfound/NotFoundPage';
+import HomePage from './pages/home/HomePage';
+import LoginPage from './pages/login/LoginPage';
+import AuthService from './services/AuthService';
+import OrderPage from './pages/order/OrderPage';
+import RequireAuth from './components/RequireAuth';
 
 const App: FC = () => {
     return (
@@ -10,8 +14,14 @@ const App: FC = () => {
             <div>
                 <Header />
                 <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route element={<NotFound />} />
+                    <Route path="/" element={<LoginPage/>}/>
+                    <Route path="/home" element={<HomePage/>}/>
+                    <Route path="/menu1" element={(
+                        <RequireAuth>
+                            <OrderPage/>
+                        </RequireAuth>
+                    )}/>
+                    <Route element={<NotFound/>}/>
                 </Routes>
             </div>
         </Router>

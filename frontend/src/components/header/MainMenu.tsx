@@ -1,15 +1,37 @@
 import React, { FC } from 'react';
 import { IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
+import ArticleIcon from '@mui/icons-material/Article';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 export type MainMenuProps = {}
+
+const menuItems = [
+    {
+        id: 0,
+        menuLabel: 'Menu 1',
+        menuIcon: ArticleIcon,
+        link: '/menu1',
+    },
+    {
+        id: 1,
+        menuLabel: 'Menu 2',
+        menuIcon: ArticleIcon,
+        link: '/menu2',
+    },
+    {
+        id: 2,
+        menuLabel: 'Menu 3',
+        menuIcon: ArticleIcon,
+        link: '/menu3',
+    },
+];
 
 const MainMenu: FC<MainMenuProps> = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -34,13 +56,15 @@ const MainMenu: FC<MainMenuProps> = () => {
                     sx={{ width: 300 }}
                 >
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>
-                                    <InboxIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
+                        {menuItems.map(({ id, menuLabel, menuIcon: Icon, link }) => (
+                            <Link key={id} to={link} style={{ color: '#1976d2' }} onClick={() => setIsMenuOpen(false)}>
+                                <ListItem button key={menuLabel}>
+                                    <ListItemIcon>
+                                        <Icon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={menuLabel} />
+                                </ListItem>
+                            </Link>
                         ))}
                     </List>
                 </Box>

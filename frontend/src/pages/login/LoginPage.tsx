@@ -1,25 +1,23 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 function Copyright(props: any): any {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                {'Your Website '}
-            </Link>
+            Copyright © Pharraxz
+            {' '}
             {new Date().getFullYear()}
         </Typography>
     );
@@ -27,14 +25,18 @@ function Copyright(props: any): any {
 
 const theme = createTheme();
 
-export default function Login(): any {
+const LoginPage: FC = () => {
+    const navigate = useNavigate();
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): any => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        AuthService.login(data.get('email') as string, data.get('password') as string);
         console.log({
             email: data.get('email'),
             password: data.get('password'),
         });
+        navigate('/home');
     };
 
     return (
@@ -89,4 +91,6 @@ export default function Login(): any {
             </Container>
         </ThemeProvider>
     );
-}
+};
+
+export default LoginPage;

@@ -18,9 +18,6 @@ const Header: FC<HeaderProps> = () => {
                         <Avatar src={logo} alt="logo"/>
                         <Typography ml={1} className="title">Pharraxz</Typography>
                     </Grid>
-                    <Grid item xs={9} display="flex" flexDirection="row-reverse" alignItems="center">
-                        <Button variant="contained" color="warning">Sign in</Button>
-                    </Grid>
                 </Grid>
             </Toolbar>
         </AppBar>
