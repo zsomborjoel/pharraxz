@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import { IconButton } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import React, { FC } from 'react';
+import { IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
@@ -23,25 +23,23 @@ const MainMenu: FC<MainMenuProps> = () => {
             <IconButton onClick={() => setIsMenuOpen((isOpen) => !isOpen)}>
                 <MenuIcon/>
             </IconButton>
-            <SwipeableDrawer
-                anchor="left"
+            <SwipeableDrawer anchor="left"
                 open={isMenuOpen}
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
             >
-                <Box
-                    role="presentation"
+                <Box role="presentation"
                     onClick={toggleDrawer(false)}
                     onKeyDown={toggleDrawer(false)}
-                    sx={{width:300}}
+                    sx={{ width: 300 }}
                 >
                     <List>
                         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                             <ListItem button key={text}>
                                 <ListItemIcon>
-                                    <InboxIcon /> 
+                                    <InboxIcon />
                                 </ListItemIcon>
-                            <ListItemText primary={text} />
+                                <ListItemText primary={text} />
                             </ListItem>
                         ))}
                     </List>
@@ -49,6 +47,6 @@ const MainMenu: FC<MainMenuProps> = () => {
             </SwipeableDrawer>
         </div>
     );
-}
+};
 
 export default MainMenu;

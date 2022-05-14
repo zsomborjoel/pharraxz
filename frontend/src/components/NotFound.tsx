@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 export type NotFoundProps = {}
 
@@ -7,7 +7,7 @@ const NotFound: FC<NotFoundProps> = () => {
         <div>
             <h1>404 Not found</h1>
         </div>
-    )
-}
+    );
+};
 
 export default NotFound;
