@@ -38,8 +38,11 @@ public class AuthService {
         return Mono.just(userDetails)
                 .zipWith(refreshTokenService.createRefreshToken(userDetails))
                 .map(result -> AuthResponseDTO.builder()
-                        .refreshToken(result.getT2().getToken())
+                        .userId(result.getT1().getUserId())
+                        .username(result.getT1().getUsername())
+                        .roleNames(result.getT1().getRoleNames())
                         .jwtToken(jwtUtil.generateToken(result.getT1()))
+                        .refreshToken(result.getT2().getToken())
                         .build());
     }
 
