@@ -11,10 +11,14 @@ const App: FC = () => {
     return (
         <Router>
             <div>
-                <Header />
+                <Header/>
                 <Routes>
                     <Route path="/" element={<LoginPage/>}/>
-                    <Route path="/home" element={<HomePage/>}/>
+                    <Route path="/home" element={(
+                        <RequireAuth>
+                            <HomePage/>
+                        </RequireAuth>
+                    )}/>
                     <Route path="/order" element={(
                         <RequireAuth>
                             <OrderPage/>
