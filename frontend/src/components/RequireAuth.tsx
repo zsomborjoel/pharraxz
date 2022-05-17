@@ -8,7 +8,7 @@ interface RequireAuthProps {
 
 const RequireAuth: FC<RequireAuthProps> = ({ children }: RequireAuthProps) => {
     if (!AuthService.isUserLoggedIn()) {
-        return <Navigate to="/"/>;
+        return <Navigate to="/login"/>;
     }
     return children;
 };
