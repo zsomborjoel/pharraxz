@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { User } from './model/User';
 
 const STORAGE_ITEM_USER = 'user';
@@ -19,7 +19,7 @@ const setupAxiosInterceptors = (token: string): any => {
     );
 };
 
-const login = (username: string, password: string): any => {
+const login = (username: string, password: string): Promise<boolean> => {
     return axios
         .post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
             username,
@@ -28,6 +28,7 @@ const login = (username: string, password: string): any => {
         .then((response: { data: User; }) => {
             localStorage.setItem(STORAGE_ITEM_USER, JSON.stringify(response.data));
             setupAxiosInterceptors(response.data.jwtToken);
+            return true;
         });
 };
 

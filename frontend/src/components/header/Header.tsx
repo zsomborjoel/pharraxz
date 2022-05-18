@@ -33,7 +33,7 @@ const Header: FC<HeaderProps> = ({
                     <Typography ml={1} variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Pharraxz
                     </Typography>
-                    {isLoggedIn
+                    {(isLoggedIn || TokenService.isUserLoggedIn())
                     && (
                         <Button variant="contained" color="warning" onClick={() => logout()}>
                             Logout
