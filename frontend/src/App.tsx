@@ -9,14 +9,13 @@ import OrderPage from './pages/order/OrderPage';
 import RequireAuth from './components/RequireAuth';
 
 const App: FC = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLogInStarted, setIsLogInStarted] = useState(false);
 
     return (
         <div>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: 1 }} />
             <Router>
-                <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-                <Box sx={{ mt: 2, mx: 1, mb: 1, flexGrow: 1, overflow: 'hidden' }} />
+                <Header isLogInStarted={isLogInStarted} setIsLogInStarted={setIsLogInStarted} />
                 <Routes>
                     <Route index element={(
                         <RequireAuth>
@@ -34,11 +33,10 @@ const App: FC = () => {
                         </RequireAuth>
                     )} />
                     <Route path="/login" element={(
-                        <LoginPage setIsLoggedIn={setIsLoggedIn} />
+                        <LoginPage setIsLogInStarted={setIsLogInStarted} />
                     )} />
                     <Route element={<NotFound />} />
                 </Routes>
-                <Box/>
             </Router>
             <Box/>
         </div>

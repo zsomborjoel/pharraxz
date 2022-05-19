@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import { Box, Avatar, Typography, Button } from '@mui/material';
@@ -9,20 +9,23 @@ import './Header.css';
 import TokenService from '../../services/TokenService';
 
 export type HeaderProps = {
-    isLoggedIn: boolean,
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
+    isLogInStarted: boolean,
+    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const Header: FC<HeaderProps> = ({
-    isLoggedIn, setIsLoggedIn,
+    isLogInStarted, setIsLogInStarted,
 }) => {
     const navigate = useNavigate();
 
     const logout = (): void => {
         TokenService.removeUser();
-        setIsLoggedIn(false);
+        setIsLogInStarted(false);
         navigate('/login');
     };
+
+    useEffect(() => {
+    }, [isLogInStarted]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -33,7 +36,7 @@ const Header: FC<HeaderProps> = ({
                     <Typography ml={1} variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Pharraxz
                     </Typography>
-                    {(isLoggedIn || TokenService.isUserLoggedIn())
+                    {(TokenService.isUserLoggedIn())
                     && (
                         <Button variant="contained" color="secondary" onClick={() => logout()}>
                             Logout

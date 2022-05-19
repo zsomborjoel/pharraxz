@@ -24,11 +24,11 @@ function Copyright(props: any): any {
 }
 
 export type LoginPageProps = {
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const LoginPage: FC<LoginPageProps> = ({
-    setIsLoggedIn,
+    setIsLogInStarted,
 }) => {
     const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const LoginPage: FC<LoginPageProps> = ({
         const data = new FormData(event.currentTarget);
         AuthService.login(data.get('email') as string, data.get('password') as string)
             .finally(() => {
-                setIsLoggedIn(true);
+                setIsLogInStarted(true);
                 navigate('/home');
             });
     };
