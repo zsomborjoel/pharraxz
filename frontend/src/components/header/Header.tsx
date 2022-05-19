@@ -35,7 +35,7 @@ const Header: FC<HeaderProps> = ({
                     </Typography>
                     {(isLoggedIn || TokenService.isUserLoggedIn())
                     && (
-                        <Button variant="contained" color="warning" onClick={() => logout()}>
+                        <Button variant="contained" color="secondary" onClick={() => logout()}>
                             Logout
                         </Button>
                     )}

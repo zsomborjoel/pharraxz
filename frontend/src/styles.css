@@ -1,0 +1,10 @@
+
+.demo {
+    display: grid;
+    grid-template-areas: "main";
+    height: 100%;
+}
+
+
+
+

@@ -52,8 +52,8 @@ const LoginPage: FC<LoginPageProps> = ({
                 alignItems: 'center',
             }}
             >
-                <Avatar sx={{ m: 1, bgcolor: deepOrange[500] }}>
-                    <LockOutlinedIcon />
+                <Avatar sx={{ m: 1 }}>
+                    <LockOutlinedIcon color="primary"/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
