@@ -6,10 +6,10 @@ databaseChangeLog:
       changes:
         - createTable:
             schema: public
-            tableName: pharma_order_details
+            tableName: supplier_order_details
             columns:
               - column:
-                  name: order_detail_id
+                  name: supplier_order_detail_id
                   type: int
                   autoIncrement: true
                   startWith: 100
@@ -21,15 +21,15 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_pharma_order_order_id
-                    references: pharma_orders(order_id)
+                    foreignKeyName: fk_supplier_order_order_id
+                    references: orders(order_id)
               - column:
                   name: pharma_product_id
                   type: int
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_pharma_order_details_pharma_product_id
-                    references: pharma_products(pharma_product_id)
+                    foreignKeyName: fk_supplier_order_details_product_id
+                    references: products(product_id)
               - column:
                   name: quantity
                   type: int
@@ -41,12 +41,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: start_date
+                  name: eta
                   type: date
                   constraints:
                     nullable: false
               - column:
-                  name: end_date
+                  name: ata
                   type: date
                   constraints:
                     nullable: false

@@ -5,23 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
 
-@Table("pharma_order_details")
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
 @NoArgsConstructor
-public class PharmaOrderDetail {
-
-    @Id
-    @Column("order_detail_id")
-    private Long orderDetailId;
+public class OrderDetail {
 
     @Column("order_id")
     private Long orderId;

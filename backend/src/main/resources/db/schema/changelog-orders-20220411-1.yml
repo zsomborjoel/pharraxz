@@ -6,7 +6,7 @@ databaseChangeLog:
       changes:
         - createTable:
             schema: public
-            tableName: pharma_orders
+            tableName: orders
             columns:
               - column:
                   name: order_id
@@ -20,7 +20,7 @@ databaseChangeLog:
                   name: user_id
                   type: int
                   constraints:
-                    foreignKeyName: fk_pharma_orders_user_id
+                    foreignKeyName: fk_orders_user_id
                     references: users(user_id)
               - column:
                   name: description

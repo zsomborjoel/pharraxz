@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ToString
 @Accessors(chain = true)
 @NoArgsConstructor
-public class PharmaOrder {
+public class Order {
 
     @Id
     @Column("order_id")

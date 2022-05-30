@@ -6,10 +6,10 @@ databaseChangeLog:
       changes:
         - createTable:
             schema: public
-            tableName: pharma_products
+            tableName: products
             columns:
               - column:
-                  name: pharma_product_id
+                  name: product_id
                   type: int
                   autoIncrement: true
                   startWith: 100
@@ -25,13 +25,13 @@ databaseChangeLog:
                   name: atc
                   type: varchar(50)
                   constraints:
-                    foreignKeyName: fk_pharma_products_atc
+                    foreignKeyName: fk_products_atc
                     references: atc_codes(atc)
               - column:
                   name: supplier_id
                   type: int
                   constraints:
-                    foreignKeyName: fk_pharma_products_supplier_id
+                    foreignKeyName: fk_products_supplier_id
                     references: suppliers(supplier_id)
               - column:
                   name: register_number
