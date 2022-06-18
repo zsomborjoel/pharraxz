@@ -20,15 +20,15 @@ public class AuthController {
     private final UserService userService;
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
+    private final AuthResponseMapper authResponseMapper;
 
     @PostMapping("/login")
     public Mono<AuthResponseDTO> login(@Valid @RequestBody final AuthRequest request) {
         return Mono.just(request)
                 .flatMap(authRequest -> userService.getUserByUsername(authRequest.getUsername()))
                 .filter(user -> authService.isValidUser(request, user))
-                .map(authService::mapToUserDetails)
-                .flatMap(authService::loadRolesToUserDetails)
-                .flatMap(authService::getAuthResponseDTOFromUserDetails);
+                .flatMap(authService::prepareAuthDetails)
+                .map(t -> authResponseMapper.toAuthResponseDTO(t.getT1(), t.getT2()));
     }
 
     @PostMapping("/refresh")
@@ -36,7 +36,6 @@ public class AuthController {
         return refreshTokenService.findByToken(request.getRefreshToken())
                 .filterWhen(refreshTokenService::verifyExpiration)
                 .zipWhen(rt -> userService.findById(rt.getUserId()))
-                .map(authService::getRefreshTokenDTOUserPair)
                 .map(authService::generateJwtByUser);
     }
 
