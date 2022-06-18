@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
+import java.util.function.Function;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -37,13 +39,17 @@ public class AuthService {
     public Mono<AuthResponseDTO> getAuthResponseDTOFromUserDetails(final CustomUserDetails userDetails) {
         return Mono.just(userDetails)
                 .zipWith(refreshTokenService.createRefreshToken(userDetails))
-                .map(result -> AuthResponseDTO.builder()
-                        .userId(result.getT1().getUserId())
-                        .username(result.getT1().getUsername())
-                        .roleNames(result.getT1().getRoleNames())
-                        .jwtToken(jwtUtil.generateToken(result.getT1()))
-                        .refreshToken(result.getT2().getToken())
-                        .build());
+                .map(getTuple2AuthResponseDTOFunction());
+    }
+
+    private Function<Tuple2<CustomUserDetails, RefreshToken>, AuthResponseDTO> getTuple2AuthResponseDTOFunction() {
+        return result -> AuthResponseDTO.builder()
+                .userId(result.getT1().getUserId())
+                .username(result.getT1().getUsername())
+                .roleNames(result.getT1().getRoleNames())
+                .jwtToken(jwtUtil.generateToken(result.getT1()))
+                .refreshToken(result.getT2().getToken())
+                .build();
     }
 
     public Pair<RefreshTokenDTO, User> getRefreshTokenDTOUserPair(final Tuple2<RefreshToken, User> tuple) {

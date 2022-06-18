@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.util.Date;
@@ -19,8 +20,8 @@ public class OrderDetail {
     @Column("order_id")
     private Long orderId;
 
-    @Column("pharma_product_id")
-    private Long pharmaProductId;
+    @Transient
+    private Product product;
 
     @Column("quantity")
     private Long quantity;

@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -35,5 +36,11 @@ public class Order {
     @LastModifiedDate
     @Column("last_modified_date")
     private LocalDateTime lastModifiedDate;
+
+    @Transient
+    private DoctorOrderDetail doctorOrderDetail;
+
+    @Transient
+    private SupplierOrderDetail supplierOrderDetail;
 
 }
