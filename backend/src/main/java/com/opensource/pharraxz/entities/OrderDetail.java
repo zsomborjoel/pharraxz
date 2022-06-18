@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -30,9 +30,9 @@ public class OrderDetail {
     private String oderType;
 
     @Column("start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column("end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
 }

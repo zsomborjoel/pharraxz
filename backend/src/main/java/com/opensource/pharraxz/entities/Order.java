@@ -13,8 +13,9 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Table("pharma_orders")
+@Table("orders")
 @Getter
 @Setter
 @ToString
@@ -38,7 +39,7 @@ public class Order {
     private LocalDateTime lastModifiedDate;
 
     @Transient
-    private DoctorOrderDetail doctorOrderDetail;
+    private List<DoctorOrderDetail> doctorOrderDetail;
 
     @Transient
     private SupplierOrderDetail supplierOrderDetail;

@@ -1,9 +1,9 @@
 package com.opensource.pharraxz.repositories;
 
-import com.opensource.pharraxz.entities.PharmaProduct;
+import com.opensource.pharraxz.entities.Order;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PharmaProductRepository extends ReactiveCrudRepository<PharmaProduct, Long> {
+public interface OrderRepository extends ReactiveCrudRepository<Order, Long> {
 }
