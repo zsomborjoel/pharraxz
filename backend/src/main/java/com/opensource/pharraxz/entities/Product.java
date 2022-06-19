@@ -11,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @Setter
 @ToString
+@Builder
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor

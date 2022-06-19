@@ -1,20 +1,14 @@
 package com.opensource.pharraxz.entities;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDate;
 
 @Getter
-@Setter
-@ToString
-@Accessors(chain = true)
-@NoArgsConstructor
+@SuperBuilder
 public class OrderDetail {
 
     @Column("order_id")

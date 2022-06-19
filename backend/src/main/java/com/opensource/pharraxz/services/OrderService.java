@@ -1,9 +1,8 @@
 package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.entities.Order;
-import com.opensource.pharraxz.repositories.DoctorOrderDetailRepository;
-import com.opensource.pharraxz.repositories.OrderRepository;
-import com.opensource.pharraxz.repositories.ProductRepository;
+import com.opensource.pharraxz.repositories.order.CustomDoctorOrderDetailRepositoryImpl;
+import com.opensource.pharraxz.repositories.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -14,8 +13,7 @@ import reactor.core.publisher.Mono;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final DoctorOrderDetailRepository doctorOrderDetailRepository;
-    private final ProductRepository productRepository;
+    private final CustomDoctorOrderDetailRepositoryImpl doctorOrderDetailRepository;
 
     public Flux<Order> getAll() {
         Flux<Order> orderFlux = orderRepository.findAll();
