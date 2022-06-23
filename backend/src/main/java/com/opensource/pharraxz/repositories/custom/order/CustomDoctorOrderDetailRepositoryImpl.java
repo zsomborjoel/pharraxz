@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.repositories.custom.doctororderdetails;
+package com.opensource.pharraxz.repositories.custom.order;
 
 import com.opensource.pharraxz.entities.DoctorOrderDetail;
 import com.opensource.pharraxz.repositories.daomappers.DoctorOrderDetailDAOMapper;

@@ -1,8 +1,6 @@
 package com.opensource.pharraxz.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
@@ -14,6 +12,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @SuperBuilder
 @ToString
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Table("doctor_order_details")
 public class DoctorOrderDetail extends OrderDetail {
 
