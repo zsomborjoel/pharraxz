@@ -1,8 +1,8 @@
 package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.entities.Order;
-import com.opensource.pharraxz.repositories.order.CustomDoctorOrderDetailRepositoryImpl;
-import com.opensource.pharraxz.repositories.order.OrderRepository;
+import com.opensource.pharraxz.repositories.custom.doctororderdetails.CustomDoctorOrderDetailRepositoryImpl;
+import com.opensource.pharraxz.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

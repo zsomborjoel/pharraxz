@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.repositories.order;
+package com.opensource.pharraxz.repositories;
 
 import com.opensource.pharraxz.entities.SupplierOrderDetail;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;

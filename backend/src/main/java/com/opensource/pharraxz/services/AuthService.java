@@ -34,11 +34,10 @@ public class AuthService {
                 .zipWith(refreshTokenService.createRefreshToken(userDetails));
     }
 
-    public RefreshTokenDTO generateJwtByUser(final Tuple2<RefreshToken, User> tuple) {
+    public RefreshTokenDTO generateJwtByUser(final RefreshToken refreshToken, final User user) {
         final RefreshTokenDTO refreshTokenDTO = RefreshTokenDTO.builder()
-                .refreshToken(tuple.getT1().getToken())
+                .refreshToken(refreshToken.getToken())
                 .build();
-        final User user = tuple.getT2();
 
         final CustomUserDetails userDetails = CustomUserDetails.builder()
                 .userId(user.getUserId())

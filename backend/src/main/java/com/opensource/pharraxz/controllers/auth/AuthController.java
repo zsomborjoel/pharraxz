@@ -36,7 +36,7 @@ public class AuthController {
         return refreshTokenService.findByToken(request.getRefreshToken())
                 .filterWhen(refreshTokenService::verifyExpiration)
                 .zipWhen(rt -> userService.findById(rt.getUserId()))
-                .map(authService::generateJwtByUser);
+                .map(t -> authService.generateJwtByUser(t.getT1(), t.getT2()));
     }
 
 }

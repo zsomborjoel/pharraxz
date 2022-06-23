@@ -1,4 +1,4 @@
-package com.opensource.pharraxz.repositories.order;
+package com.opensource.pharraxz.repositories.custom.doctororderdetails;
 
 import com.opensource.pharraxz.entities.DoctorOrderDetail;
 import reactor.core.publisher.Flux;

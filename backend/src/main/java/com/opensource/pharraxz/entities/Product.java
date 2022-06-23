@@ -31,7 +31,7 @@ public class Product {
     private Supplier supplier;
 
     @Column("register_number")
-    private String register_number;
+    private String registerNumber;
 
     @Column("packaging")
     private String packaging;
