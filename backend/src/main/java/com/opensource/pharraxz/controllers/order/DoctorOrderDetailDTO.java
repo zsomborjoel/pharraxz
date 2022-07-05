@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class DoctorOrderDetailDTO {
 
-    private Long orderId;
+    private Long orderDetailId;
     private ProductDTO product;
     private Long quantity;
     private String oderType;

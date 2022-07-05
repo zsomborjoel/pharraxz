@@ -1,11 +1,29 @@
 package com.opensource.pharraxz.controllers.order;
 
 import com.opensource.pharraxz.entities.Order;
-import org.mapstruct.Mapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@Mapper(uses = {DoctorOrderDetailMapper.class})
-public interface DoctorOrderOverviewMapper {
+import java.util.ArrayList;
+import java.util.List;
 
-    DoctorOrderOverviewDTO toDTO(Order order);
+@Component
+@RequiredArgsConstructor
+public class DoctorOrderOverviewMapper {
+
+    private final DoctorOrderDetailMapper doctorOrderDetailMapper;
+
+    public List<DoctorOrderOverviewDTO> toDTOList(Order order) {
+        final List<DoctorOrderOverviewDTO> doctorOrderOverviewDTOS = new ArrayList<>();
+        order.getDoctorOrderDetail().forEach(dod -> doctorOrderOverviewDTOS.add(
+                DoctorOrderOverviewDTO.builder()
+                        .orderId(order.getOrderId())
+                        .description(order.getDescription())
+                        .doctorOrderDetail(doctorOrderDetailMapper.toDTO(dod))
+                        .build()
+        ));
+
+        return doctorOrderOverviewDTOS;
+    }
 
 }

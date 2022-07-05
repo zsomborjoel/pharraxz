@@ -1,14 +1,11 @@
 package com.opensource.pharraxz.controllers.order;
 
-import com.opensource.pharraxz.entities.Order;
 import com.opensource.pharraxz.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
-
-import javax.annotation.PostConstruct;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -19,13 +16,9 @@ public class OrderController {
     private final DoctorOrderOverviewMapper doctorOrderOverviewMapper;
 
     @GetMapping("/doctor")
-    public Flux<Order> getAllDoctorOrders() {
-        return pharmaOrderService.getAll();
-    }
-
-    @PostConstruct
-    void test() {
-        doctorOrderOverviewMapper.toDTO(new Order());
+    public Flux<DoctorOrderOverviewDTO> getAllDoctorOrders() {
+        return pharmaOrderService.getAll()
+                .flatMapIterable(doctorOrderOverviewMapper::toDTOList);
     }
 
 }

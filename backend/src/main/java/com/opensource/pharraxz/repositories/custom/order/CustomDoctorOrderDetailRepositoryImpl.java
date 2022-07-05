@@ -4,10 +4,10 @@ import com.opensource.pharraxz.entities.DoctorOrderDetail;
 import com.opensource.pharraxz.repositories.daomappers.DoctorOrderDetailDAOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class CustomDoctorOrderDetailRepositoryImpl implements CustomDoctorOrderDetailRepository {
 
@@ -20,7 +20,7 @@ public class CustomDoctorOrderDetailRepositoryImpl implements CustomDoctorOrderD
                 from doctor_order_details dod
                 join products p
                 on dod.pharma_product_id = p.product_id
-                where order_id = :orderId""";
+                where dod.order_id = :orderId""";
 
         return client.sql(query)
                 .bind("orderId", orderId)
