@@ -1,6 +1,7 @@
 package com.opensource.pharraxz.services;
 
 import com.opensource.pharraxz.entities.Order;
+import com.opensource.pharraxz.repositories.OrderDetailRepository;
 import com.opensource.pharraxz.repositories.OrderRepository;
 import com.opensource.pharraxz.repositories.custom.order.CustomOrderDetailRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,12 @@ import reactor.core.publisher.Mono;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
     private final CustomOrderDetailRepositoryImpl doctorOrderDetailRepository;
+
+    public Mono<Void> deleteOrderDetailById(final Long id) {
+        return orderDetailRepository.deleteById(id);
+    }
 
     public Flux<Order> getAll() {
         Flux<Order> orderFlux = orderRepository.findAll();

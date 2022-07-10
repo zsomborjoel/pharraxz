@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("doctor_order_details")
+@Table("order_details")
 public class OrderDetail  {
 
     @Id
