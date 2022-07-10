@@ -39,9 +39,6 @@ public class Order {
     private LocalDateTime lastModifiedDate;
 
     @Transient
-    private List<DoctorOrderDetail> doctorOrderDetail;
-
-    @Transient
-    private SupplierOrderDetail supplierOrderDetail;
+    private List<OrderDetail> orderDetails;
 
 }

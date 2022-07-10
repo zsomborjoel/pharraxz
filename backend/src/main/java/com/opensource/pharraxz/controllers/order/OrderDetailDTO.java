@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @Accessors(chain = true)
-public class DoctorOrderDetailDTO {
+public class OrderDetailDTO {
 
     private Long orderDetailId;
     private ProductDTO product;

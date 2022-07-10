@@ -13,12 +13,12 @@ import reactor.core.publisher.Flux;
 public class OrderController {
 
     private final OrderService pharmaOrderService;
-    private final DoctorOrderOverviewMapper doctorOrderOverviewMapper;
+    private final OrderOverviewMapper orderOverviewMapper;
 
     @GetMapping("/doctor")
-    public Flux<DoctorOrderOverviewDTO> getAllDoctorOrders() {
+    public Flux<OrderOverviewDTO> getAllDoctorOrders() {
         return pharmaOrderService.getAll()
-                .flatMapIterable(doctorOrderOverviewMapper::toDTOList);
+                .flatMapIterable(orderOverviewMapper::toDTOList);
     }
 
 }

@@ -7,10 +7,10 @@ import lombok.experimental.Accessors;
 @Data
 @Builder
 @Accessors(chain = true)
-public class DoctorOrderOverviewDTO {
+public class OrderOverviewDTO {
 
     private Long orderId;
     private String description;
-    private DoctorOrderDetailDTO doctorOrderDetail;
+    private OrderDetailDTO orderDetail;
 
 }

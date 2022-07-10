@@ -1,23 +1,28 @@
 package com.opensource.pharraxz.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 
-@Setter
 @Getter
-@Accessors(chain = true)
+@Setter
 @SuperBuilder
+@ToString
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDetail {
+@Table("doctor_order_details")
+public class OrderDetail  {
+
+    @Id
+    @Column("order_detail_id")
+    private Long orderDetailId;
 
     @Column("order_id")
     private Long orderId;

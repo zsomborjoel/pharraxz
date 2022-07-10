@@ -18,9 +18,7 @@ databaseChangeLog:
   - include:
       file: classpath*:db/schema/changelog-orders-20220411-1.yml
   - include:
-      file: classpath*:db/schema/changelog-doctor-order-details-20220411-1.yml
-  - include:
-      file: classpath*:db/schema/changelog-supplier-order-details-20220411-1.yml
+      file: classpath*:db/schema/changelog-order-details-20220411-1.yml
   - include:
       file: classpath*:db/schema/changelog-user-roles-20220411-1.yml
   - include:
