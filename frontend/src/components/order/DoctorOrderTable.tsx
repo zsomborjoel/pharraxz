@@ -1,13 +1,15 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 
 import { Box } from '@mui/material';
-import { DataGrid, GridColDef, GridSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
-import { DoctorOrderOverview } from '../../services/model/DoctorOrderOverview';
-import { DoctorOrderDetail } from '../../services/model/DoctorOrderDetail';
+import { DataGrid, GridColDef, GridSelectionModel, GridSortModel, useGridApiRef } from '@mui/x-data-grid';
+import { DoctorOrderOverview } from '../../services/model/OrderOverview';
+import { DoctorOrderDetail } from '../../services/model/OrderDetail';
+import DataGridUtil from '../../utils/DataGridUtil';
 
 export type DoctorOrderTableProps = {
     doctorOrderOverviews: DoctorOrderOverview[],
     selectedOrderDetailId: string | undefined,
+    selectOrderDetail: (orderDetailId: number) => void,
     loading: boolean
 }
 
@@ -15,6 +17,7 @@ const DoctorOrderTable: FC<DoctorOrderTableProps> = (
     {
         doctorOrderOverviews,
         selectedOrderDetailId,
+        selectOrderDetail,
         loading,
     },
 ) => {
@@ -90,14 +93,32 @@ const DoctorOrderTable: FC<DoctorOrderTableProps> = (
     ];
 
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+    const [sortModel, setSortModel] = useState<GridSortModel>([
+        {
+            field: 'doctorOrderDetail.orderDetailId',
+            sort: 'desc',
+        },
+    ]);
+
+    DataGridUtil.selectFirst(selectedOrderDetailId, rows[rows.length - 1], selectionModel, setSelectionModel, selectOrderDetail);
+
+    useEffect(() => {
+        setSelectionModel([]);
+        DataGridUtil.selectFirst(selectedOrderDetailId, selectedOrderDetailId, selectionModel, setSelectionModel, selectOrderDetail);
+    }, [selectedOrderDetailId]);
 
     return (
         <div style={{ height: 800, width: '100%' }}>
             <DataGrid getRowId={(row) => row.doctorOrderDetail.orderDetailId}
                 rows={rows}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                onRowClick={(params) => selectOrderDetail(params.row.id)}
+                sortModel={sortModel}
+                selectionModel={selectionModel}
+                onSelectionModelChange={(sel) => setSelectionModel(sel)}
+                loading={loading}
                 checkboxSelection
                 autoHeight
             />
