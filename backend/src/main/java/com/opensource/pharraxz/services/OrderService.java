@@ -56,12 +56,19 @@ public class OrderService {
     }
 
     public Mono<Order> findOrCreate(final OrderRequest request) {
+        final Mono<Order> orderMono = Mono.just(
+                Order.builder()
+                .orderId(request.getOrderId())
+                .userId(request.getUserId())
+                .createdDate(LocalDateTime.now())
+                .build());
+
+        if (request.getOrderId() == null) {
+            return orderMono;
+        }
+
         return orderRepository.findById(request.getOrderId())
-                .switchIfEmpty(Mono.just(Order.builder()
-                        .orderId(request.getOrderId())
-                        .userId(request.getUserId())
-                        .createdDate(LocalDateTime.now())
-                        .build()));
+                .switchIfEmpty(orderMono);
     }
 
     public Mono<Order> save(final Order order) {
