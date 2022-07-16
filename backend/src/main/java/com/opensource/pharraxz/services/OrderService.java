@@ -33,33 +33,43 @@ public class OrderService {
 
     public Mono<Void> saveOrderRequest(final OrderRequest orderRequest) {
         return Mono.just(orderRequest)
-                .map(request -> Order.builder()
-                        .orderId(request.getOrderId())
-                        .description(request.getDescription())
-                        .createdDate(LocalDateTime.now())
-                        .build())
-                .flatMap(this::findOrSave)
-                .zipWith(productService.findById(orderRequest.getOrderDetailDTO().getProduct().getName()))
+                .flatMap(this::findOrCreate)
+                .map(order -> {
+                    // Update with description
+                    order.setDescription(orderRequest.getDescription());
+                    return order;
+                })
+                .flatMap(this::save)
+                .zipWith(productService.findById(orderRequest.getOrderDetail().getProduct().getName()))
+                // Overwrite on save or on update
                 .map(tuple -> OrderDetail.builder()
+                        .orderDetailId(orderRequest.getOrderDetail().getOrderDetailId())
                         .orderId(tuple.getT1().getOrderId())
-                        .oderType(orderRequest.getOrderDetailDTO().getOderType())
-                        .product(tuple.getT2())
-                        .quantity(orderRequest.getOrderDetailDTO().getQuantity())
-                        .startDate(orderRequest.getOrderDetailDTO().getStartDate())
-                        .endDate(orderRequest.getOrderDetailDTO().getEndDate())
+                        .oderType(orderRequest.getOrderDetail().getOderType())
+                        .productId(tuple.getT2().getName())
+                        .quantity(orderRequest.getOrderDetail().getQuantity())
+                        .startDate(orderRequest.getOrderDetail().getStartDate())
+                        .endDate(orderRequest.getOrderDetail().getEndDate())
                         .build())
-                .flatMap(this::findOrSave)
+                .flatMap(this::save)
                 .then(Mono.empty());
     }
 
-    public Mono<Order> findOrSave(final Order order) {
-        return orderRepository.findById(order.getOrderId())
-                .switchIfEmpty(orderRepository.save(order));
+    public Mono<Order> findOrCreate(final OrderRequest request) {
+        return orderRepository.findById(request.getOrderId())
+                .switchIfEmpty(Mono.just(Order.builder()
+                        .orderId(request.getOrderId())
+                        .userId(request.getUserId())
+                        .createdDate(LocalDateTime.now())
+                        .build()));
     }
 
-    public Mono<OrderDetail> findOrSave(final OrderDetail orderDetail) {
-        return orderDetailRepository.findById(orderDetail.getOrderDetailId())
-                .switchIfEmpty(orderDetailRepository.save(orderDetail));
+    public Mono<Order> save(final Order order) {
+        return orderRepository.save(order);
+    }
+
+    public Mono<OrderDetail> save(final OrderDetail orderDetail) {
+        return orderDetailRepository.save(orderDetail);
     }
 
     private Mono<Order> loadRelations(final Order order) {

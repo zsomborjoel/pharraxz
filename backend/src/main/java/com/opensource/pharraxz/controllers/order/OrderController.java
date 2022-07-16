@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping(value = "/orders")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
@@ -26,7 +26,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public Mono<Void> saveOrder(@RequestParam OrderRequest request) {
+    public Mono<Void> saveOrder(@RequestBody OrderRequest request) {
         return orderService.saveOrderRequest(request);
     }
 

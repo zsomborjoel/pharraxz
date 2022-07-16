@@ -9,12 +9,10 @@ import java.time.LocalDate;
 @Data
 @Accessors(chain = true)
 public class OrderDetailDTO {
-
     private Long orderDetailId;
     private ProductDTO product;
     private Long quantity;
     private String oderType;
     private LocalDate startDate;
     private LocalDate endDate;
-
 }

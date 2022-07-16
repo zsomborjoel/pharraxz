@@ -11,20 +11,43 @@ curl --header "Content-Type: application/json" -d "{\"refreshToken\":\"9b573af9-
 curl -v  -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders/doctor
 
 # Delete order detail
-curl -X "DELETE" -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders/detail?id=3
+curl -X "DELETE" -v \
+-H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders/detail?id=3
 
 # Save order request
-curl -X "POST" -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders \
+curl -X "POST" -v \
+-H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders \
+-H "Content-Type: application/json"  \
 -d "{
-        "userId": 1,
-        "description": "tester",
-        "orderDetail": {
-            "product": {
-                "name": "testproduct",
-            },
-            "quantity": 2,
-            "oderType": "de",
-            "startDate": "2022-06-20",
-            "endDate": "2022-06-20"
-        }
-    }"
+         \"userId\": 1,
+         \"description\": \"testernewINSERT\",
+         \"orderDetail\": {
+             \"product\": {
+                 \"name\": \"testproduct\"
+             },
+             \"quantity\": 666,
+             \"oderType\": \"deINSERT\",
+             \"startDate\": \"2022-06-20\",
+             \"endDate\": \"2022-06-20\"
+         }
+     }"
+
+# Update order request
+curl -X "POST" -v \
+-H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders \
+-H "Content-Type: application/json"  \
+-d "{
+         \"orderId\": 1,
+         \"userId\": 1,
+         \"description\": \"testernewUPDATE\",
+         \"orderDetail\": {
+             \"orderDetailId\": 2,
+             \"product\": {
+                 \"name\": \"testproduct\"
+             },
+             \"quantity\": 999,
+             \"oderType\": \"deUPDATE\",
+             \"startDate\": \"2022-06-20\",
+             \"endDate\": \"2022-06-20\"
+         }
+     }"

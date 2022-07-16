@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 

@@ -27,6 +27,9 @@ public class OrderDetail  {
     @Column("order_id")
     private Long orderId;
 
+    @Column("product_id")
+    private String productId;
+
     @Transient
     private Product product;
 

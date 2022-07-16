@@ -1,13 +1,15 @@
 package com.opensource.pharraxz.controllers.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
 
 @Data
-@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderRequest {
     private Long orderId;
     private Long userId;
     private String description;
-    private OrderDetailDTO orderDetailDTO;
+    private OrderDetailDTO orderDetail;
 }
