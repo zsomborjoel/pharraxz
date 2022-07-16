@@ -9,17 +9,10 @@ databaseChangeLog:
             tableName: products
             columns:
               - column:
-                  name: product_id
-                  type: int
-                  autoIncrement: true
-                  startWith: 100
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
                   name: name
                   type: varchar(255)
                   constraints:
+                    primaryKey: true
                     nullable: false
               - column:
                   name: atc

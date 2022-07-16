@@ -13,8 +13,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Mono<Product> findById(final Long productId) {
-        return productRepository.findById(productId)
+    public Mono<Product> findById(final String name) {
+        return productRepository.findById(name)
                 .switchIfEmpty(Mono.error(new EntityNotFoundException()));
     }
 

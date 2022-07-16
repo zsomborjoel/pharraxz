@@ -18,9 +18,6 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Product {
 
     @Id
-    @Column("product_id")
-    private Long productId;
-
     @Column("name")
     private String name;
 

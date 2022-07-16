@@ -11,7 +11,6 @@ public class ProductDAOMapper implements Function<Row, Product> {
 
     @Override
     public Product apply(Row row) {
-        Long productId = row.get("product_id", Long.class);
         String productName = row.get("name", String.class);
         String productAtc = row.get("atc", String.class);
         String productRegisterNumber = row.get("register_number", String.class);
@@ -21,7 +20,6 @@ public class ProductDAOMapper implements Function<Row, Product> {
         Boolean productReleasable = row.get("releasable", Boolean.class);
 
         return Product.builder()
-                .productId(productId)
                 .name(productName)
                 .atc(productAtc)
                 .registerNumber(productRegisterNumber)

@@ -39,7 +39,7 @@ public class OrderService {
                         .createdDate(LocalDateTime.now())
                         .build())
                 .flatMap(this::findOrSave)
-                .zipWith(productService.findById(orderRequest.getOrderDetailDTO().getProduct().getProductId()))
+                .zipWith(productService.findById(orderRequest.getOrderDetailDTO().getProduct().getName()))
                 .map(tuple -> OrderDetail.builder()
                         .orderId(tuple.getT1().getOrderId())
                         .oderType(orderRequest.getOrderDetailDTO().getOderType())

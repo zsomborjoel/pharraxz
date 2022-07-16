@@ -4,6 +4,11 @@ INSERT INTO public.roles
 (role_id, role_name)
 VALUES(1, 'ROLE_USER');
 
+-- user position
+INSERT INTO public.user_positions
+(user_position_id, "name", description)
+VALUES(1, 'test', 'desc');
+
 -- users
 INSERT INTO public.users
 (user_id, firstname, lastname, username, "password", user_position_id)
@@ -16,8 +21,8 @@ VALUES(1, 1);
 
 -- product
 INSERT INTO public.products
-(product_id, "name", atc, supplier_id, register_number, packaging, description, inn, releasable)
-VALUES(1, 'testproduct', NULL, NULL, NULL, NULL, NULL, NULL, true);
+("name", atc, supplier_id, register_number, packaging, description, inn, releasable)
+VALUES('testproduct', NULL, NULL, NULL, NULL, NULL, NULL, true);
 
 -- orders
 INSERT INTO public.orders
@@ -26,8 +31,8 @@ VALUES(1, 1, 'tester', '2022-07-10 13:53:27.292', '2022-07-10 13:53:27.292');
 
 -- order details
 INSERT INTO public.order_details
-(order_detail_id, order_id, pharma_product_id, quantity, order_type, start_date, end_date)
-VALUES(1, 1, 1, 5, '', '2022-06-18', '2022-06-18');
+(order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
+VALUES(1, 1, 'testproduct', 5, '', '2022-06-18', '2022-06-18');
 INSERT INTO public.order_details
-(order_detail_id, order_id, pharma_product_id, quantity, order_type, start_date, end_date)
-VALUES(2, 1, 1, 2, 'de', '2022-06-18', '2022-06-18');
+(order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
+VALUES(2, 1, 'testproduct', 2, 'de', '2022-06-18', '2022-06-18');
