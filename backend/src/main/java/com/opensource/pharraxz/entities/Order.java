@@ -1,10 +1,8 @@
 package com.opensource.pharraxz.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +16,7 @@ import java.util.List;
 @Table("orders")
 @Getter
 @Setter
+@SuperBuilder
 @ToString
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -26,6 +25,9 @@ public class Order {
     @Id
     @Column("order_id")
     private Long orderId;
+
+    @Column("user_id")
+    private Long userId;
 
     @Column("description")
     private String description;

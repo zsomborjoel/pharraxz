@@ -20,9 +20,14 @@ public class OrderController {
                 .flatMapIterable(orderOverviewMapper::toDTOList);
     }
 
-    @DeleteMapping("/detail")
-    public Mono<Void> deleteOrderDetail(@RequestParam Long id) {
+    @DeleteMapping("/detail/{id}")
+    public Mono<Void> deleteOrderDetail(@PathVariable Long id) {
         return orderService.deleteOrderDetailById(id);
+    }
+
+    @PostMapping
+    public Mono<Void> saveOrder(@RequestParam OrderRequest request) {
+        return orderService.saveOrderRequest(request);
     }
 
 }
