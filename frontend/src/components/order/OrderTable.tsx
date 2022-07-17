@@ -2,100 +2,100 @@ import React, { FC, useState, useEffect } from 'react';
 
 import { Box } from '@mui/material';
 import { DataGrid, GridColDef, GridSelectionModel, GridSortModel, useGridApiRef } from '@mui/x-data-grid';
-import { DoctorOrderOverview } from '../../services/model/OrderOverview';
-import { DoctorOrderDetail } from '../../services/model/OrderDetail';
+import { OrderOverview } from '../../services/model/OrderOverview';
+import { OrderDetail } from '../../services/model/OrderDetail';
 import DataGridUtil from '../../utils/DataGridUtil';
 
 export type DoctorOrderTableProps = {
-    doctorOrderOverviews: DoctorOrderOverview[],
+    orderOverviews: OrderOverview[],
     selectedOrderDetailId: string | undefined,
     selectOrderDetail: (orderDetailId: number) => void,
     loading: boolean
 }
 
-const DoctorOrderTable: FC<DoctorOrderTableProps> = (
+const OrderTable: FC<DoctorOrderTableProps> = (
     {
-        doctorOrderOverviews,
+        orderOverviews,
         selectedOrderDetailId,
         selectOrderDetail,
         loading,
     },
 ) => {
-    const rows = doctorOrderOverviews;
+    const rows = orderOverviews;
 
     const columns: GridColDef[] = [
         {
-            field: 'doctorOrderDetail.orderDetailId',
+            field: 'orderDetail.orderDetailId',
             headerName: 'Sub order id',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.orderDetailId,
+            valueGetter: (e) => e.row.orderDetail.orderDetailId,
         },
         {
-            field: 'doctorOrderDetail.product.name',
+            field: 'orderDetail.product.name',
             headerName: 'Medicine name',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.name,
+            valueGetter: (e) => e.row.orderDetail.product.name,
         },
         {
-            field: 'doctorOrderDetail.product.registerNumber',
+            field: 'orderDetail.product.registerNumber',
             headerName: 'Register number',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.registerNumber,
+            valueGetter: (e) => e.row.orderDetail.product.registerNumber,
         },
         {
-            field: 'doctorOrderDetail.product.packaging',
+            field: 'orderDetail.product.packaging',
             headerName: 'Packaging',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.packaging,
+            valueGetter: (e) => e.row.orderDetail.product.packaging,
         },
         {
-            field: 'doctorOrderDetail.product.description',
+            field: 'orderDetail.product.description',
             headerName: 'Medicie description',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.description,
+            valueGetter: (e) => e.row.orderDetail.product.description,
         },
         {
-            field: 'doctorOrderDetail.product.inn',
+            field: 'orderDetail.product.inn',
             headerName: 'Inn',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.inn,
+            valueGetter: (e) => e.row.orderDetail.product.inn,
         },
         {
-            field: 'doctorOrderDetail.product.releasable',
+            field: 'orderDetail.product.releasable',
             headerName: 'Releasable',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.product.releasable,
+            valueGetter: (e) => e.row.orderDetail.product.releasable,
         },
         {
-            field: 'doctorOrderDetail.quantity',
+            field: 'orderDetail.quantity',
             headerName: 'Quantity',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.quantity,
+            valueGetter: (e) => e.row.orderDetail.quantity,
         },
         {
-            field: 'doctorOrderDetail.oderType',
+            field: 'orderDetail.oderType',
             headerName: 'Oder type',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.oderType,
+            valueGetter: (e) => e.row.orderDetail.oderType,
         },
         {
-            field: 'doctorOrderDetail.startDate',
+            field: 'orderDetail.startDate',
             headerName: 'Order start date',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.startDate,
+            valueGetter: (e) => e.row.orderDetail.startDate,
         },
         {
-            field: 'doctorOrderDetail.endDate',
+            field: 'orderDetail.endDate',
             headerName: 'Order end date',
             width: 130,
-            valueGetter: (e) => e.row.doctorOrderDetail.endDate,
+            valueGetter: (e) => e.row.orderDetail.endDate,
         },
     ];
 
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
     const [sortModel, setSortModel] = useState<GridSortModel>([
         {
-            field: 'doctorOrderDetail.orderDetailId',
+            field: 'orderDetail.orderDetailId',
             sort: 'desc',
         },
     ]);
@@ -109,7 +109,7 @@ const DoctorOrderTable: FC<DoctorOrderTableProps> = (
 
     return (
         <div style={{ height: 800, width: '100%' }}>
-            <DataGrid getRowId={(row) => row.doctorOrderDetail.orderDetailId}
+            <DataGrid getRowId={(row) => row.orderDetail.orderDetailId}
                 rows={rows}
                 columns={columns}
                 pageSize={10}
@@ -126,4 +126,4 @@ const DoctorOrderTable: FC<DoctorOrderTableProps> = (
     );
 };
 
-export default React.memo(DoctorOrderTable);
+export default React.memo(OrderTable);

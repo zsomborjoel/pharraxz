@@ -1,7 +1,8 @@
 import { OrderDetail } from './OrderDetail';
 
-export interface OrderOverview {
+export interface OrderSaveRequest {
     orderId: number;
+    userId: number;
     description: string;
     orderDetail: OrderDetail;
 }

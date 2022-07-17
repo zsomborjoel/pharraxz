@@ -4,7 +4,7 @@ export interface OrderDetail {
     orderDetailId: number;
     product: Product;
     quantity: number;
-    oderType: string;
+    oderType: string | null;
     startDate: string;
     endDate: string;
 }

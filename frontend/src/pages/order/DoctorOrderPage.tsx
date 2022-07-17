@@ -4,9 +4,9 @@ import '../../styles.css';
 import { ReflexContainer, ReflexElement, ReflexSplitter } from 'react-reflex';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import DoctorOrderTable from '../../components/order/DoctorOrderTable';
+import DoctorOrderTable from '../../components/order/OrderTable';
 import LoadingIndicator from '../../components/LoadingIndicator';
-import { DoctorOrderOverview } from '../../services/model/OrderOverview';
+import { OrderOverview } from '../../services/model/OrderOverview';
 import OrderService from '../../services/OrderService';
 import { OrderDetail } from '../../services/model/OrderDetail';
 
@@ -14,9 +14,9 @@ export type DoctorOrderPageProps = {}
 
 const DoctorOrderPage: FC<DoctorOrderPageProps> = () => {
     const [loadingDoctorOrders, setLoadingDoctorOrders] = useState<boolean>(false);
-    const [selectedOrderDetail, setSelectedOrderDetail] = useState<DoctorOrderDetail>();
+    const [selectedOrderDetail, setSelectedOrderDetail] = useState<OrderDetail>();
     const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<string>();
-    const [doctorOrderOverviews, setDoctorOrderOverviews] = useState<DoctorOrderOverview[]>([]);
+    const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
     const navigate = useNavigate();
 
     const selectOrderDetail = (id: number): void => {
@@ -25,8 +25,8 @@ const DoctorOrderPage: FC<DoctorOrderPageProps> = () => {
 
     useEffect(() => {
         setLoadingDoctorOrders(true);
-        OrderService.getAllDoctorOrderOverview().then((result) => {
-            setDoctorOrderOverviews(result.data);
+        OrderService.getAllOrderOverview().then((result) => {
+            setOrderOverviews(result);
             setLoadingDoctorOrders(false);
         });
     }, []);
@@ -36,7 +36,7 @@ const DoctorOrderPage: FC<DoctorOrderPageProps> = () => {
             <Box sx={{ height: 800 }}>
                 <ReflexContainer orientation="vertical">
                     <ReflexElement minSize={300}>
-                        <DoctorOrderTable doctorOrderOverviews={doctorOrderOverviews}
+                        <DoctorOrderTable orderOverviews={orderOverviews}
                             selectedOrderDetailId={selectedOrderDetailId}
                             selectOrderDetail={selectOrderDetail}
                             loading={loadingDoctorOrders}/>
