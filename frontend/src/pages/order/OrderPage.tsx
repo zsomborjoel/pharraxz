@@ -4,46 +4,71 @@ import '../../styles.css';
 import { ReflexContainer, ReflexElement, ReflexSplitter } from 'react-reflex';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import DoctorOrderTable from '../../components/order/OrderTable';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { OrderOverview } from '../../services/model/OrderOverview';
 import OrderService from '../../services/OrderService';
 import { OrderDetail } from '../../services/model/OrderDetail';
+import OrderTable from '../../components/order/OrderTable';
+import { OrderView } from '../../services/model/OrderView';
 
-export type DoctorOrderPageProps = {}
+export type OrderPageProps = {}
 
-const DoctorOrderPage: FC<DoctorOrderPageProps> = () => {
+const OrderPage: FC<OrderPageProps> = () => {
     const [loadingDoctorOrders, setLoadingDoctorOrders] = useState<boolean>(false);
     const [selectedOrderDetail, setSelectedOrderDetail] = useState<OrderDetail>();
     const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<string>();
     const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
+    const [orderViews, setOrderViews] = useState<OrderView[]>([]);
+
     const navigate = useNavigate();
 
     const selectOrderDetail = (id: number): void => {
-        navigate(`/${id}`);
     };
 
     useEffect(() => {
         setLoadingDoctorOrders(true);
         OrderService.getAllOrderOverview().then((result) => {
-            setOrderOverviews(result);
-            setLoadingDoctorOrders(false);
+            setOrderOverviews(result.data);
         });
     }, []);
+
+    useEffect(() => {
+        if (orderOverviews.length > 0) {
+            const orderViewsNew = [] as OrderView[];
+            orderOverviews.forEach((orderOverview) => {
+                orderOverview.orderDetails.forEach((orderDetail) => {
+                    const orderViewNew = {} as OrderView;
+
+                    orderViewNew.orderId = orderOverview.orderId;
+                    orderViewNew.description = orderOverview.description;
+                    orderViewNew.orderDetailId = orderDetail.orderDetailId;
+                    orderViewNew.product = orderDetail.product;
+                    orderViewNew.quantity = orderDetail.quantity;
+                    orderViewNew.oderType = orderDetail.oderType;
+                    orderViewNew.startDate = orderDetail.startDate;
+                    orderViewNew.endDate = orderDetail.endDate;
+
+                    orderViewsNew.push(orderViewNew);
+                });
+            });
+
+            setOrderViews(orderViewsNew);
+            setLoadingDoctorOrders(false);
+        }
+    }, [orderOverviews]);
 
     return (
         <div className="reflex">
             <Box sx={{ height: 800 }}>
                 <ReflexContainer orientation="vertical">
                     <ReflexElement minSize={300}>
-                        <DoctorOrderTable orderOverviews={orderOverviews}
+                        <OrderTable orderViews={orderViews}
                             selectedOrderDetailId={selectedOrderDetailId}
                             selectOrderDetail={selectOrderDetail}
                             loading={loadingDoctorOrders}/>
                     </ReflexElement>
                     <ReflexSplitter />
                     <ReflexElement minSize={300}>
-                        <LoadingIndicator loading={false}/>
                         Something
                     </ReflexElement>
                 </ReflexContainer>
@@ -52,4 +77,4 @@ const DoctorOrderPage: FC<DoctorOrderPageProps> = () => {
     );
 };
 
-export default DoctorOrderPage;
+export default OrderPage;

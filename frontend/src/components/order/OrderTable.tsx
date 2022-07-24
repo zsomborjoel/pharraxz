@@ -5,102 +5,115 @@ import { DataGrid, GridColDef, GridSelectionModel, GridSortModel, useGridApiRef 
 import { OrderOverview } from '../../services/model/OrderOverview';
 import { OrderDetail } from '../../services/model/OrderDetail';
 import DataGridUtil from '../../utils/DataGridUtil';
+import { OrderView } from '../../services/model/OrderView';
 
-export type DoctorOrderTableProps = {
-    orderOverviews: OrderOverview[],
+export type OrderTableProps = {
+    orderViews: OrderView[],
     selectedOrderDetailId: string | undefined,
     selectOrderDetail: (orderDetailId: number) => void,
     loading: boolean
 }
 
-const OrderTable: FC<DoctorOrderTableProps> = (
+const OrderTable: FC<OrderTableProps> = (
     {
-        orderOverviews,
+        orderViews,
         selectedOrderDetailId,
         selectOrderDetail,
         loading,
     },
 ) => {
-    const rows = orderOverviews;
+    const rows = orderViews;
 
     const columns: GridColDef[] = [
         {
-            field: 'orderDetail.orderDetailId',
+            field: 'orderId',
+            headerName: 'Order id',
+            width: 130,
+            valueGetter: (e) => e.row.orderId,
+        },
+        {
+            field: 'description',
+            headerName: 'Description',
+            width: 130,
+            valueGetter: (e) => e.row.description,
+        },
+        {
+            field: 'orderDetailId',
             headerName: 'Sub order id',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.orderDetailId,
+            valueGetter: (e) => e.row.orderDetailId,
         },
         {
-            field: 'orderDetail.product.name',
+            field: 'product.name',
             headerName: 'Medicine name',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.name,
+            valueGetter: (e) => e.row.product.name,
         },
         {
-            field: 'orderDetail.product.registerNumber',
+            field: 'product.atc',
+            headerName: 'Atc',
+            width: 130,
+            valueGetter: (e) => e.row.product.atc,
+        },
+        {
+            field: 'product.registerNumber',
             headerName: 'Register number',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.registerNumber,
+            valueGetter: (e) => e.row.product.registerNumber,
         },
         {
-            field: 'orderDetail.product.packaging',
+            field: 'product.packaging',
             headerName: 'Packaging',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.packaging,
+            valueGetter: (e) => e.row.product.packaging,
         },
         {
-            field: 'orderDetail.product.description',
-            headerName: 'Medicie description',
-            width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.description,
-        },
-        {
-            field: 'orderDetail.product.inn',
+            field: 'product.inn',
             headerName: 'Inn',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.inn,
+            valueGetter: (e) => e.row.product.inn,
         },
         {
-            field: 'orderDetail.product.releasable',
+            field: 'product.releasable',
             headerName: 'Releasable',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.product.releasable,
+            valueGetter: (e) => e.row.product.releasable,
         },
         {
-            field: 'orderDetail.quantity',
+            field: 'quantity',
             headerName: 'Quantity',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.quantity,
+            valueGetter: (e) => e.row.quantity,
         },
         {
-            field: 'orderDetail.oderType',
+            field: 'oderType',
             headerName: 'Oder type',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.oderType,
+            valueGetter: (e) => e.row.oderType,
         },
         {
-            field: 'orderDetail.startDate',
+            field: 'startDate',
             headerName: 'Order start date',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.startDate,
+            valueGetter: (e) => e.row.startDate,
         },
         {
-            field: 'orderDetail.endDate',
+            field: 'endDate',
             headerName: 'Order end date',
             width: 130,
-            valueGetter: (e) => e.row.orderDetail.endDate,
+            valueGetter: (e) => e.row.endDate,
         },
     ];
 
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
     const [sortModel, setSortModel] = useState<GridSortModel>([
         {
-            field: 'orderDetail.orderDetailId',
+            field: 'orderDetailId',
             sort: 'desc',
         },
     ]);
 
-    DataGridUtil.selectFirst(selectedOrderDetailId, rows[rows.length - 1], selectionModel, setSelectionModel, selectOrderDetail);
+    // DataGridUtil.selectFirst(selectedOrderDetailId, rows[rows.length - 1], selectionModel, setSelectionModel, selectOrderDetail);
 
     useEffect(() => {
         setSelectionModel([]);
@@ -109,7 +122,7 @@ const OrderTable: FC<DoctorOrderTableProps> = (
 
     return (
         <div style={{ height: 800, width: '100%' }}>
-            <DataGrid getRowId={(row) => row.orderDetail.orderDetailId}
+            <DataGrid getRowId={(row) => row.orderDetailId}
                 rows={rows}
                 columns={columns}
                 pageSize={10}

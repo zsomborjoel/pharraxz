@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import AuthHeader from '../utils/AuthHeader';
-import { DoctorOrderOverview } from './model/OrderOverview';
+import { OrderOverview } from './model/OrderOverview';
 
 const ENTITY_URL = '/orders';
 
-const getAllOrderOverview = (): Promise<DoctorOrderOverview[]> => {
+const getAllOrderOverview = (): Promise<AxiosResponse<OrderOverview[]>> => {
     return axios.get(`${process.env.REACT_APP_SERVER_URL + ENTITY_URL}/doctor`, { headers: AuthHeader() });
 };
 

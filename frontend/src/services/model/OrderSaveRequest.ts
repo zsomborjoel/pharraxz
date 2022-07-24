@@ -1,8 +1,8 @@
 import { OrderDetail } from './OrderDetail';
 
 export interface OrderSaveRequest {
-    orderId: number;
-    userId: number;
-    description: string;
+    orderId: number | null;
+    userId: number | undefined;
+    description: string | null;
     orderDetail: OrderDetail;
 }

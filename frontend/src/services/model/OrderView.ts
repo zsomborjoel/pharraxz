@@ -1,6 +1,8 @@
 import { Product } from './Product';
 
-export interface OrderDetail {
+export interface OrderView {
+    orderId: number;
+    description: string;
     orderDetailId: number;
     product: Product;
     quantity: number | null;
