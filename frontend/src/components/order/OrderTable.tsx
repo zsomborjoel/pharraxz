@@ -1,15 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { Box } from '@mui/material';
-import { DataGrid, GridColDef, GridSelectionModel, GridSortModel, useGridApiRef } from '@mui/x-data-grid';
-import { OrderOverview } from '../../services/model/OrderOverview';
-import { OrderDetail } from '../../services/model/OrderDetail';
+import { DataGrid, GridColDef, GridSelectionModel, GridSortModel } from '@mui/x-data-grid';
 import DataGridUtil from '../../utils/DataGridUtil';
 import { OrderView } from '../../services/model/OrderView';
 
 export type OrderTableProps = {
     orderViews: OrderView[],
-    selectedOrderDetailId: string | undefined,
+    selectedOrderDetailId: number | undefined,
     selectOrderDetail: (orderDetailId: number) => void,
     loading: boolean
 }
@@ -113,7 +110,7 @@ const OrderTable: FC<OrderTableProps> = (
         },
     ]);
 
-    // DataGridUtil.selectFirst(selectedOrderDetailId, rows[rows.length - 1], selectionModel, setSelectionModel, selectOrderDetail);
+    DataGridUtil.selectFirst(selectedOrderDetailId, rows[rows.length - 1], selectionModel, setSelectionModel, selectOrderDetail);
 
     useEffect(() => {
         setSelectionModel([]);
@@ -125,14 +122,13 @@ const OrderTable: FC<OrderTableProps> = (
             <DataGrid getRowId={(row) => row.orderDetailId}
                 rows={rows}
                 columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                onRowClick={(params) => selectOrderDetail(params.row.id)}
+                pageSize={100}
+                rowsPerPageOptions={[100]}
+                onRowClick={(params) => selectOrderDetail(params.row.orderDetailId)}
                 sortModel={sortModel}
                 selectionModel={selectionModel}
                 onSelectionModelChange={(sel) => setSelectionModel(sel)}
                 loading={loading}
-                checkboxSelection
                 autoHeight
             />
         </div>

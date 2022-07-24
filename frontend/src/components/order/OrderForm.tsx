@@ -1,61 +1,56 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
     Box,
-    Button,
-    Collapse,
-    FormControlLabel,
     Grid,
-    InputAdornment,
-    Switch,
     TextField,
-    Tooltip,
-    Typography,
 } from '@mui/material';
 import { OrderDetail } from '../../services/model/OrderDetail';
 import { Product } from '../../services/model/Product';
 import OrderService from '../../services/OrderService';
 import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
+import { OrderView } from '../../services/model/OrderView';
 
-export type OrderDetailFormProps = {
-    orderDetail: OrderDetail,
+export type OrderFormProps = {
+    orderView: OrderView,
     updateOrderDetail: (orderDetail: OrderDetail) => void,
     onDeleteOrderDetail: () => void,
-    orderId: number
+    orderDetailIdProp: number
 }
 
-const OrderDetailForm: FC<OrderDetailFormProps> = (
+const OrderForm: FC<OrderFormProps> = (
     {
-        orderDetail,
+        orderView,
         updateOrderDetail,
         onDeleteOrderDetail,
-        orderId,
+        orderDetailIdProp,
     },
 ) => {
-    const [id, setId] = useState<number | null>(orderId);
+    const [orderId, setOrderId] = useState<number | null>(orderView?.orderId);
+    const [orderDetailId, setOrderDetailId] = useState<number>(orderDetailIdProp);
     const [description, setDescription] = useState<string | null>(null);
-    const [orderDetailId, setOrderDetailId] = useState<number>(orderDetail?.orderDetailId);
-    const [orderDetailDescription, setOrderDetailDescription] = useState<string | null>(null);
-    const [productName, setProductName] = useState<string | null>(orderDetail?.product.name || null);
-    const [oderType, setOrderType] = useState<string | null>(orderDetail?.oderType || null);
-    const [quantity, setQuantity] = useState<number | null>(orderDetail?.quantity || null);
-    const [startDate, setStartDate] = useState<string | null>(orderDetail?.startDate || null);
-    const [endDate, setEndDate] = useState<string | null>(orderDetail?.endDate || null);
+    const [productName, setProductName] = useState<string | null>(orderView?.product.name || null);
+    const [oderType, setOrderType] = useState<string | null>(orderView?.oderType || null);
+    const [quantity, setQuantity] = useState<number | null>(orderView?.quantity || null);
+    const [startDate, setStartDate] = useState<string | null>(orderView?.startDate || null);
+    const [endDate, setEndDate] = useState<string | null>(orderView?.endDate || null);
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const initializeForm = (): void => {
-        setId(orderDetail?.orderDetailId || null);
-        setProductName(orderDetail?.product.name || null);
-        setOrderType(orderDetail?.oderType || null);
-        setQuantity(orderDetail?.quantity || null);
-        setStartDate(orderDetail?.startDate || null);
-        setEndDate(orderDetail?.endDate || null);
+        setOrderId(orderView?.orderId || null);
+        setDescription(orderView?.description || null);
+        setProductName(orderView?.product.name || null);
+        setOrderType(orderView?.oderType || null);
+        setQuantity(orderView?.quantity || null);
+        setStartDate(orderView?.startDate || null);
+        setEndDate(orderView?.endDate || null);
         setIsSaveable(false);
     };
 
     const resetForm = (): void => {
-        setId(null);
+        setOrderId(null);
+        setDescription(null);
         setProductName(null);
         setOrderType(null);
         setQuantity(null);
@@ -69,14 +64,14 @@ const OrderDetailForm: FC<OrderDetailFormProps> = (
 
     useEffect(() => {
         initializeForm();
-        setId(orderDetail?.orderDetailId);
-    }, [orderDetailId]);
+        setOrderId(orderView?.orderDetailId);
+    }, [orderView]);
 
     useEffect(() => {
-        const changed = productName !== (orderDetail?.product.name || null)
-            || quantity !== (orderDetail?.quantity || null)
-            || startDate !== (orderDetail?.startDate || null)
-            || endDate !== (orderDetail?.endDate || null);
+        const changed = productName !== (orderView?.product.name || null)
+            || quantity !== (orderView?.quantity || null)
+            || startDate !== (orderView?.startDate || null)
+            || endDate !== (orderView?.endDate || null);
 
         const mandatoryExists = productName !== null
             && quantity !== null
@@ -124,11 +119,15 @@ const OrderDetailForm: FC<OrderDetailFormProps> = (
             <Grid container spacing={1} sx={{ mb: 2 }}>
                 <Grid item xs={3} display="flex">
                     <TextField label="Order Id" fullWidth margin="dense" size="small" maxRows={3} multiline required
-                        value={id} onChange={(e) => setId(parseInt(e.target.value, 10))}/>
+                        value={orderId} onChange={(e) => setOrderId(parseInt(e.target.value, 10))}/>
                 </Grid>
                 <Grid item xs={3} display="flex">
                     <TextField label="Order Description" fullWidth margin="dense" size="small" maxRows={3} multiline required
                         value={description} onChange={(e) => setDescription(e.target.value)}/>
+                </Grid>
+                <Grid item xs={3} display="flex">
+                    <TextField label="Order Detail Id" fullWidth margin="dense" size="small" maxRows={3} multiline required
+                        value={orderDetailId} onChange={(e) => setOrderDetailId(parseInt(e.target.value, 10))}/>
                 </Grid>
             </Grid>
             <Grid container spacing={1} sx={{ mb: 2 }}>
@@ -159,4 +158,4 @@ const OrderDetailForm: FC<OrderDetailFormProps> = (
     );
 };
 
-export default OrderDetailForm;
+export default OrderForm;

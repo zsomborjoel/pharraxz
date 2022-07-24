@@ -2,7 +2,7 @@ import { GridSelectionModel } from '@mui/x-data-grid';
 
 class DataGridUtil {
     static selectFirst = (
-        selectedId: string | undefined,
+        selectedId: any,
         firstId: any,
         selectionModel: GridSelectionModel,
         setSelectionModel: (m: GridSelectionModel) => void,
@@ -15,6 +15,7 @@ class DataGridUtil {
             }
         } else if (selectionModel.length === 0) {
             setSelectionModel([selectedId]);
+            selectEntity(selectedId);
         }
     };
 }
