@@ -15,9 +15,9 @@ public class OrderController {
     private final OrderOverviewMapper orderOverviewMapper;
 
     @GetMapping("/doctor")
-    public Flux<OrderOverviewDTO> getAllDoctorOrders() {
+    public Flux<OrderOverviewDTO> getAllOrders() {
         return orderService.getAll()
-                .flatMapIterable(orderOverviewMapper::toDTOList);
+                .map(orderOverviewMapper::toDTO);
     }
 
     @DeleteMapping("/detail/{id}")
