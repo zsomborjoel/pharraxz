@@ -5,20 +5,13 @@ import DataGridUtil from '../../utils/DataGridUtil';
 import { OrderView } from '../../services/model/OrderView';
 
 export type OrderTableProps = {
-    orderViews: OrderView[],
-    selectedOrderDetailId: number | undefined,
-    selectOrderDetail: (orderDetailId: number) => void,
-    loading: boolean
-}
+    orderViews: OrderView[];
+    selectedOrderDetailId: number | undefined;
+    selectOrderDetail: (orderDetailId: number) => void;
+    loading: boolean;
+};
 
-const OrderTable: FC<OrderTableProps> = (
-    {
-        orderViews,
-        selectedOrderDetailId,
-        selectOrderDetail,
-        loading,
-    },
-) => {
+const OrderTable: FC<OrderTableProps> = ({ orderViews, selectedOrderDetailId, selectOrderDetail, loading }) => {
     const rows = orderViews;
 
     const columns: GridColDef[] = [
@@ -119,7 +112,8 @@ const OrderTable: FC<OrderTableProps> = (
 
     return (
         <div style={{ height: 800, width: '100%' }}>
-            <DataGrid getRowId={(row) => row.orderDetailId}
+            <DataGrid
+                getRowId={(row) => row.orderDetailId}
                 rows={rows}
                 columns={columns}
                 pageSize={100}

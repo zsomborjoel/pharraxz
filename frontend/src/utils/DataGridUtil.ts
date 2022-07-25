@@ -6,7 +6,7 @@ class DataGridUtil {
         firstId: any,
         selectionModel: GridSelectionModel,
         setSelectionModel: (m: GridSelectionModel) => void,
-        selectEntity: (id: any) => void,
+        selectEntity: (id: any) => void
     ): void => {
         if (!selectedId) {
             if (selectionModel.length === 0) {

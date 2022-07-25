@@ -1,8 +1,9 @@
 import axios from 'axios';
 import TokenService from './TokenService';
+import { ENDPOINTS } from '../config/constants';
 
 const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}/api`,
+    baseURL: ENDPOINTS.BASE,
     headers: {
         'Content-Type': 'application/json',
     },

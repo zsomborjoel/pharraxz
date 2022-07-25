@@ -8,15 +8,13 @@ const isUserLoggedIn = (): boolean => {
 };
 
 const setupAxiosInterceptors = (token: string): any => {
-    axios.interceptors.request.use(
-        (config) => {
-            if (isUserLoggedIn() && config.headers) {
-                // eslint-disable-next-line no-param-reassign
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-            return config;
-        },
-    );
+    axios.interceptors.request.use((config) => {
+        if (isUserLoggedIn() && config.headers) {
+            // eslint-disable-next-line no-param-reassign
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    });
 };
 
 const login = (username: string, password: string): Promise<boolean> => {
@@ -25,7 +23,7 @@ const login = (username: string, password: string): Promise<boolean> => {
             username,
             password,
         })
-        .then((response: { data: User; }) => {
+        .then((response: { data: User }) => {
             localStorage.setItem(STORAGE_ITEM_USER, JSON.stringify(response.data));
             setupAxiosInterceptors(response.data.jwtToken);
             return true;

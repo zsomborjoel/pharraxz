@@ -6,13 +6,13 @@ import { OrderOverview } from '../../services/model/OrderOverview';
 import { OrderView } from '../../services/model/OrderView';
 
 export type OrderFormWapperProps = {
-    orderView: OrderView | undefined,
-    updateOrderDetail: (orderDetail: OrderDetail) => void,
-    onDeleteOrderDetail: () => void,
-    orderDetailId: number | undefined,
-}
+    orderView: OrderView | undefined;
+    updateOrderDetail: (orderDetail: OrderDetail) => void;
+    onDeleteOrderDetail: () => void;
+    orderDetailId: number | undefined;
+};
 
-type OrderFormWrapperState = {}
+type OrderFormWrapperState = {};
 
 class OrderFormWrapper extends React.Component<OrderFormWapperProps, OrderFormWrapperState> {
     shouldComponentUpdate(nextProps: Readonly<OrderFormWapperProps>, nextState: Readonly<{}>): boolean {
@@ -25,10 +25,12 @@ class OrderFormWrapper extends React.Component<OrderFormWapperProps, OrderFormWr
         if (props.orderView && props.orderDetailId) {
             return (
                 <Box sx={{ height: 1 }}>
-                    <OrderForm orderView={props.orderView}
+                    <OrderForm
+                        orderView={props.orderView}
                         updateOrderDetail={props.updateOrderDetail}
                         onDeleteOrderDetail={props.onDeleteOrderDetail}
-                        orderDetailIdProp={props.orderDetailId} />
+                        orderDetailIdProp={props.orderDetailId}
+                    />
                 </Box>
             );
         }

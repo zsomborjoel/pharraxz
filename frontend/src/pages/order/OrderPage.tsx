@@ -12,7 +12,7 @@ import OrderTable from '../../components/order/OrderTable';
 import { OrderView } from '../../services/model/OrderView';
 import OrderFormWrapper from '../../components/order/OrderFormWrapper';
 
-export type OrderPageProps = {}
+export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = () => {
     const [loadingDoctorOrders, setLoadingDoctorOrders] = useState<boolean>(false);
@@ -21,19 +21,16 @@ const OrderPage: FC<OrderPageProps> = () => {
     const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<number>();
     const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
     const [orderViews, setOrderViews] = useState<OrderView[]>([]);
-    const [orderViewsMap, setOrderViewsMap] = useState(new Map());
 
     const selectOrderDetail = (id: number): void => {
-        setSelectedOrderView(orderViewsMap.get(id));
+        setSelectedOrderView(orderViews.find((o) => o.orderDetailId === id));
     };
 
-    const updateOrderDetail = (orderDetail: OrderDetail): void => {
-    };
+    const updateOrderDetail = (orderDetail: OrderDetail): void => {};
 
     const refreshPage = (): void => {
         if (orderOverviews.length > 0) {
             const orderViewsNew = [] as OrderView[];
-            const orderViewsNewMap = new Map();
             orderOverviews.forEach((orderOverview) => {
                 orderOverview.orderDetails.forEach((orderDetail) => {
                     const orderViewNew = {} as OrderView;
@@ -48,7 +45,6 @@ const OrderPage: FC<OrderPageProps> = () => {
                     orderViewNew.endDate = orderDetail.endDate;
 
                     orderViewsNew.push(orderViewNew);
-                    orderViewsNewMap.set(orderDetail.orderDetailId, orderViewNew);
 
                     setSelectedOrderDetailId(orderDetail.orderDetailId);
                 });
@@ -56,7 +52,6 @@ const OrderPage: FC<OrderPageProps> = () => {
             });
 
             setOrderViews(orderViewsNew);
-            setOrderViewsMap(orderViewsNewMap);
             setLoadingDoctorOrders(false);
         }
     };
@@ -81,17 +76,21 @@ const OrderPage: FC<OrderPageProps> = () => {
             <Box sx={{ height: 800 }}>
                 <ReflexContainer orientation="vertical">
                     <ReflexElement minSize={300}>
-                        <OrderTable orderViews={orderViews}
+                        <OrderTable
+                            orderViews={orderViews}
                             selectedOrderDetailId={selectedOrderDetailId}
                             selectOrderDetail={selectOrderDetail}
-                            loading={loadingDoctorOrders}/>
+                            loading={loadingDoctorOrders}
+                        />
                     </ReflexElement>
                     <ReflexSplitter />
                     <ReflexElement minSize={300}>
-                        <OrderFormWrapper orderView={selectedOrderView}
+                        <OrderFormWrapper
+                            orderView={selectedOrderView}
                             updateOrderDetail={updateOrderDetail}
                             onDeleteOrderDetail={onDeleteOrderDetail}
-                            orderDetailId={selectedOrderDetailId}/>
+                            orderDetailId={selectedOrderDetailId}
+                        />
                     </ReflexElement>
                 </ReflexContainer>
             </Box>
