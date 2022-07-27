@@ -1,7 +1,7 @@
 import { Product } from './Product';
 
 export interface OrderDetail {
-    orderDetailId: number;
+    orderDetailId: number | null;
     product: Product;
     quantity: number | null;
     oderType: string | null;

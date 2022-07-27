@@ -9,51 +9,53 @@ import { OrderView } from '../../services/model/OrderView';
 
 export type OrderFormProps = {
     orderView: OrderView;
-    updateOrderDetail: (orderDetail: OrderDetail) => void;
-    onDeleteOrderDetail: () => void;
+    updateOrderDetail: () => void;
     orderDetailIdProp: number;
 };
 
-const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, onDeleteOrderDetail, orderDetailIdProp }) => {
-    const [orderId, setOrderId] = useState<number | null>(orderView?.orderId);
-    const [orderDetailId, setOrderDetailId] = useState<number>(orderDetailIdProp);
-    const [description, setDescription] = useState<string | null>(orderView?.description || null);
-    const [productName, setProductName] = useState<string | null>(orderView?.product.name || null);
-    const [oderType, setOrderType] = useState<string | null>(orderView?.oderType || null);
+const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDetailIdProp }) => {
+    const [orderId, setOrderId] = useState<number | null>(orderView?.orderId || null);
+    const [orderDetailId, setOrderDetailId] = useState<number | null>(orderDetailIdProp);
+    const [description, setDescription] = useState<string | null>(orderView?.description || '');
+    const [productName, setProductName] = useState<string | null>(orderView?.product.name || '');
+    const [oderType, setOrderType] = useState<string | null>(orderView?.oderType || '');
     const [quantity, setQuantity] = useState<number | null>(orderView?.quantity || null);
-    const [startDate, setStartDate] = useState<string | null>(orderView?.startDate || null);
-    const [endDate, setEndDate] = useState<string | null>(orderView?.endDate || null);
+    const [startDate, setStartDate] = useState<string | null>(orderView?.startDate || '');
+    const [endDate, setEndDate] = useState<string | null>(orderView?.endDate || '');
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const initializeForm = (): void => {
         setOrderId(orderView?.orderId || null);
-        setDescription(orderView?.description || null);
-        setProductName(orderView?.product.name || null);
-        setOrderType(orderView?.oderType || null);
-        setQuantity(orderView?.quantity || null);
-        setStartDate(orderView?.startDate || null);
-        setEndDate(orderView?.endDate || null);
+        setDescription(orderView?.description || '');
+        setOrderDetailId(orderView?.orderDetailId || null);
+        setProductName(orderView?.product.name || '');
+        setOrderType(orderView?.oderType || '');
+        setQuantity(orderView?.quantity || 0);
+        setStartDate(orderView?.startDate || '');
+        setEndDate(orderView?.endDate || '');
         setIsSaveable(false);
     };
 
     const resetForm = (): void => {
-        setOrderId(null);
-        setDescription(null);
-        setProductName(null);
-        setOrderType(null);
-        setQuantity(null);
-        setStartDate(null);
-        setEndDate(null);
+        setOrderId(0);
+        setDescription('');
+        setOrderDetailId(null);
+        setProductName('');
+        setOrderType('');
+        setQuantity(0);
+        setStartDate('');
+        setEndDate('');
     };
 
     const deleteOrderDetail = (): void => {
-        OrderService.deleteOrderDetail(orderDetailId).then(() => onDeleteOrderDetail());
+        if (orderDetailId) {
+            OrderService.deleteOrderDetail(orderDetailId).then(() => updateOrderDetail());
+        }
     };
 
     useEffect(() => {
         initializeForm();
-        setOrderId(orderView?.orderDetailId);
     }, [orderView]);
 
     useEffect(() => {
@@ -102,19 +104,21 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, onDeleteO
     };
 
     const saveOrder = (): void => {
-        OrderService.saveOrder(getOrderSaveRequest()).catch((error) => {
-            switch (error.response.status) {
-            case 400: {
-                setErrorMessage('Order already exists!');
-                setIsSaveable(false);
-                break;
-            }
-            default: {
-                setErrorMessage('Unexpected error!');
-                setIsSaveable(false);
-            }
-            }
-        });
+        OrderService.saveOrder(getOrderSaveRequest())
+            .then((response) => updateOrderDetail())
+            .catch((error) => {
+                switch (error.response.status) {
+                case 400: {
+                    setErrorMessage('Order already exists!');
+                    setIsSaveable(false);
+                    break;
+                }
+                default: {
+                    setErrorMessage('Unexpected error!');
+                    setIsSaveable(false);
+                }
+                }
+            });
     };
 
     return (
@@ -122,18 +126,17 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, onDeleteO
             <Grid container spacing={1} sx={{ mb: 2 }}>
                 <Grid item xs={4} display="flex">
                     <TextField
+                        type="number"
                         label="Order Id"
                         fullWidth
                         margin="dense"
                         size="small"
-                        maxRows={3}
-                        multiline
                         required
                         value={orderId}
                         onChange={(e) => setOrderId(parseInt(e.target.value, 10))}
                     />
                 </Grid>
-                <Grid item xs={5} display="flex">
+                <Grid item xs={8} display="flex">
                     <TextField
                         label="Order Description"
                         fullWidth
@@ -144,19 +147,6 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, onDeleteO
                         required
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={3} display="flex">
-                    <TextField
-                        label="Order Detail Id"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        required
-                        value={orderDetailId}
-                        onChange={(e) => setOrderDetailId(parseInt(e.target.value, 10))}
                     />
                 </Grid>
             </Grid>
@@ -188,12 +178,11 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, onDeleteO
                 </Grid>
                 <Grid item xs={3} display="flex">
                     <TextField
+                        type="number"
                         label="Quantity"
                         fullWidth
                         margin="dense"
                         size="small"
-                        maxRows={3}
-                        multiline
                         required
                         value={quantity}
                         onChange={(e) => setQuantity(parseInt(e.target.value, 10))}

@@ -3,7 +3,7 @@ import { Product } from './Product';
 export interface OrderView {
     orderId: number;
     description: string;
-    orderDetailId: number;
+    orderDetailId: number | null;
     product: Product;
     quantity: number | null;
     oderType: string | null;

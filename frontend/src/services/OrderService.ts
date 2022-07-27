@@ -5,15 +5,16 @@ import { OrderSaveRequest } from './model/OrderSaveRequest';
 import { ENDPOINTS } from '../config/constants';
 
 const getAllOrderOverview = (): Promise<AxiosResponse<OrderOverview[]>> => {
-    return axios.get(`${ENDPOINTS.ORDER}/doctor`, { headers: AuthHeader() });
+    return axios.get(ENDPOINTS.ORDER, { headers: AuthHeader() });
 };
 
 const deleteOrderDetail = (id: number): Promise<void> => {
-    return axios.delete(`${ENDPOINTS.ORDER}/doctor/${id}`, { headers: AuthHeader() });
+    return axios.delete(`${ENDPOINTS.ORDER}/detail/${id}`, { headers: AuthHeader() });
 };
 
 const saveOrder = (request: OrderSaveRequest): Promise<void> => {
-    return axios.post(`${ENDPOINTS.ORDER}`, request, { headers: AuthHeader() });
+    console.log(request);
+    return axios.post(ENDPOINTS.ORDER, request, { headers: AuthHeader() });
 };
 
 const OrderService = {

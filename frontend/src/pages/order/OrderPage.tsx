@@ -15,18 +15,16 @@ import OrderFormWrapper from '../../components/order/OrderFormWrapper';
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = () => {
-    const [loadingDoctorOrders, setLoadingDoctorOrders] = useState<boolean>(false);
+    const [loadingOrders, setLoadingOrders] = useState<boolean>(false);
     const [selectedOrderId, setSelectedOrderId] = useState<number>();
     const [selectedOrderView, setSelectedOrderView] = useState<OrderView>();
-    const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<number>();
+    const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<number | null>();
     const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
     const [orderViews, setOrderViews] = useState<OrderView[]>([]);
 
     const selectOrderDetail = (id: number): void => {
         setSelectedOrderView(orderViews.find((o) => o.orderDetailId === id));
     };
-
-    const updateOrderDetail = (orderDetail: OrderDetail): void => {};
 
     const refreshPage = (): void => {
         if (orderOverviews.length > 0) {
@@ -52,19 +50,24 @@ const OrderPage: FC<OrderPageProps> = () => {
             });
 
             setOrderViews(orderViewsNew);
-            setLoadingDoctorOrders(false);
+            setLoadingOrders(false);
         }
     };
 
-    const onDeleteOrderDetail = (): void => {
-        refreshPage();
+    const getOrders = (): void => {
+        setLoadingOrders(true);
+        OrderService.getAllOrderOverview().then((result) => {
+            setOrderOverviews(result.data);
+            setLoadingOrders(false);
+        });
+    };
+
+    const updateOrderDetail = (): void => {
+        getOrders();
     };
 
     useEffect(() => {
-        setLoadingDoctorOrders(true);
-        OrderService.getAllOrderOverview().then((result) => {
-            setOrderOverviews(result.data);
-        });
+        getOrders();
     }, []);
 
     useEffect(() => {
@@ -80,15 +83,14 @@ const OrderPage: FC<OrderPageProps> = () => {
                             orderViews={orderViews}
                             selectedOrderDetailId={selectedOrderDetailId}
                             selectOrderDetail={selectOrderDetail}
-                            loading={loadingDoctorOrders}
+                            loading={loadingOrders}
                         />
                     </ReflexElement>
                     <ReflexSplitter />
-                    <ReflexElement minSize={300}>
+                    <ReflexElement minSize={500}>
                         <OrderFormWrapper
                             orderView={selectedOrderView}
                             updateOrderDetail={updateOrderDetail}
-                            onDeleteOrderDetail={onDeleteOrderDetail}
                             orderDetailId={selectedOrderDetailId}
                         />
                     </ReflexElement>

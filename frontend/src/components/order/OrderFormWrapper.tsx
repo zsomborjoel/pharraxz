@@ -7,9 +7,8 @@ import { OrderView } from '../../services/model/OrderView';
 
 export type OrderFormWapperProps = {
     orderView: OrderView | undefined;
-    updateOrderDetail: (orderDetail: OrderDetail) => void;
-    onDeleteOrderDetail: () => void;
-    orderDetailId: number | undefined;
+    updateOrderDetail: () => void;
+    orderDetailId: number | null | undefined;
 };
 
 type OrderFormWrapperState = {};
@@ -28,7 +27,6 @@ class OrderFormWrapper extends React.Component<OrderFormWapperProps, OrderFormWr
                     <OrderForm
                         orderView={props.orderView}
                         updateOrderDetail={props.updateOrderDetail}
-                        onDeleteOrderDetail={props.onDeleteOrderDetail}
                         orderDetailIdProp={props.orderDetailId}
                     />
                 </Box>

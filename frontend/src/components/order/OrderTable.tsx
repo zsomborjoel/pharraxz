@@ -6,7 +6,7 @@ import { OrderView } from '../../services/model/OrderView';
 
 export type OrderTableProps = {
     orderViews: OrderView[];
-    selectedOrderDetailId: number | undefined;
+    selectedOrderDetailId: number | null | undefined;
     selectOrderDetail: (orderDetailId: number) => void;
     loading: boolean;
 };
