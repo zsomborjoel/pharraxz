@@ -31,7 +31,7 @@ public class OrderService {
         return orderFlux.flatMap(this::loadRelations);
     }
 
-    public Mono<Void> saveOrderRequest(final OrderRequest orderRequest) {
+    public Mono<OrderDetail> saveOrderRequest(final OrderRequest orderRequest) {
         return Mono.just(orderRequest)
                 .flatMap(this::findOrCreate)
                 .map(order -> {
@@ -52,23 +52,23 @@ public class OrderService {
                         .endDate(orderRequest.getOrderDetail().getEndDate())
                         .build())
                 .flatMap(this::save)
-                .then(Mono.empty());
+                .single();
     }
 
     public Mono<Order> findOrCreate(final OrderRequest request) {
-        final Mono<Order> orderMono = Mono.just(
-                Order.builder()
+        final Order order = Order.builder()
                 .orderId(request.getOrderId())
                 .userId(request.getUserId())
                 .createdDate(LocalDateTime.now())
-                .build());
+                .build();
 
         if (request.getOrderId() == null) {
-            return orderMono;
+            return Mono.just(order);
         }
 
+        order.setOrderId(null); // if order not present
         return orderRepository.findById(request.getOrderId())
-                .switchIfEmpty(orderMono);
+                .switchIfEmpty(Mono.just(order));
     }
 
     public Mono<Order> save(final Order order) {

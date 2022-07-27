@@ -13,8 +13,9 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderOverviewMapper orderOverviewMapper;
+    private final OrderDetailMapper orderDetailMapper;
 
-    @GetMapping("/doctor")
+    @GetMapping
     public Flux<OrderOverviewDTO> getAllOrders() {
         return orderService.getAll()
                 .map(orderOverviewMapper::toDTO);
@@ -26,8 +27,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public Mono<Void> saveOrder(@RequestBody OrderRequest request) {
-        return orderService.saveOrderRequest(request);
+    public Mono<OrderDetailDTO> saveOrder(@RequestBody OrderRequest request) {
+        return orderService.saveOrderRequest(request)
+                .map(orderDetailMapper::toDTO);
     }
 
 }

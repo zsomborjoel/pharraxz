@@ -28,6 +28,12 @@ VALUES('testproduct', NULL, NULL, NULL, NULL, NULL, NULL, true);
 INSERT INTO public.orders
 (order_id, user_id, description, created_date, last_modified_date)
 VALUES(1, 1, 'tester', '2022-07-10 13:53:27.292', '2022-07-10 13:53:27.292');
+INSERT INTO public.orders
+(order_id, user_id, description, created_date, last_modified_date)
+VALUES(2, 1, 'tester', '2022-07-10 13:53:27.292', '2022-07-10 13:53:27.292');
+
+-- order details
+
 
 -- order details
 INSERT INTO public.order_details
@@ -36,3 +42,9 @@ VALUES(1, 1, 'testproduct', 5, '', '2022-06-18', '2022-06-18');
 INSERT INTO public.order_details
 (order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
 VALUES(2, 1, 'testproduct', 2, 'de', '2022-06-18', '2022-06-18');
+INSERT INTO public.order_details
+(order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
+VALUES(3, 2, 'testproduct', 8, '', '2022-06-18', '2022-06-18');
+INSERT INTO public.order_details
+(order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
+VALUES(4, 2, 'testproduct', 4, 'de2', '2022-06-18', '2022-06-18');
