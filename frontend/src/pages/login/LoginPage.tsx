@@ -10,7 +10,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
-import { deepOrange } from '@mui/material/colors';
 import AuthService from '../../services/AuthService';
 
 function Copyright(props: any): any {
@@ -59,7 +58,8 @@ const LoginPage: FC<LoginPageProps> = ({
                     Sign in
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <TextField margin="normal"
+                    <TextField
+                        margin="normal"
                         required
                         fullWidth
                         id="email"
@@ -68,7 +68,8 @@ const LoginPage: FC<LoginPageProps> = ({
                         autoComplete="email"
                         autoFocus
                     />
-                    <TextField margin="normal"
+                    <TextField
+                        margin="normal"
                         required
                         fullWidth
                         name="password"
@@ -77,10 +78,12 @@ const LoginPage: FC<LoginPageProps> = ({
                         id="password"
                         autoComplete="current-password"
                     />
-                    <FormControlLabel control={<Checkbox value="remember" color="primary" />}
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    <Button type="submit"
+                    <Button
+                        type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}

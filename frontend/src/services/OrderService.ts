@@ -4,18 +4,11 @@ import { OrderOverview } from './model/OrderOverview';
 import { OrderSaveRequest } from './model/OrderSaveRequest';
 import { ENDPOINTS } from '../config/constants';
 
-const getAllOrderOverview = (): Promise<AxiosResponse<OrderOverview[]>> => {
-    return axios.get(ENDPOINTS.ORDER, { headers: AuthHeader() });
-};
+const getAllOrderOverview = (): Promise<AxiosResponse<OrderOverview[]>> => axios.get(ENDPOINTS.ORDER, { headers: AuthHeader() });
 
-const deleteOrderDetail = (id: number): Promise<void> => {
-    return axios.delete(`${ENDPOINTS.ORDER}/detail/${id}`, { headers: AuthHeader() });
-};
+const deleteOrderDetail = (id: number): Promise<void> => axios.delete(`${ENDPOINTS.ORDER}/detail/${id}`, { headers: AuthHeader() });
 
-const saveOrder = (request: OrderSaveRequest): Promise<void> => {
-    console.log(request);
-    return axios.post(ENDPOINTS.ORDER, request, { headers: AuthHeader() });
-};
+const saveOrder = (request: OrderSaveRequest): Promise<void> => axios.post(ENDPOINTS.ORDER, request, { headers: AuthHeader() });
 
 const OrderService = {
     getAllOrderOverview,

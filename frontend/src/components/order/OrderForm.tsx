@@ -14,11 +14,11 @@ export type OrderFormProps = {
 };
 
 const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) => {
-    const [orderId, setOrderId] = useState<number | null>(selectedElement?.id || null);
+    const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
     const [productName, setProductName] = useState<string | null>(selectedElement?.product.name || '');
-    const [oderType, setOrderType] = useState<string | null>(selectedElement?.oderType || '');
+    const [orderType, setOrderType] = useState<string | null>(selectedElement?.orderType || '');
     const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
     const [startDate, setStartDate] = useState<string | null>(selectedElement?.startDate || '');
     const [endDate, setEndDate] = useState<string | null>(selectedElement?.endDate || '');
@@ -26,11 +26,11 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const initializeForm = (): void => {
-        setOrderId(selectedElement?.id || null);
+        setOrderId(selectedElement?.orderId || null);
         setDescription(selectedElement?.description || '');
         setOrderDetailId(selectedElement?.id || null);
         setProductName(selectedElement?.product.name || '');
-        setOrderType(selectedElement?.oderType || '');
+        setOrderType(selectedElement?.orderType || '');
         setQuantity(selectedElement?.quantity || 0);
         setStartDate(selectedElement?.startDate || '');
         setEndDate(selectedElement?.endDate || '');
@@ -48,58 +48,53 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setEndDate('');
     };
 
+    const getProduct = (): Product => ({
+        name: productName,
+        atc: null,
+        registerNumber: null,
+        packaging: null,
+        description: null,
+        inn: null,
+        releasable: null,
+    });
+
+    const getOrderDetail = (): OrderDetail => ({
+        orderDetailId,
+        product: getProduct(),
+        quantity,
+        orderType,
+        startDate,
+        endDate,
+    });
+
+    const getOrderSaveRequest = (): OrderSaveRequest => ({
+        orderId,
+        userId: AuthService.getCurrentUser()?.userId,
+        description,
+        orderDetail: getOrderDetail(),
+    });
+
+    const getChangedElement = (): OrderView => ({
+        orderId,
+        description,
+        id: orderDetailId,
+        product: getProduct(),
+        quantity,
+        orderType,
+        startDate,
+        endDate,
+    });
+
     const deleteOrderDetail = (): void => {
         if (orderDetailId) {
-            OrderService.deleteOrderDetail(orderDetailId).then(() => onDelete(selectedElement));
+            OrderService.deleteOrderDetail(orderDetailId).finally(() => onDelete(selectedElement));
         }
     };
 
-    useEffect(() => {
-        initializeForm();
-    }, [selectedElement]);
-
-    useEffect(() => {
-        const changed =
-            productName !== (selectedElement?.product.name || null) ||
-            quantity !== (selectedElement?.quantity || null) ||
-            startDate !== (selectedElement?.startDate || null) ||
-            endDate !== (selectedElement?.endDate || null);
-
-        const mandatoryExists = productName !== null && quantity !== null && startDate !== null && endDate !== null;
-
-        setIsSaveable(changed && mandatoryExists);
-        setErrorMessage(null);
-    }, [productName, quantity, startDate, endDate]);
-
-    const getProduct = (): Product => ({
-            name: productName,
-            atc: null,
-            registerNumber: null,
-            packaging: null,
-            description: null,
-            inn: null,
-            releasable: null,
-        });
-
-    const getOrderDetail = (): OrderDetail => ({
-            orderDetailId,
-            product: getProduct(),
-            quantity,
-            oderType,
-            startDate,
-            endDate,
-        });
-
-    const getOrderSaveRequest = (): OrderSaveRequest => ({
-            orderId,
-            userId: AuthService.getCurrentUser()?.userId,
-            description,
-            orderDetail: getOrderDetail(),
-        });
-
     const saveOrder = (): void => {
         OrderService.saveOrder(getOrderSaveRequest())
-            .then(() => onSave(selectedElement))
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .then((_) => onSave(getChangedElement()))
             .catch((error) => {
                 switch (error.response.status) {
                 case 400: {
@@ -115,6 +110,26 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                 }
             });
     };
+
+    useEffect(() => {
+        initializeForm();
+    }, [selectedElement]);
+
+    useEffect(() => {
+        const changed =
+            orderId !== (selectedElement?.orderId || null) ||
+            description !== (selectedElement?.description || '') ||
+            productName !== (selectedElement?.product.name || '') ||
+            orderType !== (selectedElement?.orderType || '') ||
+            quantity !== (selectedElement?.quantity || null) ||
+            startDate !== (selectedElement?.startDate || '') ||
+            endDate !== (selectedElement?.endDate || '');
+
+        const mandatoryExists = productName !== null && quantity !== null && startDate !== null && endDate !== null;
+
+        setIsSaveable(changed && mandatoryExists);
+        setErrorMessage(null);
+    }, [orderId, description, productName, orderType, quantity, startDate, endDate]);
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>

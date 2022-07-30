@@ -32,7 +32,7 @@ const OrderPage: FC<OrderPageProps> = () => {
                     orderViewNew.id = orderDetail.orderDetailId;
                     orderViewNew.product = orderDetail.product;
                     orderViewNew.quantity = orderDetail.quantity;
-                    orderViewNew.oderType = orderDetail.oderType;
+                    orderViewNew.orderType = orderDetail.orderType;
                     orderViewNew.startDate = orderDetail.startDate;
                     orderViewNew.endDate = orderDetail.endDate;
 

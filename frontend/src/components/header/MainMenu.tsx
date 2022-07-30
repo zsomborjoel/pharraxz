@@ -36,7 +36,7 @@ const menuItems = [
 const MainMenu: FC<MainMenuProps> = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const toggleDrawer = (open: boolean) => () => {
+    const toggleDrawer = () => () => {
         setIsMenuOpen(false);
     };
 
@@ -45,14 +45,16 @@ const MainMenu: FC<MainMenuProps> = () => {
             <IconButton onClick={() => setIsMenuOpen((isOpen) => !isOpen)}>
                 <MenuIcon/>
             </IconButton>
-            <SwipeableDrawer anchor="left"
+            <SwipeableDrawer
+                anchor="left"
                 open={isMenuOpen}
-                onClose={toggleDrawer(false)}
-                onOpen={toggleDrawer(true)}
+                onClose={toggleDrawer()}
+                onOpen={toggleDrawer()}
             >
-                <Box role="presentation"
-                    onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
+                <Box
+                    role="presentation"
+                    onClick={toggleDrawer()}
+                    onKeyDown={toggleDrawer()}
                     sx={{ width: 300 }}
                 >
                     <List>

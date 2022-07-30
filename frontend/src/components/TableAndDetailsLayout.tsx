@@ -38,12 +38,18 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
     };
 
     const updateElementInTableView = (element: any): void => {
+        console.log("update")
+        console.log(element)
         const updatedTableRows = tableRows.map((row) => row.id === element.id ? element : row);
+        console.log(updatedTableRows)
         setTableRows(updatedTableRows);
     };
 
     const deleteElementInTableView = (element: any): void => {
+        console.log("delete")
+        console.log(element)
         const filteredTableRows = tableRows.filter((row) => row.id !== element.id);
+        console.log(filteredTableRows)
         setTableRows(filteredTableRows);
     };
 
@@ -73,7 +79,7 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
                     <ReflexElement size={850} minSize={400} className="left-pane">
                         <DataGrid
                             getRowId={(row) => row.id}
-                            rows={rows}
+                            rows={tableRows}
                             columns={columns}
                             pageSize={100}
                             rowsPerPageOptions={[100]}

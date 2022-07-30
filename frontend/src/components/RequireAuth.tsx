@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 
@@ -10,6 +10,7 @@ const RequireAuth: FC<RequireAuthProps> = ({ children }: RequireAuthProps) => {
     if (!AuthService.isUserLoggedIn()) {
         return <Navigate to="/login"/>;
     }
+
     return children;
 };
 
