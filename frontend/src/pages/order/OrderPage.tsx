@@ -1,30 +1,24 @@
 import React, { FC, useState, useEffect } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
-import { ReflexContainer, ReflexElement, ReflexSplitter } from 'react-reflex';
-import { Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import { GridColDef, GridSortModel } from '@mui/x-data-grid';
 import { OrderOverview } from '../../services/model/OrderOverview';
 import OrderService from '../../services/OrderService';
-import { OrderDetail } from '../../services/model/OrderDetail';
-import OrderTable from '../../components/order/OrderTable';
 import { OrderView } from '../../services/model/OrderView';
-import OrderFormWrapper from '../../components/order/OrderFormWrapper';
+import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
+import OrderForm from '../../components/order/OrderForm';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = () => {
-    const [loadingOrders, setLoadingOrders] = useState<boolean>(false);
-    const [selectedOrderId, setSelectedOrderId] = useState<number>();
-    const [selectedOrderView, setSelectedOrderView] = useState<OrderView>();
-    const [selectedOrderDetailId, setSelectedOrderDetailId] = useState<number | null>();
     const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
     const [orderViews, setOrderViews] = useState<OrderView[]>([]);
-
-    const selectOrderDetail = (id: number): void => {
-        setSelectedOrderView(orderViews.find((o) => o.orderDetailId === id));
-    };
+    const [sortModel] = useState<GridSortModel>([
+        {
+            field: 'orderId',
+            sort: 'desc',
+        },
+    ]);
 
     const refreshPage = (): void => {
         if (orderOverviews.length > 0) {
@@ -35,7 +29,7 @@ const OrderPage: FC<OrderPageProps> = () => {
 
                     orderViewNew.orderId = orderOverview.orderId;
                     orderViewNew.description = orderOverview.description;
-                    orderViewNew.orderDetailId = orderDetail.orderDetailId;
+                    orderViewNew.id = orderDetail.orderDetailId;
                     orderViewNew.product = orderDetail.product;
                     orderViewNew.quantity = orderDetail.quantity;
                     orderViewNew.oderType = orderDetail.oderType;
@@ -43,27 +37,16 @@ const OrderPage: FC<OrderPageProps> = () => {
                     orderViewNew.endDate = orderDetail.endDate;
 
                     orderViewsNew.push(orderViewNew);
-
-                    setSelectedOrderDetailId(orderDetail.orderDetailId);
                 });
-                setSelectedOrderId(orderOverview.orderId);
             });
-
             setOrderViews(orderViewsNew);
-            setLoadingOrders(false);
         }
     };
 
     const getOrders = (): void => {
-        setLoadingOrders(true);
         OrderService.getAllOrderOverview().then((result) => {
             setOrderOverviews(result.data);
-            setLoadingOrders(false);
         });
-    };
-
-    const updateOrderDetail = (): void => {
-        getOrders();
     };
 
     useEffect(() => {
@@ -74,30 +57,96 @@ const OrderPage: FC<OrderPageProps> = () => {
         refreshPage();
     }, [orderOverviews]);
 
-    return (
-        <div className="reflex">
-            <Box sx={{ height: 800 }}>
-                <ReflexContainer orientation="vertical">
-                    <ReflexElement minSize={300}>
-                        <OrderTable
-                            orderViews={orderViews}
-                            selectedOrderDetailId={selectedOrderDetailId}
-                            selectOrderDetail={selectOrderDetail}
-                            loading={loadingOrders}
-                        />
-                    </ReflexElement>
-                    <ReflexSplitter />
-                    <ReflexElement minSize={500}>
-                        <OrderFormWrapper
-                            orderView={selectedOrderView}
-                            updateOrderDetail={updateOrderDetail}
-                            orderDetailId={selectedOrderDetailId}
-                        />
-                    </ReflexElement>
-                </ReflexContainer>
-            </Box>
-        </div>
-    );
+    const rows = orderViews;
+
+    const columns: GridColDef[] = [
+        {
+            field: 'orderId',
+            headerName: 'Order id',
+            width: 130,
+            valueGetter: (e: { row: { orderId: any; }; }) => e.row.orderId,
+        },
+        {
+            field: 'description',
+            headerName: 'Description',
+            width: 130,
+            valueGetter: (e: { row: { description: any; }; }) => e.row.description,
+        },
+        {
+            field: 'orderDetailId',
+            headerName: 'Sub order id',
+            width: 130,
+            valueGetter: (e: { row: { id: any; }; }) => e.row.id,
+        },
+        {
+            field: 'product.name',
+            headerName: 'Medicine name',
+            width: 130,
+            valueGetter: (e: { row: { product: { name: any; }; }; }) => e.row.product.name,
+        },
+        {
+            field: 'product.atc',
+            headerName: 'Atc',
+            width: 130,
+            valueGetter: (e: { row: { product: { atc: any; }; }; }) => e.row.product.atc,
+        },
+        {
+            field: 'product.registerNumber',
+            headerName: 'Register number',
+            width: 130,
+            valueGetter: (e: { row: { product: { registerNumber: any; }; }; }) => e.row.product.registerNumber,
+        },
+        {
+            field: 'product.packaging',
+            headerName: 'Packaging',
+            width: 130,
+            valueGetter: (e: { row: { product: { packaging: any; }; }; }) => e.row.product.packaging,
+        },
+        {
+            field: 'product.inn',
+            headerName: 'Inn',
+            width: 130,
+            valueGetter: (e: { row: { product: { inn: any; }; }; }) => e.row.product.inn,
+        },
+        {
+            field: 'product.releasable',
+            headerName: 'Releasable',
+            width: 130,
+            valueGetter: (e: { row: { product: { releasable: any; }; }; }) => e.row.product.releasable,
+        },
+        {
+            field: 'quantity',
+            headerName: 'Quantity',
+            width: 130,
+            valueGetter: (e: { row: { quantity: any; }; }) => e.row.quantity,
+        },
+        {
+            field: 'oderType',
+            headerName: 'Oder type',
+            width: 130,
+            valueGetter: (e: { row: { oderType: any; }; }) => e.row.oderType,
+        },
+        {
+            field: 'startDate',
+            headerName: 'Order start date',
+            width: 130,
+            valueGetter: (e: { row: { startDate: any; }; }) => e.row.startDate,
+        },
+        {
+            field: 'endDate',
+            headerName: 'Order end date',
+            width: 130,
+            valueGetter: (e: { row: { endDate: any; }; }) => e.row.endDate,
+        },
+    ];
+
+    return (<TableAndDetailsLayout
+        rows={rows}
+        columns={columns}
+        pageUrl='/order'
+        sortModelInitialState={sortModel}
+        detailedView={OrderForm}
+    />);
 };
 
 export default OrderPage;

@@ -8,32 +8,32 @@ import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
 
 export type OrderFormProps = {
-    orderView: OrderView;
-    updateOrderDetail: () => void;
-    orderDetailIdProp: number;
+    selectedElement: OrderView;
+    onSave: (element: any) => void;
+    onDelete: (element: any) => void;
 };
 
-const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDetailIdProp }) => {
-    const [orderId, setOrderId] = useState<number | null>(orderView?.orderId || null);
-    const [orderDetailId, setOrderDetailId] = useState<number | null>(orderDetailIdProp);
-    const [description, setDescription] = useState<string | null>(orderView?.description || '');
-    const [productName, setProductName] = useState<string | null>(orderView?.product.name || '');
-    const [oderType, setOrderType] = useState<string | null>(orderView?.oderType || '');
-    const [quantity, setQuantity] = useState<number | null>(orderView?.quantity || null);
-    const [startDate, setStartDate] = useState<string | null>(orderView?.startDate || '');
-    const [endDate, setEndDate] = useState<string | null>(orderView?.endDate || '');
+const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) => {
+    const [orderId, setOrderId] = useState<number | null>(selectedElement?.id || null);
+    const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
+    const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
+    const [productName, setProductName] = useState<string | null>(selectedElement?.product.name || '');
+    const [oderType, setOrderType] = useState<string | null>(selectedElement?.oderType || '');
+    const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
+    const [startDate, setStartDate] = useState<string | null>(selectedElement?.startDate || '');
+    const [endDate, setEndDate] = useState<string | null>(selectedElement?.endDate || '');
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const initializeForm = (): void => {
-        setOrderId(orderView?.orderId || null);
-        setDescription(orderView?.description || '');
-        setOrderDetailId(orderView?.orderDetailId || null);
-        setProductName(orderView?.product.name || '');
-        setOrderType(orderView?.oderType || '');
-        setQuantity(orderView?.quantity || 0);
-        setStartDate(orderView?.startDate || '');
-        setEndDate(orderView?.endDate || '');
+        setOrderId(selectedElement?.id || null);
+        setDescription(selectedElement?.description || '');
+        setOrderDetailId(selectedElement?.id || null);
+        setProductName(selectedElement?.product.name || '');
+        setOrderType(selectedElement?.oderType || '');
+        setQuantity(selectedElement?.quantity || 0);
+        setStartDate(selectedElement?.startDate || '');
+        setEndDate(selectedElement?.endDate || '');
         setIsSaveable(false);
     };
 
@@ -50,20 +50,20 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDeta
 
     const deleteOrderDetail = (): void => {
         if (orderDetailId) {
-            OrderService.deleteOrderDetail(orderDetailId).then(() => updateOrderDetail());
+            OrderService.deleteOrderDetail(orderDetailId).then(() => onDelete(selectedElement));
         }
     };
 
     useEffect(() => {
         initializeForm();
-    }, [orderView]);
+    }, [selectedElement]);
 
     useEffect(() => {
         const changed =
-            productName !== (orderView?.product.name || null) ||
-            quantity !== (orderView?.quantity || null) ||
-            startDate !== (orderView?.startDate || null) ||
-            endDate !== (orderView?.endDate || null);
+            productName !== (selectedElement?.product.name || null) ||
+            quantity !== (selectedElement?.quantity || null) ||
+            startDate !== (selectedElement?.startDate || null) ||
+            endDate !== (selectedElement?.endDate || null);
 
         const mandatoryExists = productName !== null && quantity !== null && startDate !== null && endDate !== null;
 
@@ -71,8 +71,7 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDeta
         setErrorMessage(null);
     }, [productName, quantity, startDate, endDate]);
 
-    const getProduct = (): Product => {
-        return {
+    const getProduct = (): Product => ({
             name: productName,
             atc: null,
             registerNumber: null,
@@ -80,32 +79,27 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDeta
             description: null,
             inn: null,
             releasable: null,
-        };
-    };
+        });
 
-    const getOrderDetail = (): OrderDetail => {
-        return {
+    const getOrderDetail = (): OrderDetail => ({
             orderDetailId,
             product: getProduct(),
             quantity,
             oderType,
             startDate,
             endDate,
-        };
-    };
+        });
 
-    const getOrderSaveRequest = (): OrderSaveRequest => {
-        return {
+    const getOrderSaveRequest = (): OrderSaveRequest => ({
             orderId,
             userId: AuthService.getCurrentUser()?.userId,
             description,
             orderDetail: getOrderDetail(),
-        };
-    };
+        });
 
     const saveOrder = (): void => {
         OrderService.saveOrder(getOrderSaveRequest())
-            .then((response) => updateOrderDetail())
+            .then(() => onSave(selectedElement))
             .catch((error) => {
                 switch (error.response.status) {
                 case 400: {
@@ -113,6 +107,7 @@ const OrderForm: FC<OrderFormProps> = ({ orderView, updateOrderDetail, orderDeta
                     setIsSaveable(false);
                     break;
                 }
+
                 default: {
                     setErrorMessage('Unexpected error!');
                     setIsSaveable(false);
