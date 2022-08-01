@@ -29,7 +29,7 @@ public class OrderDetailDAOMapper implements Function<Row, OrderDetail> {
                 .orderDetailId(orderDetailId)
                 .product(product)
                 .quantity(quantity)
-                .oderType(orderType)
+                .orderType(orderType)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

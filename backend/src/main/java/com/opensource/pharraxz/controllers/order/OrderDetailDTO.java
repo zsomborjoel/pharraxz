@@ -12,7 +12,7 @@ public class OrderDetailDTO {
     private Long orderDetailId;
     private ProductDTO product;
     private Long quantity;
-    private String oderType;
+    private String orderType;
     private LocalDate startDate;
     private LocalDate endDate;
 }

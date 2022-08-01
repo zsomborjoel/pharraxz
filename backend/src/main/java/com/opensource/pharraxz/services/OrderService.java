@@ -1,5 +1,6 @@
 package com.opensource.pharraxz.services;
 
+import com.opensource.pharraxz.controllers.order.OrderDetailMapper;
 import com.opensource.pharraxz.controllers.order.OrderRequest;
 import com.opensource.pharraxz.entities.Order;
 import com.opensource.pharraxz.entities.OrderDetail;
@@ -21,6 +22,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final CustomOrderDetailRepositoryImpl doctorOrderDetailRepository;
+    private final OrderDetailMapper orderDetailMapper;
 
     public Mono<Void> deleteOrderDetailById(final Long id) {
         return orderDetailRepository.deleteById(id);
@@ -42,15 +44,12 @@ public class OrderService {
                 .flatMap(this::save)
                 .zipWith(productService.findById(orderRequest.getOrderDetail().getProduct().getName()))
                 // Overwrite on save or on update
-                .map(tuple -> OrderDetail.builder()
-                        .orderDetailId(orderRequest.getOrderDetail().getOrderDetailId())
-                        .orderId(tuple.getT1().getOrderId())
-                        .oderType(orderRequest.getOrderDetail().getOderType())
-                        .productId(tuple.getT2().getName())
-                        .quantity(orderRequest.getOrderDetail().getQuantity())
-                        .startDate(orderRequest.getOrderDetail().getStartDate())
-                        .endDate(orderRequest.getOrderDetail().getEndDate())
-                        .build())
+                .map(tuple -> {
+                    final OrderDetail orderDetail = orderDetailMapper.toEntity(orderRequest.getOrderDetail());
+                    orderDetail.setOrderId(tuple.getT1().getOrderId());
+                    orderDetail.setProductId(tuple.getT2().getName());
+                    return orderDetail;
+                })
                 .flatMap(this::save)
                 .single();
     }

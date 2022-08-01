@@ -9,4 +9,6 @@ public interface OrderDetailMapper {
 
     OrderDetailDTO toDTO(OrderDetail orderDetail);
 
+    OrderDetail toEntity(OrderDetailDTO orderDetailDTO);
+
 }

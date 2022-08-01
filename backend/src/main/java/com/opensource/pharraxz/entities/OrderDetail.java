@@ -37,7 +37,7 @@ public class OrderDetail  {
     private Long quantity;
 
     @Column("order_type")
-    private String oderType;
+    private String orderType;
 
     @Column("start_date")
     private LocalDate startDate;
