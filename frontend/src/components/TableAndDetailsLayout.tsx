@@ -38,18 +38,22 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
     };
 
     const updateElementInTableView = (element: any): void => {
-        console.log("update")
+        console.log('update')
         console.log(element)
         const updatedTableRows = tableRows.map((row) => row.id === element.id ? element : row);
+
+        console.log(updatedTableRows.indexOf(element) === -1)
+
+        if (updatedTableRows.indexOf(element) === -1) {
+            updatedTableRows.push(element);
+        }
+
         console.log(updatedTableRows)
         setTableRows(updatedTableRows);
     };
 
     const deleteElementInTableView = (element: any): void => {
-        console.log("delete")
-        console.log(element)
         const filteredTableRows = tableRows.filter((row) => row.id !== element.id);
-        console.log(filteredTableRows)
         setTableRows(filteredTableRows);
     };
 

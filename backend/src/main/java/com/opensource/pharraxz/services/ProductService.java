@@ -1,10 +1,12 @@
 package com.opensource.pharraxz.services;
 
+import com.opensource.pharraxz.entities.Order;
 import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.exceptions.EntityNotFoundException;
 import com.opensource.pharraxz.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -16,6 +18,10 @@ public class ProductService {
     public Mono<Product> findById(final String name) {
         return productRepository.findById(name)
                 .switchIfEmpty(Mono.error(new EntityNotFoundException()));
+    }
+
+    public Flux<Product> getAll() {
+        return productRepository.findAll();
     }
 
 }

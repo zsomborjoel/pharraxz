@@ -8,7 +8,7 @@ curl --header "Content-Type: application/json" -d "{\"username\":\"user\",\"pass
 curl --header "Content-Type: application/json" -d "{\"refreshToken\":\"9b573af9-d5d9-415b-8e0b-9f4242b5b3dd\"}" localhost:8080/auth/refresh
 
 # Get orders
-curl -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders/doctor
+curl -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders
 
 # Delete order detail
 curl -X "DELETE" -v \
@@ -37,17 +37,23 @@ curl -X "POST" -v \
 -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" localhost:8080/orders \
 -H "Content-Type: application/json"  \
 -d "{
-         \"orderId\": 1,
-         \"userId\": 1,
-         \"description\": \"testernewUPDATE\",
-         \"orderDetail\": {
-             \"orderDetailId\": 2,
-             \"product\": {
-                 \"name\": \"testproduct\"
-             },
-             \"quantity\": 999,
-             \"oderType\": \"deUPDATE\",
-             \"startDate\": \"2022-06-20\",
-             \"endDate\": \"2022-06-20\"
-         }
-     }"
+        \"orderId\": 140,
+        \"userId\": 1,
+        \"description\": \"23133\",
+        \"orderDetail\": {
+            \"orderDetailId\": 130,
+            \"product\": {
+                \"name\": \"testproduct\",
+                \"atc\": null,
+                \"registerNumber\": null,
+                \"packaging\": null,
+                \"description\": null,
+                \"inn\": null,
+                \"releasable\": null
+            },
+            \"quantity\": 3,
+            \"orderType\": \"a\",
+            \"startDate\": \"2021-01-01\",
+            \"endDate\": \"2021-01-02\"
+        }
+    }"

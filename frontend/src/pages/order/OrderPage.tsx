@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
 import { GridColDef, GridSortModel } from '@mui/x-data-grid';
-import { OrderOverview } from '../../services/model/OrderOverview';
 import OrderService from '../../services/OrderService';
 import { OrderView } from '../../services/model/OrderView';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
@@ -11,7 +10,6 @@ import OrderForm from '../../components/order/OrderForm';
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = () => {
-    const [orderOverviews, setOrderOverviews] = useState<OrderOverview[]>([]);
     const [orderViews, setOrderViews] = useState<OrderView[]>([]);
     const [sortModel] = useState<GridSortModel>([
         {
@@ -20,42 +18,15 @@ const OrderPage: FC<OrderPageProps> = () => {
         },
     ]);
 
-    const refreshPage = (): void => {
-        if (orderOverviews.length > 0) {
-            const orderViewsNew = [] as OrderView[];
-            orderOverviews.forEach((orderOverview) => {
-                orderOverview.orderDetails.forEach((orderDetail) => {
-                    const orderViewNew = {} as OrderView;
-
-                    orderViewNew.orderId = orderOverview.orderId;
-                    orderViewNew.description = orderOverview.description;
-                    orderViewNew.id = orderDetail.orderDetailId;
-                    orderViewNew.product = orderDetail.product;
-                    orderViewNew.quantity = orderDetail.quantity;
-                    orderViewNew.orderType = orderDetail.orderType;
-                    orderViewNew.startDate = orderDetail.startDate;
-                    orderViewNew.endDate = orderDetail.endDate;
-
-                    orderViewsNew.push(orderViewNew);
-                });
-            });
-            setOrderViews(orderViewsNew);
-        }
-    };
-
     const getOrders = (): void => {
-        OrderService.getAllOrderOverview().then((result) => {
-            setOrderOverviews(result.data);
+        OrderService.getAllOrderView().then((result) => {
+            setOrderViews(result.data);
         });
     };
 
     useEffect(() => {
         getOrders();
     }, []);
-
-    useEffect(() => {
-        refreshPage();
-    }, [orderOverviews]);
 
     const rows = orderViews;
 
@@ -74,7 +45,7 @@ const OrderPage: FC<OrderPageProps> = () => {
         },
         {
             field: 'orderDetailId',
-            headerName: 'Sub order id',
+            headerName: 'Order detail id',
             width: 130,
             valueGetter: (e: { row: { id: any; }; }) => e.row.id,
         },

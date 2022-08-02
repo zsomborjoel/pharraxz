@@ -6,4 +6,5 @@ export const ENDPOINTS = {
     LOGIN: `${SERVER_URL}/auth/login`,
     ORDER: `${SERVER_URL}/orders`,
     USER: `${SERVER_URL}/users`,
+    PRODUCT: `${SERVER_URL}/products`,
 };

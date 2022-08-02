@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Grid, TextField, Button, Collapse, Typography } from '@mui/material';
+import { Box, Grid, TextField, Button, Collapse, Typography, Autocomplete } from '@mui/material';
 import { OrderDetail } from '../../services/model/OrderDetail';
 import { Product } from '../../services/model/Product';
 import OrderService from '../../services/OrderService';
 import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
+import ProductService from '../../services/ProductService';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -14,6 +15,7 @@ export type OrderFormProps = {
 };
 
 const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) => {
+    const [products, setProducts] = useState<(string | null)[]>([]);
     const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
@@ -74,17 +76,6 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         orderDetail: getOrderDetail(),
     });
 
-    const getChangedElement = (): OrderView => ({
-        orderId,
-        description,
-        id: orderDetailId,
-        product: getProduct(),
-        quantity,
-        orderType,
-        startDate,
-        endDate,
-    });
-
     const deleteOrderDetail = (): void => {
         if (orderDetailId) {
             OrderService.deleteOrderDetail(orderDetailId).finally(() => onDelete(selectedElement));
@@ -93,8 +84,9 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const saveOrder = (): void => {
         OrderService.saveOrder(getOrderSaveRequest())
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then((_) => onSave(getChangedElement()))
+            .then((result) => {
+                onSave(result.data);
+            })
             .catch((error) => {
                 switch (error.response.status) {
                 case 400: {
@@ -112,20 +104,31 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     };
 
     useEffect(() => {
+        ProductService.getAllProducts().then((result) => {
+            setProducts(result.data.map((p) => p.name));
+        });
+    }, []);
+
+    useEffect(() => {
         initializeForm();
     }, [selectedElement]);
 
     useEffect(() => {
         const changed =
-            orderId !== (selectedElement?.orderId || null) ||
-            description !== (selectedElement?.description || '') ||
-            productName !== (selectedElement?.product.name || '') ||
-            orderType !== (selectedElement?.orderType || '') ||
-            quantity !== (selectedElement?.quantity || null) ||
-            startDate !== (selectedElement?.startDate || '') ||
-            endDate !== (selectedElement?.endDate || '');
+            orderId !== (selectedElement?.orderId || null)
+            || description !== (selectedElement?.description || '')
+            || productName !== (selectedElement?.product.name || '')
+            || orderType !== (selectedElement?.orderType || '')
+            || quantity !== (selectedElement?.quantity || null)
+            || startDate !== (selectedElement?.startDate || '')
+            || endDate !== (selectedElement?.endDate || '');
 
-        const mandatoryExists = productName !== null && quantity !== null && startDate !== null && endDate !== null;
+        const mandatoryExists =
+            (productName !== null && productName !== '')
+            && (orderType !== null && orderType !== '')
+            && (quantity !== 0)
+            && (startDate !== null && startDate !== '')
+            && (endDate !== null && endDate !== '');
 
         setIsSaveable(changed && mandatoryExists);
         setErrorMessage(null);
@@ -154,7 +157,6 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                         size="small"
                         maxRows={3}
                         multiline
-                        required
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
@@ -162,16 +164,14 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             </Grid>
             <Grid container spacing={1} sx={{ mb: 2 }}>
                 <Grid item xs={4} display="flex">
-                    <TextField
-                        label="Product Name"
+                    <Autocomplete
+                        sx={{ pt: 1 }}
                         fullWidth
-                        margin="dense"
                         size="small"
-                        maxRows={3}
-                        multiline
-                        required
+                        options={products}
                         value={productName}
-                        onChange={(e) => setProductName(e.target.value)}
+                        onChange={(_e, v) => setProductName(v)}
+                        renderInput={(params) => <TextField {...params} label="Product Name" />}
                     />
                 </Grid>
                 <Grid item xs={5} display="flex">
@@ -182,6 +182,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                         size="small"
                         maxRows={3}
                         multiline
+                        required
                         value={setOrderType}
                         onChange={(e) => setOrderType(e.target.value)}
                     />

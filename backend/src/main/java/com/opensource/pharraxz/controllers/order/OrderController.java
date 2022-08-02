@@ -12,13 +12,13 @@ import reactor.core.publisher.Mono;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderOverviewMapper orderOverviewMapper;
+    private final OrderViewMapper orderViewMapper;
     private final OrderDetailMapper orderDetailMapper;
 
     @GetMapping
-    public Flux<OrderOverviewDTO> getAllOrders() {
+    public Flux<OrderViewDTO> getAllOrders() {
         return orderService.getAll()
-                .map(orderOverviewMapper::toDTO);
+                .flatMapIterable(orderViewMapper::toDTO);
     }
 
     @DeleteMapping("/detail/{id}")
@@ -27,9 +27,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public Mono<OrderDetailDTO> saveOrder(@RequestBody OrderRequest request) {
+    public Flux<OrderViewDTO> saveOrder(@RequestBody OrderRequest request) {
         return orderService.saveOrderRequest(request)
-                .map(orderDetailMapper::toDTO);
+                .flatMapIterable(orderViewMapper::toDTO);
     }
 
 }
