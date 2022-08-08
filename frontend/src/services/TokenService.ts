@@ -4,6 +4,7 @@ const STORAGE_ITEM_USER = 'user';
 
 const getLocalRefreshToken = (): string | null => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
+
     if (user === null) {
         return null;
     }
@@ -13,6 +14,7 @@ const getLocalRefreshToken = (): string | null => {
 
 const getLocalAccessToken = (): string | null => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
+
     if (user === null) {
         return null;
     }
@@ -22,6 +24,7 @@ const getLocalAccessToken = (): string | null => {
 
 const updateLocalAccessToken = (token: string): void => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
+
     if (user === null) {
         return;
     }
@@ -33,6 +36,7 @@ const updateLocalAccessToken = (token: string): void => {
 
 const getUser = (): User | null => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
+
     if (user === null) {
         return null;
     }
@@ -48,9 +52,7 @@ const removeUser = (): void => {
     localStorage.removeItem(STORAGE_ITEM_USER);
 };
 
-const isUserLoggedIn = (): boolean => {
-    return localStorage.getItem(STORAGE_ITEM_USER) !== null;
-};
+const isUserLoggedIn = (): boolean => localStorage.getItem(STORAGE_ITEM_USER) !== null;
 
 const TokenService = {
     getLocalRefreshToken,

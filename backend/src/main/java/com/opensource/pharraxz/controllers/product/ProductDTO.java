@@ -6,8 +6,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ProductDTO {
-
-    private Long productId;
     private String name;
     private String atc;
     private String registerNumber;
@@ -15,5 +13,4 @@ public class ProductDTO {
     private String description;
     private String inn;
     private Boolean releasable;
-
 }

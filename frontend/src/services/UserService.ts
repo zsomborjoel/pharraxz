@@ -1,9 +1,8 @@
 import axios from 'axios';
 import AuthHeader from '../utils/AuthHeader';
+import { ENDPOINTS } from '../config/constants';
 
-const getUserBoard = (): Promise<any> => {
-    return axios.get(`${process.env.REACT_APP_SERVER_URL}/users`, { headers: AuthHeader() });
-};
+const getUserBoard = (): Promise<any> => axios.get(ENDPOINTS.USER, { headers: AuthHeader() });
 
 const UserService = {
     getUserBoard,

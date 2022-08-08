@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 

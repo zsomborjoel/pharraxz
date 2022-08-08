@@ -1,8 +1,9 @@
 import axios from 'axios';
 import TokenService from './TokenService';
+import { ENDPOINTS } from '../config/constants';
 
 const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}/api`,
+    baseURL: ENDPOINTS.BASE,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -11,29 +12,29 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (config) => {
         const token = TokenService.getLocalAccessToken();
+
         if (token && config.headers) {
             // eslint-disable-next-line no-param-reassign
             config.headers.Authorization = `Bearer ${token}`; // for Spring Boot back-end
         }
+
         return config;
     },
-    (error) => {
-        return Promise.reject(error);
-    },
+    (error) => Promise.reject(error),
 );
 
 instance.interceptors.response.use(
-    (res) => {
-        return res;
-    },
-    async (err) => {
+    (res) => res,
+    async(err) => {
         const originalConfig = err.config;
+
         if (originalConfig.url !== '/auth/login' && err.response) {
             // Access Token was expired
             // eslint-disable-next-line no-underscore-dangle
             if (err.response.status === 401 && !originalConfig._retry) {
                 // eslint-disable-next-line no-underscore-dangle
                 originalConfig._retry = true;
+
                 try {
                     const rs = await instance.post('/auth/refreshtoken', {
                         refreshToken: TokenService.getLocalRefreshToken(),
@@ -46,6 +47,7 @@ instance.interceptors.response.use(
                 }
             }
         }
+
         return Promise.reject(err);
     },
 );

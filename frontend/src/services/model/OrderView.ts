@@ -1,7 +1,9 @@
 import { Product } from './Product';
 
-export interface OrderDetail {
-    orderDetailId: number | null;
+export interface OrderView {
+    orderId: number | null;
+    description: string | null;
+    id: number | null;
     product: Product;
     quantity: number | null;
     orderType: string | null;

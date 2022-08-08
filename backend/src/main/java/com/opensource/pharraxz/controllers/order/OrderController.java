@@ -7,22 +7,29 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping(value = "/orders")
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderOverviewMapper orderOverviewMapper;
+    private final OrderViewMapper orderViewMapper;
+    private final OrderDetailMapper orderDetailMapper;
 
-    @GetMapping("/doctor")
-    public Flux<OrderOverviewDTO> getAllDoctorOrders() {
+    @GetMapping
+    public Flux<OrderViewDTO> getAllOrders() {
         return orderService.getAll()
-                .flatMapIterable(orderOverviewMapper::toDTOList);
+                .flatMapIterable(orderViewMapper::toDTO);
     }
 
-    @DeleteMapping("/detail")
-    public Mono<Void> deleteOrderDetail(@RequestParam Long id) {
+    @DeleteMapping("/detail/{id}")
+    public Mono<Void> deleteOrderDetail(@PathVariable Long id) {
         return orderService.deleteOrderDetailById(id);
+    }
+
+    @PostMapping
+    public Flux<OrderViewDTO> saveOrder(@RequestBody OrderRequest request) {
+        return orderService.saveOrderRequest(request)
+                .flatMapIterable(orderViewMapper::toDTO);
     }
 
 }

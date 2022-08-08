@@ -27,6 +27,9 @@ public class OrderDetail  {
     @Column("order_id")
     private Long orderId;
 
+    @Column("product_id")
+    private String productId;
+
     @Transient
     private Product product;
 
@@ -34,7 +37,7 @@ public class OrderDetail  {
     private Long quantity;
 
     @Column("order_type")
-    private String oderType;
+    private String orderType;
 
     @Column("start_date")
     private LocalDate startDate;

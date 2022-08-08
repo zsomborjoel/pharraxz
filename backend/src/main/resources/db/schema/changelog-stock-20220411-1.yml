@@ -17,12 +17,12 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: pharma_product_id
-                  type: int
+                  name: product_id
+                  type: varchar(255)
                   constraints:
                     nullable: false
                     foreignKeyName: fk_stock_product_id
-                    references: products(product_id)
+                    references: products(name)
               - column:
                   name: ward_id
                   type: int
