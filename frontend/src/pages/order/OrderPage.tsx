@@ -5,7 +5,7 @@ import { GridColDef, GridSortModel } from '@mui/x-data-grid';
 import OrderService from '../../services/OrderService';
 import { OrderView } from '../../services/model/OrderView';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
-import OrderForm from '../../components/order/OrderForm';
+import OrderForm from './OrderForm';
 
 export type OrderPageProps = {};
 

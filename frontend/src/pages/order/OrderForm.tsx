@@ -7,6 +7,7 @@ import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
 import ProductService from '../../services/ProductService';
+import OrderTypeDropdown from '../../components/OrderTypeDropdown';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -175,16 +176,10 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                     />
                 </Grid>
                 <Grid item xs={5} display="flex">
-                    <TextField
+                    <OrderTypeDropdown
                         label="Order Type"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        required
-                        value={setOrderType}
-                        onChange={(e) => setOrderType(e.target.value)}
+                        value={orderType}
+                        setValue={setOrderType}
                     />
                 </Grid>
                 <Grid item xs={3} display="flex">

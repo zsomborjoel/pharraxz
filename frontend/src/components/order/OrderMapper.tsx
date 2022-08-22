@@ -5,9 +5,7 @@ const getOrderViews = (oos: OrderOverview[]): OrderView[] => {
     const orderViewsNew = [] as OrderView[];
 
     if (oos.length > 0) {
-        console.log(oos)
         oos.forEach((orderOverview) => {
-            console.log(oos)
             orderOverview.orderDetails.forEach((orderDetail) => {
                 const orderViewNew = {} as OrderView;
 
@@ -19,7 +17,6 @@ const getOrderViews = (oos: OrderOverview[]): OrderView[] => {
                 orderViewNew.orderType = orderDetail.orderType;
                 orderViewNew.startDate = orderDetail.startDate;
                 orderViewNew.endDate = orderDetail.endDate;
-                console.log(orderViewNew)
                 orderViewsNew.push(orderViewNew);
             });
         });
