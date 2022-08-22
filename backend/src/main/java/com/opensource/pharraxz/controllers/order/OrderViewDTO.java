@@ -2,6 +2,7 @@ package com.opensource.pharraxz.controllers.order;
 
 
 import com.opensource.pharraxz.controllers.product.ProductDTO;
+import com.opensource.pharraxz.enums.OrderType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,7 +19,7 @@ public class OrderViewDTO {
     private Long id;
     private ProductDTO product;
     private Long quantity;
-    private String orderType;
+    private OrderType orderType;
     private LocalDate startDate;
     private LocalDate endDate;
 

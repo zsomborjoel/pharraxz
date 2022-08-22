@@ -2,11 +2,13 @@ package com.opensource.pharraxz.repositories.daomappers;
 
 import com.opensource.pharraxz.entities.OrderDetail;
 import com.opensource.pharraxz.entities.Product;
+import com.opensource.pharraxz.enums.OrderType;
 import io.r2dbc.spi.Row;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Component
@@ -29,7 +31,9 @@ public class OrderDetailDAOMapper implements Function<Row, OrderDetail> {
                 .orderDetailId(orderDetailId)
                 .product(product)
                 .quantity(quantity)
-                .orderType(orderType)
+                .orderType(Objects.isNull(orderType)
+                        ? null
+                        : OrderType.valueOf(orderType.toUpperCase()))
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

@@ -4,6 +4,7 @@ import com.opensource.pharraxz.controllers.order.OrderDetailMapper;
 import com.opensource.pharraxz.controllers.order.OrderRequest;
 import com.opensource.pharraxz.entities.Order;
 import com.opensource.pharraxz.entities.OrderDetail;
+import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.repositories.OrderDetailRepository;
 import com.opensource.pharraxz.repositories.OrderRepository;
 import com.opensource.pharraxz.repositories.custom.order.CustomOrderDetailRepositoryImpl;
@@ -40,7 +41,9 @@ public class OrderService {
                 .flatMap(this::findOrCreate)
                 .flatMap(this::save);
 
-        final Mono<OrderDetail> orderDetailMono = orderMono.zipWith(productService.findById(orderRequest.getOrderDetail().getProduct().getName()))
+        final Mono<Product> productMono = productService.findById(orderRequest.getOrderDetail().getProduct().getName());
+
+        final Mono<OrderDetail> orderDetailMono = orderMono.zipWith(productMono)
                 .map(tuple -> { // Overwrite on save or on update
                     final OrderDetail orderDetail = orderDetailMapper.toEntity(orderRequest.getOrderDetail());
                     orderDetail.setOrderId(tuple.getT1().getOrderId());
