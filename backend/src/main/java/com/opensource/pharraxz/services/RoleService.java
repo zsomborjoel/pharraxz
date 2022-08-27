@@ -18,7 +18,7 @@ public class RoleService {
     public Flux<RoleName> getRoleNamesFromUsername(final String username) {
         return roleRepository.findRolesByUsername(username)
                 .map(Role::getRoleName)
-                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(Role.class, username)));
     }
 
 }

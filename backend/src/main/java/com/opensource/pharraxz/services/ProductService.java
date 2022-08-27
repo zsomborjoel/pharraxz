@@ -17,7 +17,7 @@ public class ProductService {
 
     public Mono<Product> findById(final String name) {
         return productRepository.findById(name)
-                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(Product.class, name)));
     }
 
     public Flux<Product> getAll() {

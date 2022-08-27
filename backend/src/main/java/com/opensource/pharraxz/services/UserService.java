@@ -16,7 +16,7 @@ public class UserService {
 
     public Mono<User> findById(final Long userId) {
         return userRepository.findById(userId)
-                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(User.class, userId)));
     }
 
     public Flux<User> findAll() {
@@ -25,7 +25,7 @@ public class UserService {
 
     public Mono<User> getUserByUsername(final String username) {
         return userRepository.findByUsername(username)
-                .switchIfEmpty(Mono.error(new EntityNotFoundException()));
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(User.class, username)));
     }
 
 }
