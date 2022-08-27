@@ -7,7 +7,7 @@ import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
 import ProductService from '../../services/ProductService';
-import OrderTypeDropdown from '../../components/OrderTypeDropdown';
+import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -68,7 +68,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         orderType,
         startDate,
         endDate,
-    });
+    } as OrderDetail);
 
     const getOrderSaveRequest = (): OrderSaveRequest => ({
         orderId,
@@ -86,6 +86,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const saveOrder = (): void => {
         OrderService.saveOrder(getOrderSaveRequest())
             .then((result) => {
+                console.log(result.data);
                 onSave(result.data);
             })
             .catch((error) => {

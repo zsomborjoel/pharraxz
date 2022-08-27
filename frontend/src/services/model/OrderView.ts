@@ -1,3 +1,4 @@
+import { OrderType } from '../enum/OrderType';
 import { Product } from './Product';
 
 export interface OrderView {
@@ -6,7 +7,7 @@ export interface OrderView {
     id: number | null;
     product: Product;
     quantity: number | null;
-    orderType: string | null;
+    orderType: OrderType | string;
     startDate: string | null;
     endDate: string | null;
 }

@@ -1,4 +1,5 @@
 export enum OrderType {
     PERSONAL = "personal",
-    DOCTOR = "doctor"
+    DOCTOR = "doctor",
+    OTHER = "other"
 }

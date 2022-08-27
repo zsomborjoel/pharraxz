@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { FC } from "react"
-import { OrderType } from "../services/enum/OrderType";
+import { OrderType } from "../../services/enum/OrderType";
 
 type Props = {
     label: string,

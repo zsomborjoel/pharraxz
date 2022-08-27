@@ -6,6 +6,7 @@ import OrderService from '../../services/OrderService';
 import { OrderView } from '../../services/model/OrderView';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
 import OrderForm from './OrderForm';
+import { OrderType } from '../../services/enum/OrderType';
 
 export type OrderPageProps = {};
 
@@ -18,14 +19,10 @@ const OrderPage: FC<OrderPageProps> = () => {
         },
     ]);
 
-    const getOrders = (): void => {
+    useEffect(() => {
         OrderService.getAllOrderView().then((result) => {
             setOrderViews(result.data);
         });
-    };
-
-    useEffect(() => {
-        getOrders();
     }, []);
 
     const rows = orderViews;
@@ -95,7 +92,7 @@ const OrderPage: FC<OrderPageProps> = () => {
             field: 'oderType',
             headerName: 'Oder type',
             width: 130,
-            valueGetter: (e: { row: { oderType: any; }; }) => e.row.oderType,
+            valueFormatter: ((p) => OrderType[p.value as keyof typeof OrderType]),
         },
         {
             field: 'startDate',
