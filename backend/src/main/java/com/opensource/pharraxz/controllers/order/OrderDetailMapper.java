@@ -12,6 +12,6 @@ public interface OrderDetailMapper {
 
     @Mapping(target = "orderId", ignore = true)
     @Mapping(target = "productId", ignore = true)
-    OrderDetail toEntity(OrderDetailDTO orderDetailDTO);
+    OrderDetail fromDTO(OrderDetailDTO orderDetailDTO);
 
 }

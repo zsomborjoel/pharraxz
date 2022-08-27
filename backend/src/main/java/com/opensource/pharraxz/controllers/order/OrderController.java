@@ -13,12 +13,11 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderViewMapper orderViewMapper;
-    private final OrderDetailMapper orderDetailMapper;
 
     @GetMapping
     public Flux<OrderViewDTO> getAllOrders() {
         return orderService.getAll()
-                .flatMapIterable(orderViewMapper::toDTO);
+                .flatMapIterable(orderViewMapper::toDTOList);
     }
 
     @DeleteMapping("/detail/{id}")
@@ -27,9 +26,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public Flux<OrderViewDTO> saveOrder(@RequestBody OrderRequest request) {
+    public Mono<OrderViewDTO> saveOrder(@RequestBody OrderRequest request) {
         return orderService.saveOrderRequest(request)
-                .flatMapIterable(orderViewMapper::toDTO);
+                .flatMapIterable(orderViewMapper::toDTOList)
+                .next();
     }
 
 }

@@ -52,7 +52,7 @@ curl -X "POST" -v \
                 \"releasable\": null
             },
             \"quantity\": 3,
-            \"orderType\": \"a\",
+            \"orderType\": \"OTHER\",
             \"startDate\": \"2021-01-01\",
             \"endDate\": \"2021-01-02\"
         }

@@ -16,6 +16,7 @@ import reactor.util.function.Tuple2;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -39,21 +40,16 @@ public class OrderService {
     public Mono<Order> saveOrderRequest(final OrderRequest orderRequest) {
         final Mono<Order> orderMono = Mono.just(orderRequest)
                 .flatMap(this::findOrCreate)
+                .map(updateOrder(orderRequest))
                 .flatMap(this::save);
 
         final Mono<Product> productMono = productService.findById(orderRequest.getOrderDetail().getProduct().getName());
 
         final Mono<OrderDetail> orderDetailMono = orderMono.zipWith(productMono)
-                .map(tuple -> { // Overwrite on save or on update
-                    final OrderDetail orderDetail = orderDetailMapper.toEntity(orderRequest.getOrderDetail());
-                    orderDetail.setOrderId(tuple.getT1().getOrderId());
-                    orderDetail.setProductId(tuple.getT2().getName());
-                    return orderDetail;
-                })
+                .map(updateOrderDetail(orderRequest))
                 .flatMap(this::save);
 
         return orderMono.zipWith(orderDetailMono)
-                .log("service")
                 .map(tuple -> Order.builder()
                         .orderId(tuple.getT1().getOrderId())
                         .userId(tuple.getT1().getOrderId())
@@ -66,21 +62,17 @@ public class OrderService {
 
     public Mono<Order> findOrCreate(final OrderRequest request) {
         final Order order = Order.builder()
-                .orderId(request.getOrderId())
-                .userId(request.getUserId())
-                .description(request.getDescription())
                 .createdDate(LocalDateTime.now())
                 .build();
 
         if (request.getOrderId() == null) {
-            return Mono.just(order);
+            return Mono.just(order); // create
         }
 
-        order.setOrderId(null); // if order not present
         return orderRepository.findById(request.getOrderId())
                 .switchIfEmpty(Mono.just(order));
     }
-
+    
     public Mono<Order> save(final Order order) {
         return orderRepository.save(order);
     }
@@ -93,6 +85,23 @@ public class OrderService {
         return Mono.just(order)
                 .zipWith(doctorOrderDetailRepository.findAllByOrderId(order.getOrderId()).collectList())
                 .map(result -> result.getT1().setOrderDetails(result.getT2()));
+    }
+    
+    private Function<Order, Order> updateOrder(final OrderRequest orderRequest) {
+        return order -> {
+            order.setUserId(orderRequest.getUserId());
+            order.setDescription(orderRequest.getDescription());
+            return order;
+        };
+    }
+
+    private Function<Tuple2<Order, Product>, OrderDetail> updateOrderDetail(final OrderRequest orderRequest) {
+        return tuple -> { // Overwrite on save or on update
+            final OrderDetail orderDetail = orderDetailMapper.fromDTO(orderRequest.getOrderDetail());
+            orderDetail.setOrderId(tuple.getT1().getOrderId());
+            orderDetail.setProductId(tuple.getT2().getName());
+            return orderDetail;
+        };
     }
 
 }
