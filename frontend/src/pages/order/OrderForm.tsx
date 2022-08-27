@@ -86,7 +86,6 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const saveOrder = (): void => {
         OrderService.saveOrder(getOrderSaveRequest())
             .then((result) => {
-                console.log(result.data);
                 onSave(result.data);
             })
             .catch((error) => {

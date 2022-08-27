@@ -92,7 +92,7 @@ const OrderPage: FC<OrderPageProps> = () => {
             field: 'oderType',
             headerName: 'Oder type',
             width: 130,
-            valueFormatter: ((p) => OrderType[p.value as keyof typeof OrderType]),
+            valueGetter: (e: { row: { orderType: any; }; }) => OrderType[e.row.orderType as keyof typeof OrderType],
         },
         {
             field: 'startDate',
