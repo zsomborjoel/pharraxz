@@ -25,7 +25,7 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final CustomOrderDetailRepositoryImpl doctorOrderDetailRepository;
+    private final CustomOrderDetailRepositoryImpl customOrderDetailRepository;
     private final OrderDetailMapper orderDetailMapper;
 
     public Mono<Void> deleteOrderDetailById(final Long id) {
@@ -83,7 +83,7 @@ public class OrderService {
 
     private Mono<Order> loadRelations(final Order order) {
         return Mono.just(order)
-                .zipWith(doctorOrderDetailRepository.findAllByOrderId(order.getOrderId()).collectList())
+                .zipWith(customOrderDetailRepository.findAllByOrderId(order.getOrderId()).collectList())
                 .map(result -> result.getT1().setOrderDetails(result.getT2()));
     }
     
@@ -99,7 +99,6 @@ public class OrderService {
         return tuple -> { // Overwrite on save or on update
             final OrderDetail orderDetail = orderDetailMapper.fromDTO(orderRequest.getOrderDetail());
             orderDetail.setOrderId(tuple.getT1().getOrderId());
-            orderDetail.setProductId(tuple.getT2().getName());
             return orderDetail;
         };
     }
