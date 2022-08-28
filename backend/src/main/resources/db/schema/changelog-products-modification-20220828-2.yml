@@ -1,0 +1,21 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 01e68620-1b29-4fb1-becd-112ee8945dd9
+      author: zsomborjoel
+      changes:
+        - renameColumn:
+            newColumnName: distributor
+            oldColumnName: inn
+            tableName: products
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: releasable_by
+                  type: varchar(50)
+        - addDefaultValue:
+            columnDataType: boolean
+            columnName: releasable
+            defaultValueBoolean: true
+            tableName: products
