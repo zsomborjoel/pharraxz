@@ -23,4 +23,5 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-user-roles-20220411-1.yml
   - include:
       file: classpath*:db/schema/changelog-refresh-token-20220422-1.yml
-
+  - include:
+      file: classpath*:db/schema/changelog-products-modification-20220828-1.yml

@@ -1,0 +1,21 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: ba6ced97-3b50-4996-ab61-f3e9487ef490
+      author: zsomborjoel
+      changes:
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: shortage
+                  type: boolean
+
+  - changeSet:
+      id: 9884040b-e11b-4d37-acab-3d340f9aefab
+      author: zsomborjoel
+      changes:
+        - dropNotNullConstraint:
+            columnDataType: boolean
+            columnName: releasable
+            tableName: products

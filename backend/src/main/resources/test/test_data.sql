@@ -33,9 +33,6 @@ INSERT INTO public.orders
 VALUES(2, 1, 'tester', '2022-07-10 13:53:27.292', '2022-07-10 13:53:27.292');
 
 -- order details
-
-
--- order details
 INSERT INTO public.order_details
 (order_detail_id, order_id, product_id, quantity, order_type, start_date, end_date)
 VALUES(1, 1, 'testproduct', 5, '', '2022-06-18', '2022-06-18');
