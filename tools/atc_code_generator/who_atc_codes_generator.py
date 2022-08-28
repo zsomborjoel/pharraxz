@@ -7,9 +7,9 @@ from tqdm import tqdm
 ATC_DDD_URL = "https://www.whocc.no/atc_ddd_index/?code="
 
 
-def getATC_DDD_Data(targetList, level):
+def get_ATC_DDD_data(target_list, level):
     temp_list = []
-    for n in tqdm(targetList):
+    for n in tqdm(target_list):
         req = requests.get(ATC_DDD_URL + n)
         soup = BeautifulSoup(req.text, 'lxml')
         row_data_list = [i.find('a') for i in soup.findAll('b')]
@@ -23,13 +23,13 @@ def getATC_DDD_Data(targetList, level):
     return pd.DataFrame(temp_list, columns=['href', 'text'])
 
 
-ATC_L1 = getATC_DDD_Data(string.ascii_uppercase, 1)
+ATC_L1 = get_ATC_DDD_data(string.ascii_uppercase, 1)
 ATC_L1.to_excel('ATC_L1.xlsx', index=False)
-ATC_L2 = getATC_DDD_Data(string.ascii_uppercase, 2)
+ATC_L2 = get_ATC_DDD_data(string.ascii_uppercase, 2)
 ATC_L2.to_excel('ATC_L2.xlsx', index=False)
-ATC_L3 = getATC_DDD_Data(list(ATC_L2['href']), 3)
+ATC_L3 = get_ATC_DDD_data(list(ATC_L2['href']), 3)
 ATC_L3.to_excel('ATC_L3.xlsx', index=False)
-ATC_L4 = getATC_DDD_Data(list(ATC_L3['href']), 4)
+ATC_L4 = get_ATC_DDD_data(list(ATC_L3['href']), 4)
 ATC_L4.to_excel('ATC_L4.xlsx', index=False)
 ATC_L4List = []
 
