@@ -1,0 +1,12 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 5d1907df-cbe8-4ee8-b04c-4c4a38fc73c2
+      author: zsomborjoel
+      changes:
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: inn
+                  type: varchar(255)

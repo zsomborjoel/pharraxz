@@ -29,3 +29,5 @@ databaseChangeLog:
       file: classpath*:db/load/changelog-load-atc-codes-20220828-1.yml
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220828-2.yml
+  - include:
+      file: classpath*:db/schema/changelog-products-modification-20220828-3.yml
