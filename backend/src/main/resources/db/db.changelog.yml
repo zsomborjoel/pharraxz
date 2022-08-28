@@ -25,3 +25,5 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-refresh-token-20220422-1.yml
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220828-1.yml
+  - include:
+      file: classpath*:db/load/changelog-load-atc-codes-20220828-1.yml

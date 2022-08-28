@@ -1,0 +1,29 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 1f18e674-f1e3-441c-99cb-a88b51e26c0f
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/ATC_L1.csv
+            quotchar: '"'
+            separator: ','
+            tableName: atc_codes
+        - loadData:
+            file: classpath*:db/data/ATC_L2.csv
+            quotchar: '"'
+            separator: ','
+            tableName: atc_codes
+        - loadData:
+            file: classpath*:db/data/ATC_L3.csv
+            quotchar: '"'
+            separator: ','
+            tableName: atc_codes
+        - loadData:
+            file: classpath*:db/data/ATC_L4.csv
+            quotchar: '"'
+            separator: ','
+            tableName: atc_codes
+
+
+
