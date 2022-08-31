@@ -16,7 +16,8 @@ const setupAxiosInterceptors = (token: string): any => {
     });
 };
 
-const login = (username: string, password: string): Promise<boolean> => axios
+const login = (username: string, password: string): Promise<boolean> =>
+    axios
         .post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
             username,
             password,

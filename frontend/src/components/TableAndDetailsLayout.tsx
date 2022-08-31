@@ -6,25 +6,31 @@ import { useParams } from 'react-router-dom';
 import LoadingIndicator from './LoadingIndicator';
 
 type Props = {
-    rows: any[],
-    columns: GridColDef[],
-    sortModelInitialState?: GridSortModel,
-    detailedView: ElementType,
-    pageUrl: string,
-}
+    rows: any[];
+    columns: GridColDef[];
+    sortModelInitialState?: GridSortModel;
+    detailedView: ElementType;
+    pageUrl: string;
+};
 
 type UrlParams = {
     id: string;
-}
+};
 
-const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelInitialState, detailedView: DetailedView }) => {
+const TableAndDetailsLayout: FC<Props> = ({
+    pageUrl,
+    rows,
+    columns,
+    sortModelInitialState,
+    detailedView: DetailedView,
+}) => {
     if (!rows.length) {
         return <LoadingIndicator loading />;
     }
 
     const [tableRows, setTableRows] = useState<any[]>(rows);
     const [selectedRow, setSelectedRow] = useState<any>();
-    const [sortModel] = useState<GridSortModel | undefined>(sortModelInitialState);
+    const [sortModel, setSortModel] = useState<GridSortModel | undefined>(sortModelInitialState);
     const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
 
     const { id } = useParams<UrlParams>();
@@ -38,7 +44,7 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
     };
 
     const updateElementInTableView = (element: any): void => {
-        const updatedTableRows = tableRows.map((row) => row.id === element.id ? element : row);
+        const updatedTableRows = tableRows.map((row) => (row.id === element.id ? element : row));
 
         if (updatedTableRows.indexOf(element) === -1) {
             updatedTableRows.push(element);
@@ -54,11 +60,17 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
 
     const renderDetailedView = (): ReactElement => {
         if (!selectedRow) {
-            return <LoadingIndicator loading />
+            return <LoadingIndicator loading />;
         }
 
-        return <DetailedView selectedElement={selectedRow} onSave={updateElementInTableView} onDelete={deleteElementInTableView}/>
-    }
+        return (
+            <DetailedView
+                selectedElement={selectedRow}
+                onSave={updateElementInTableView}
+                onDelete={deleteElementInTableView}
+            />
+        );
+    };
 
     useEffect(() => {
         let elementId = tableRows[0].id;
@@ -69,7 +81,7 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
 
         setSelectionModel([elementId]);
         selectRow(elementId);
-    },[]);
+    }, []);
 
     return (
         <div className="reflex">
@@ -84,6 +96,7 @@ const TableAndDetailsLayout: FC<Props> = ({ pageUrl, rows, columns, sortModelIni
                             rowsPerPageOptions={[100]}
                             onRowClick={(params) => selectRow(params.row.id)}
                             sortModel={sortModel}
+                            onSortModelChange={setSortModel}
                             selectionModel={selectionModel}
                             onSelectionModelChange={setSelectionModel}
                             loading={!tableRows.length}

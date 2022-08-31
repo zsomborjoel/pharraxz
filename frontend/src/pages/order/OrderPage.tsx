@@ -32,89 +32,91 @@ const OrderPage: FC<OrderPageProps> = () => {
             field: 'orderId',
             headerName: 'Order id',
             width: 130,
-            valueGetter: (e: { row: { orderId: any; }; }) => e.row.orderId,
+            valueGetter: (e) => e.row.orderId,
         },
         {
             field: 'description',
             headerName: 'Description',
             width: 130,
-            valueGetter: (e: { row: { description: any; }; }) => e.row.description,
+            valueGetter: (e) => e.row.description,
         },
         {
             field: 'orderDetailId',
             headerName: 'Order detail id',
             width: 130,
-            valueGetter: (e: { row: { id: any; }; }) => e.row.id,
+            valueGetter: (e) => e.row.id,
         },
         {
             field: 'product.name',
             headerName: 'Medicine name',
             width: 130,
-            valueGetter: (e: { row: { product: { name: any; }; }; }) => e.row.product.name,
+            valueGetter: (e) => e.row.product.name,
         },
         {
             field: 'product.atc',
             headerName: 'Atc',
             width: 130,
-            valueGetter: (e: { row: { product: { atc: any; }; }; }) => e.row.product.atc,
+            valueGetter: (e) => e.row.product.atc,
         },
         {
             field: 'product.registerNumber',
             headerName: 'Register number',
             width: 130,
-            valueGetter: (e: { row: { product: { registerNumber: any; }; }; }) => e.row.product.registerNumber,
+            valueGetter: (e) => e.row.product.registerNumber,
         },
         {
             field: 'product.packaging',
             headerName: 'Packaging',
             width: 130,
-            valueGetter: (e: { row: { product: { packaging: any; }; }; }) => e.row.product.packaging,
+            valueGetter: (e) => e.row.product.packaging,
         },
         {
             field: 'product.inn',
             headerName: 'Inn',
             width: 130,
-            valueGetter: (e: { row: { product: { inn: any; }; }; }) => e.row.product.inn,
+            valueGetter: (e) => e.row.product.inn,
         },
         {
             field: 'product.releasable',
             headerName: 'Releasable',
             width: 130,
-            valueGetter: (e: { row: { product: { releasable: any; }; }; }) => e.row.product.releasable,
+            valueGetter: (e) => e.row.product.releasable,
         },
         {
             field: 'quantity',
             headerName: 'Quantity',
             width: 130,
-            valueGetter: (e: { row: { quantity: any; }; }) => e.row.quantity,
+            valueGetter: (e) => e.row.quantity,
         },
         {
             field: 'oderType',
             headerName: 'Oder type',
             width: 130,
-            valueGetter: (e: { row: { orderType: any; }; }) => OrderType[e.row.orderType as keyof typeof OrderType],
+            valueGetter: (e) => OrderType[e.row.orderType as keyof typeof OrderType],
         },
         {
             field: 'startDate',
             headerName: 'Order start date',
             width: 130,
-            valueGetter: (e: { row: { startDate: any; }; }) => e.row.startDate,
+            valueGetter: (e) => e.row.startDate,
         },
         {
             field: 'endDate',
             headerName: 'Order end date',
             width: 130,
-            valueGetter: (e: { row: { endDate: any; }; }) => e.row.endDate,
+            valueGetter: (e) => e.row.endDate,
         },
     ];
 
-    return (<TableAndDetailsLayout
-        rows={rows}
-        columns={columns}
-        pageUrl='/order'
-        sortModelInitialState={sortModel}
-        detailedView={OrderForm}
-    />);
+    return (
+        <TableAndDetailsLayout
+            rows={rows}
+            columns={columns}
+            pageUrl="/order"
+            sortModelInitialState={sortModel}
+            detailedView={OrderForm}
+        />
+    );
 };
 
 export default OrderPage;

@@ -8,3 +8,5 @@ export const ENDPOINTS = {
     USER: `${SERVER_URL}/users`,
     PRODUCT: `${SERVER_URL}/products`,
 };
+
+export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

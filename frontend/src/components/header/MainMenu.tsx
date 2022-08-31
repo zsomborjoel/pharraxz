@@ -10,7 +10,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export type MainMenuProps = {}
+export type MainMenuProps = {};
 
 const menuItems = [
     {
@@ -43,26 +43,16 @@ const MainMenu: FC<MainMenuProps> = () => {
     return (
         <div>
             <IconButton onClick={() => setIsMenuOpen((isOpen) => !isOpen)}>
-                <MenuIcon/>
+                <MenuIcon />
             </IconButton>
-            <SwipeableDrawer
-                anchor="left"
-                open={isMenuOpen}
-                onClose={toggleDrawer()}
-                onOpen={toggleDrawer()}
-            >
-                <Box
-                    role="presentation"
-                    onClick={toggleDrawer()}
-                    onKeyDown={toggleDrawer()}
-                    sx={{ width: 300 }}
-                >
+            <SwipeableDrawer anchor="left" open={isMenuOpen} onClose={toggleDrawer()} onOpen={toggleDrawer()}>
+                <Box role="presentation" onClick={toggleDrawer()} onKeyDown={toggleDrawer()} sx={{ width: 300 }}>
                     <List>
                         {menuItems.map(({ id, menuLabel, menuIcon: Icon, link }) => (
                             <Link key={id} to={link} style={{ color: '#1976d2' }} onClick={() => setIsMenuOpen(false)}>
                                 <ListItem button key={menuLabel}>
                                     <ListItemIcon>
-                                        <Icon/>
+                                        <Icon />
                                     </ListItemIcon>
                                     <ListItemText primary={menuLabel} />
                                 </ListItem>

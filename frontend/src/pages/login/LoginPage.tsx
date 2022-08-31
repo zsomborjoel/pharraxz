@@ -15,44 +15,40 @@ import AuthService from '../../services/AuthService';
 function Copyright(props: any): any {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            Copyright © Pharraxz
-            {' '}
-            {new Date().getFullYear()}
+            Copyright © Pharraxz {new Date().getFullYear()}
         </Typography>
     );
 }
 
 export type LoginPageProps = {
-    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>,
-}
+    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const LoginPage: FC<LoginPageProps> = ({
-    setIsLogInStarted,
-}) => {
+const LoginPage: FC<LoginPageProps> = ({ setIsLogInStarted }) => {
     const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): any => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        AuthService.login(data.get('email') as string, data.get('password') as string)
-            .finally(() => {
-                setIsLogInStarted(true);
-                navigate('/home');
-            });
+        AuthService.login(data.get('email') as string, data.get('password') as string).finally(() => {
+            setIsLogInStarted(true);
+            navigate('/home');
+        });
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <Box sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
             >
                 <Avatar sx={{ m: 1 }}>
-                    <LockOutlinedIcon color="primary"/>
+                    <LockOutlinedIcon color="primary" />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
@@ -78,16 +74,8 @@ const LoginPage: FC<LoginPageProps> = ({
                         id="password"
                         autoComplete="current-password"
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
+                    <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                         Sign In
                     </Button>
                 </Box>

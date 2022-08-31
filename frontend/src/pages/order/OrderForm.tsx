@@ -8,6 +8,7 @@ import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
 import ProductService from '../../services/ProductService';
 import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
+import DatePicker from '../../components/DatePicker';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -23,8 +24,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [productName, setProductName] = useState<string | null>(selectedElement?.product.name || '');
     const [orderType, setOrderType] = useState<string | null>(selectedElement?.orderType || '');
     const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
-    const [startDate, setStartDate] = useState<string | null>(selectedElement?.startDate || '');
-    const [endDate, setEndDate] = useState<string | null>(selectedElement?.endDate || '');
+    const [startDate, setStartDate] = useState<Date | null>(selectedElement?.startDate || null);
+    const [endDate, setEndDate] = useState<Date | null>(selectedElement?.endDate || null);
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -35,8 +36,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setProductName(selectedElement?.product.name || '');
         setOrderType(selectedElement?.orderType || '');
         setQuantity(selectedElement?.quantity || 0);
-        setStartDate(selectedElement?.startDate || '');
-        setEndDate(selectedElement?.endDate || '');
+        setStartDate(selectedElement?.startDate || null);
+        setEndDate(selectedElement?.endDate || null);
         setIsSaveable(false);
     };
 
@@ -47,8 +48,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setProductName('');
         setOrderType('');
         setQuantity(0);
-        setStartDate('');
-        setEndDate('');
+        setStartDate(null);
+        setEndDate(null);
     };
 
     const getProduct = (): Product => ({
@@ -61,14 +62,15 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         releasable: null,
     });
 
-    const getOrderDetail = (): OrderDetail => ({
-        orderDetailId,
-        product: getProduct(),
-        quantity,
-        orderType,
-        startDate,
-        endDate,
-    } as OrderDetail);
+    const getOrderDetail = (): OrderDetail =>
+        ({
+            orderDetailId,
+            product: getProduct(),
+            quantity,
+            orderType,
+            startDate,
+            endDate,
+        } as OrderDetail);
 
     const getOrderSaveRequest = (): OrderSaveRequest => ({
         orderId,
@@ -90,16 +92,16 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             })
             .catch((error) => {
                 switch (error.response.status) {
-                case 400: {
-                    setErrorMessage('Order already exists!');
-                    setIsSaveable(false);
-                    break;
-                }
+                    case 400: {
+                        setErrorMessage('Order already exists!');
+                        setIsSaveable(false);
+                        break;
+                    }
 
-                default: {
-                    setErrorMessage('Unexpected error!');
-                    setIsSaveable(false);
-                }
+                    default: {
+                        setErrorMessage('Unexpected error!');
+                        setIsSaveable(false);
+                    }
                 }
             });
     };
@@ -116,20 +118,22 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     useEffect(() => {
         const changed =
-            orderId !== (selectedElement?.orderId || null)
-            || description !== (selectedElement?.description || '')
-            || productName !== (selectedElement?.product.name || '')
-            || orderType !== (selectedElement?.orderType || '')
-            || quantity !== (selectedElement?.quantity || null)
-            || startDate !== (selectedElement?.startDate || '')
-            || endDate !== (selectedElement?.endDate || '');
+            orderId !== (selectedElement?.orderId || null) ||
+            description !== (selectedElement?.description || '') ||
+            productName !== (selectedElement?.product.name || '') ||
+            orderType !== (selectedElement?.orderType || '') ||
+            quantity !== (selectedElement?.quantity || null) ||
+            startDate !== (selectedElement?.startDate || null) ||
+            endDate !== (selectedElement?.endDate || null);
 
         const mandatoryExists =
-            (productName !== null && productName !== '')
-            && (orderType !== null && orderType !== '')
-            && (quantity !== 0)
-            && (startDate !== null && startDate !== '')
-            && (endDate !== null && endDate !== '');
+            productName !== null &&
+            productName !== '' &&
+            orderType !== null &&
+            orderType !== '' &&
+            quantity !== 0 &&
+            startDate !== null &&
+            endDate !== null;
 
         setIsSaveable(changed && mandatoryExists);
         setErrorMessage(null);
@@ -176,11 +180,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                     />
                 </Grid>
                 <Grid item xs={5} display="flex">
-                    <OrderTypeDropdown
-                        label="Order Type"
-                        value={orderType}
-                        setValue={setOrderType}
-                    />
+                    <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
                 </Grid>
                 <Grid item xs={3} display="flex">
                     <TextField
@@ -197,30 +197,10 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             </Grid>
             <Grid container spacing={1} sx={{ mb: 2 }}>
                 <Grid item xs={3} display="flex">
-                    <TextField
-                        label="Start Date"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        required
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
+                    <DatePicker required label="Start Date" value={startDate} onChange={setStartDate} />
                 </Grid>
                 <Grid item xs={3} display="flex">
-                    <TextField
-                        label="End Date"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        required
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
+                    <DatePicker required label="End Date" value={endDate} onChange={setEndDate} />
                 </Grid>
             </Grid>
             <Grid container spacing={1}>

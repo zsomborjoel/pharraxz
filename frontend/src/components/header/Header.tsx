@@ -9,13 +9,11 @@ import './Header.css';
 import TokenService from '../../services/TokenService';
 
 export type HeaderProps = {
-    isLogInStarted: boolean,
-    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>,
-}
+    isLogInStarted: boolean;
+    setIsLogInStarted: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const Header: FC<HeaderProps> = ({
-    isLogInStarted, setIsLogInStarted,
-}) => {
+const Header: FC<HeaderProps> = ({ isLogInStarted, setIsLogInStarted }) => {
     const navigate = useNavigate();
 
     const logout = (): void => {
@@ -24,20 +22,18 @@ const Header: FC<HeaderProps> = ({
         navigate('/login');
     };
 
-    useEffect(() => {
-    }, [isLogInStarted]);
+    useEffect(() => {}, [isLogInStarted]);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <MainMenu/>
-                    <Avatar src={logo} alt="logo"/>
+                    <MainMenu />
+                    <Avatar src={logo} alt="logo" />
                     <Typography ml={1} variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Pharraxz
                     </Typography>
-                    {(TokenService.isUserLoggedIn())
-                    && (
+                    {TokenService.isUserLoggedIn() && (
                         <Button variant="contained" color="secondary" onClick={() => logout()}>
                             Logout
                         </Button>

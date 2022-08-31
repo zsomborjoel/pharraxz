@@ -19,38 +19,33 @@ const App: FC = () => {
                 <Routes>
                     <Route
                         index
-                        element={(
+                        element={
                             <RequireAuth>
                                 <HomePage />
                             </RequireAuth>
-                    )}
+                        }
                     />
                     <Route
                         path="/home"
-                        element={(
+                        element={
                             <RequireAuth>
                                 <HomePage />
                             </RequireAuth>
-                    )}
+                        }
                     />
                     <Route
                         path="/order"
-                        element={(
+                        element={
                             <RequireAuth>
                                 <OrderPage />
                             </RequireAuth>
-                    )}
+                        }
                     />
-                    <Route
-                        path="/login"
-                        element={(
-                            <LoginPage setIsLogInStarted={setIsLogInStarted} />
-                    )}
-                    />
+                    <Route path="/login" element={<LoginPage setIsLogInStarted={setIsLogInStarted} />} />
                     <Route element={<NotFound />} />
                 </Routes>
             </Router>
-            <Box/>
+            <Box />
         </div>
     );
 };
