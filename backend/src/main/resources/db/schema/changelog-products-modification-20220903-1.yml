@@ -1,0 +1,18 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 210f3761-021c-40a1-af3e-57e069146fc8
+      author: zsomborjoel
+      changes:
+        - modifyDataType:
+            columnName: packaging
+            newDataType: varchar(255)
+            tableName: products
+        - modifyDataType:
+            columnName: distributor
+            newDataType: varchar(255)
+            tableName: products
+        - modifyDataType:
+            columnName: releasable_by
+            newDataType: varchar(255)
+            tableName: products

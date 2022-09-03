@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 5cdb3e64-39ee-4e41-b91a-902fdca8e95a
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/releasable_codes.csv
+            quotchar: '"'
+            separator: ','
+            tableName: releasable_codes

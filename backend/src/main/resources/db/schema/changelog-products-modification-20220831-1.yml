@@ -1,0 +1,15 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: d95e19c4-6891-4f3c-931a-0299fb5dbaa9
+      author: zsomborjoel
+      changes:
+        - dropColumn:
+            columnName: register_number
+            tableName: products
+        - addForeignKeyConstraint:
+            baseColumnNames: releasable_by
+            baseTableName: products
+            constraintName: fk_products_releasable_codes
+            referencedColumnNames: code
+            referencedTableName: releasable_codes

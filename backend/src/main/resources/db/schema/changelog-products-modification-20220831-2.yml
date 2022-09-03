@@ -1,0 +1,9 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 2f5e72da-0ffd-4f7d-8fd4-b5257886cbe2
+      author: zsomborjoel
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: products
+            constraintName: fk_products_atc

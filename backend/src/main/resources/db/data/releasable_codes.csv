@@ -1,0 +1,6 @@
+code,description,description_hun
+I,medicines that can be used in the conditions provided by providers providing specialist outpatient care or inpatient care,rendelőintézeti járóbeteg-szakellátást vagy fekvőbeteg-szakellátást nyújtó szolgáltatók által biztosított körülmények között alkalmazható gyógyszerek
+J,medicines that can be used in outpatient care following specialist/hospital diagnosis,a szakorvosi/kórházi diagnózist követő járóbeteg-ellátásban alkalmazható gyógyszerek
+Sz,medicines that can be used under the continuous supervision of a specialist after a specialist/hospital diagnosis,a szakorvosi/kórházi diagnózist követően folyamatos szakorvosi ellenőrzés mellett alkalmazható gyógyszerek
+V,medicines subject to a medical prescription only,kizárólag orvosi rendelvényhez kötött gyógyszerek
+VN,medicines that can be dispensed without a doctor's prescription,orvosi rendelvény nélkül is kiadható gyógyszerek

@@ -1,0 +1,10 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: f7b63953-414b-4538-8c67-c7d822218ba1
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/products.csv
+            separator: ','
+            tableName: products

@@ -1,0 +1,22 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 787d94ba-8b9a-4f32-9e4d-f491d57a6b2e
+      author: zsomborjoel
+      changes:
+        - createTable:
+            schema: public
+            tableName: releasable_codes
+            columns:
+              - column:
+                  name: code
+                  type: varchar(5)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(1000)
+              - column:
+                  name: description_hun
+                  type: varchar(1000)
