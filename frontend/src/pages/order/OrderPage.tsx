@@ -59,12 +59,6 @@ const OrderPage: FC<OrderPageProps> = () => {
             valueGetter: (e) => e.row.product.atc,
         },
         {
-            field: 'product.registerNumber',
-            headerName: 'Register number',
-            width: 130,
-            valueGetter: (e) => e.row.product.registerNumber,
-        },
-        {
             field: 'product.packaging',
             headerName: 'Packaging',
             width: 130,

@@ -17,7 +17,7 @@ export type OrderFormProps = {
 };
 
 const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) => {
-    const [products, setProducts] = useState<(string | null)[]>([]);
+    const [products, setProducts] = useState<(Product | null)[]>([]);
     const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
@@ -52,15 +52,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setEndDate(null);
     };
 
-    const getProduct = (): Product => ({
-        name: productName,
-        atc: null,
-        registerNumber: null,
-        packaging: null,
-        description: null,
-        inn: null,
-        releasable: null,
-    });
+    const getProduct = (): Product | null | undefined => products.find((product) => product?.name === productName);
 
     const getOrderDetail = (): OrderDetail =>
         ({
@@ -108,7 +100,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     useEffect(() => {
         ProductService.getAllProducts().then((result) => {
-            setProducts(result.data.map((p) => p.name));
+            setProducts(result.data);
         });
     }, []);
 
@@ -173,9 +165,9 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                         sx={{ pt: 1 }}
                         fullWidth
                         size="small"
-                        options={products}
+                        options={products.map((product) => product?.name)}
                         value={productName}
-                        onChange={(_e, v) => setProductName(v)}
+                        onChange={(_e, v) => setProductName(v!)}
                         renderInput={(params) => <TextField {...params} label="Product Name" />}
                     />
                 </Grid>
