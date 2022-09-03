@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
 import ArticleIcon from '@mui/icons-material/Article';
+import MedicationIcon from '@mui/icons-material/Medication';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -21,9 +22,9 @@ const menuItems = [
     },
     {
         id: 1,
-        menuLabel: 'Menu 2',
-        menuIcon: ArticleIcon,
-        link: '/menu2',
+        menuLabel: 'Product',
+        menuIcon: MedicationIcon,
+        link: '/product',
     },
     {
         id: 2,

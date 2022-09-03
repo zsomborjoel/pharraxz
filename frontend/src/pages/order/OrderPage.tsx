@@ -10,7 +10,7 @@ import { OrderType } from '../../services/enum/OrderType';
 
 export type OrderPageProps = {};
 
-const OrderPage: FC<OrderPageProps> = () => {
+const OrderPage: FC<OrderPageProps> = (): any => {
     const [orderViews, setOrderViews] = useState<OrderView[]>([]);
     const [sortModel] = useState<GridSortModel>([
         {

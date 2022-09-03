@@ -9,4 +9,9 @@ export const ENDPOINTS = {
     PRODUCT: `${SERVER_URL}/products`,
 };
 
+export const ROUTES = {
+    ORDER: '/order',
+    PRODUCT: '/product',
+};
+
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

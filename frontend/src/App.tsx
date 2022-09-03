@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Header from './components/header/Header';
 import NotFound from './pages/notfound/NotFoundPage';
-import HomePage from './pages/home/HomePage';
 import LoginPage from './pages/login/LoginPage';
-import OrderPage from './pages/order/OrderPage';
 import RequireAuth from './components/RequireAuth';
+import routes from './config/routes';
 
 const App: FC = () => {
     const [isLogInStarted, setIsLogInStarted] = useState(false);
@@ -17,30 +16,9 @@ const App: FC = () => {
             <Router>
                 <Header isLogInStarted={isLogInStarted} setIsLogInStarted={setIsLogInStarted} />
                 <Routes>
-                    <Route
-                        index
-                        element={
-                            <RequireAuth>
-                                <HomePage />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="/home"
-                        element={
-                            <RequireAuth>
-                                <HomePage />
-                            </RequireAuth>
-                        }
-                    />
-                    <Route
-                        path="/order"
-                        element={
-                            <RequireAuth>
-                                <OrderPage />
-                            </RequireAuth>
-                        }
-                    />
+                    {routes.map(({ path, element }) => (
+                        <Route path={path} element={<RequireAuth>{element}</RequireAuth>} />
+                    ))}
                     <Route path="/login" element={<LoginPage setIsLogInStarted={setIsLogInStarted} />} />
                     <Route element={<NotFound />} />
                 </Routes>

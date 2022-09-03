@@ -1,17 +1,22 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 
 interface RequireAuthProps {
-    children: ReactElement<any, any>;
+    children: ReactNode;
 }
 
-const RequireAuth: FC<RequireAuthProps> = ({ children }: RequireAuthProps) => {
+const RequireAuth: FC<RequireAuthProps> = ({ children }): JSX.Element => {
     if (!AuthService.isUserLoggedIn()) {
         return <Navigate to="/login" />;
     }
 
-    return children;
+    return (
+        <>
+            {children}
+            <br />
+        </>
+    );
 };
 
 export default RequireAuth;
