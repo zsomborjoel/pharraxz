@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 public class ProductDTO {
     private String name;
     private String atc;
-    private String registerNumber;
     private String packaging;
     private String description;
     private String inn;

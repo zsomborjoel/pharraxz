@@ -24,11 +24,8 @@ public class Product {
     @Column("atc")
     private String atc;
 
-    @Transient
-    private Supplier supplier;
-
-    @Column("register_number")
-    private String registerNumber;
+    @Column("supplier_id")
+    private String supplierId;
 
     @Column("packaging")
     private String packaging;
@@ -36,9 +33,15 @@ public class Product {
     @Column("description")
     private String description;
 
+    @Column("distributor")
+    private String distributor;
+
     @Column("inn")
     private String inn;
 
     @Column("releasable")
     private Boolean releasable;
+
+    @Column("releasable_by")
+    private String releasableBy;
 }

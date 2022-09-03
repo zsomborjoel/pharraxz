@@ -10,23 +10,27 @@ import java.util.function.Function;
 public class ProductDAOMapper implements Function<Row, Product> {
 
     @Override
-    public Product apply(Row row) {
-        String productName = row.get("name", String.class);
-        String productAtc = row.get("atc", String.class);
-        String productRegisterNumber = row.get("register_number", String.class);
-        String productPackaging = row.get("packaging", String.class);
-        String productDescription = row.get("description", String.class);
-        String productInn = row.get("inn", String.class);
-        Boolean productReleasable = row.get("releasable", Boolean.class);
+    public Product apply(final Row row) {
+        final String name = row.get("name", String.class);
+        final String atc = row.get("atc", String.class);
+        final String supplierId = row.get("supplier_id", String.class);
+        final String packaging = row.get("packaging", String.class);
+        final String description = row.get("description", String.class);
+        final String distributor = row.get("distributor", String.class);
+        final String inn = row.get("inn", String.class);
+        final Boolean releasable = row.get("releasable", Boolean.class);
+        final String releasableBy = row.get("releasable_by", String.class);
 
         return Product.builder()
-                .name(productName)
-                .atc(productAtc)
-                .registerNumber(productRegisterNumber)
-                .packaging(productPackaging)
-                .description(productDescription)
-                .inn(productInn)
-                .releasable(productReleasable)
+                .name(name)
+                .atc(atc)
+                .supplierId(supplierId)
+                .packaging(packaging)
+                .description(description)
+                .distributor(distributor)
+                .inn(inn)
+                .releasable(releasable)
+                .releasableBy(releasableBy)
                 .build();
     }
 

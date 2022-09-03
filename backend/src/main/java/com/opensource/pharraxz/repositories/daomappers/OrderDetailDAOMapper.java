@@ -19,13 +19,13 @@ public class OrderDetailDAOMapper implements Function<Row, OrderDetail> {
 
     @Override
     public OrderDetail apply(final Row row) {
-        Long orderDetailId = row.get("order_detail_id", Long.class);
-        Long quantity = row.get("quantity", Long.class);
-        String orderType = row.get("order_type", String.class);
-        LocalDate startDate = row.get("start_date", LocalDate.class);
-        LocalDate endDate = row.get("end_date", LocalDate.class);
+        final Long orderDetailId = row.get("order_detail_id", Long.class);
+        final Long quantity = row.get("quantity", Long.class);
+        final String orderType = row.get("order_type", String.class);
+        final LocalDate startDate = row.get("start_date", LocalDate.class);
+        final LocalDate endDate = row.get("end_date", LocalDate.class);
 
-        Product product = productDAOMapper.apply(row);
+        final Product product = productDAOMapper.apply(row);
 
         return OrderDetail.builder()
                 .orderDetailId(orderDetailId)

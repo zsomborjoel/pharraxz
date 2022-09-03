@@ -15,7 +15,7 @@ public class OrderViewMapper {
     private final ProductMapper productMapper;
 
     public List<OrderViewDTO> toDTOList(final Order order) {
-        List<OrderViewDTO> orderViewDTOS = new ArrayList<>();
+        final List<OrderViewDTO> orderViewDTOS = new ArrayList<>();
         order.getOrderDetails().forEach(od -> orderViewDTOS.add(OrderViewDTO.builder()
                         .id(od.getOrderDetailId())
                         .orderId(order.getOrderId())

@@ -14,8 +14,8 @@ public class CustomOrderDetailRepositoryImpl implements CustomOrderDetailReposit
     private final DatabaseClient client;
     private final OrderDetailDAOMapper mapper;
 
-    public Flux<OrderDetail> findAllByOrderId(Long orderId) {
-        String query = """
+    public Flux<OrderDetail> findAllByOrderId(final Long orderId) {
+        final String query = """
                 select od.*, p.*
                 from order_details od
                 join products p
