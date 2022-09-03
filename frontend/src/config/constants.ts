@@ -10,6 +10,8 @@ export const ENDPOINTS = {
 };
 
 export const ROUTES = {
+    ROOT: '/',
+    HOME: '/home',
     ORDER: '/order',
     PRODUCT: '/product',
 };
