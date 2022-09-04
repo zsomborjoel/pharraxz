@@ -5,7 +5,7 @@ import Header from './components/header/Header';
 import NotFound from './pages/notfound/NotFoundPage';
 import LoginPage from './pages/login/LoginPage';
 import RequireAuth from './components/RequireAuth';
-import routes from './config/routes';
+import routes from './configs/routes';
 
 const App: FC = () => {
     const [isLogInStarted, setIsLogInStarted] = useState(false);

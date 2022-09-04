@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { FC } from 'react';
 import TextField from '@mui/material/TextField';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
-import { ISO_DATE_FORMAT } from '../config/constants';
+import { ISO_DATE_FORMAT } from '../configs/constants';
 
 type Props = {
     label: string;

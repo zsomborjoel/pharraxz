@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import AuthHeader from '../utils/AuthHeader';
 import { OrderView } from './model/OrderView';
 import { OrderSaveRequest } from './model/OrderSaveRequest';
-import { ENDPOINTS } from '../config/constants';
+import { ENDPOINTS } from '../configs/constants';
 
 const getAllOrderView = (): Promise<AxiosResponse<OrderView[]>> =>
     axios.get(ENDPOINTS.ORDER, { headers: AuthHeader() });

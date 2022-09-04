@@ -1,6 +1,6 @@
 import axios from 'axios';
 import TokenService from './TokenService';
-import { ENDPOINTS } from '../config/constants';
+import { ENDPOINTS } from '../configs/constants';
 
 const instance = axios.create({
     baseURL: ENDPOINTS.BASE,
