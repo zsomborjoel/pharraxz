@@ -3,7 +3,8 @@ import AuthHeader from '../utils/AuthHeader';
 import { Product } from './model/Product';
 import { ENDPOINTS } from '../configs/constants';
 
-const getAllProducts = (): Promise<AxiosResponse<Product[]>> => axios.get(ENDPOINTS.PRODUCT, { headers: AuthHeader() });
+const getAllProducts = async (): Promise<AxiosResponse<Product[]>> =>
+    axios.get(ENDPOINTS.PRODUCT, { headers: AuthHeader() });
 
 const ProductService = {
     getAllProducts,

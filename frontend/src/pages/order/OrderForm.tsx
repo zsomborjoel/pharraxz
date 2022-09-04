@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { Box, Grid, TextField, Button, Collapse, Typography, Autocomplete } from '@mui/material';
 import { OrderDetail } from '../../services/model/OrderDetail';
 import { Product } from '../../services/model/Product';
@@ -6,9 +6,9 @@ import OrderService from '../../services/OrderService';
 import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
-import ProductService from '../../services/ProductService';
 import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
 import DatePicker from '../../components/DatePicker';
+import { ProductContext } from '../../contexts/ProductContext';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -17,7 +17,6 @@ export type OrderFormProps = {
 };
 
 const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) => {
-    const [products, setProducts] = useState<(Product | null)[]>([]);
     const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
@@ -28,6 +27,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [endDate, setEndDate] = useState<Date | null>(selectedElement?.endDate || null);
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const { products } = useContext(ProductContext);
 
     const initializeForm = (): void => {
         setOrderId(selectedElement?.orderId || null);
@@ -97,12 +98,6 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                 }
             });
     };
-
-    useEffect(() => {
-        ProductService.getAllProducts().then((result) => {
-            setProducts(result.data);
-        });
-    }, []);
 
     useEffect(() => {
         initializeForm();
