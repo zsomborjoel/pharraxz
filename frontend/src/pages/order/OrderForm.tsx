@@ -74,12 +74,12 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const deleteOrderDetail = (): void => {
         if (orderDetailId) {
-            OrderService.deleteOrderDetail(orderDetailId).finally(() => onDelete(selectedElement));
+            OrderService.del(orderDetailId).finally(() => onDelete(selectedElement));
         }
     };
 
     const saveOrder = (): void => {
-        OrderService.saveOrder(getOrderSaveRequest())
+        OrderService.save(getOrderSaveRequest())
             .then((result) => {
                 onSave(result.data);
             })

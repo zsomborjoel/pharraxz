@@ -8,8 +8,11 @@ import lombok.experimental.Accessors;
 public class ProductDTO {
     private String name;
     private String atc;
+    private Long supplierId;
     private String packaging;
     private String description;
+    private String distributor;
     private String inn;
     private Boolean releasable;
+    private String releasableBy;
 }

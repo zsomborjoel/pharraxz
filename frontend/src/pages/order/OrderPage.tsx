@@ -20,7 +20,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
     ]);
 
     useEffect(() => {
-        OrderService.getAllOrderView().then((result) => {
+        OrderService.getAll().then((result) => {
             setOrderViews(result.data);
         });
     }, []);
@@ -32,13 +32,11 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'orderId',
             headerName: 'Order id',
             width: 130,
-            valueGetter: (e) => e.row.orderId,
         },
         {
             field: 'description',
             headerName: 'Description',
             width: 130,
-            valueGetter: (e) => e.row.description,
         },
         {
             field: 'orderDetailId',
@@ -80,7 +78,6 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'quantity',
             headerName: 'Quantity',
             width: 130,
-            valueGetter: (e) => e.row.quantity,
         },
         {
             field: 'oderType',
@@ -92,13 +89,11 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'startDate',
             headerName: 'Order start date',
             width: 130,
-            valueGetter: (e) => e.row.startDate,
         },
         {
             field: 'endDate',
             headerName: 'Order end date',
             width: 130,
-            valueGetter: (e) => e.row.endDate,
         },
     ];
 

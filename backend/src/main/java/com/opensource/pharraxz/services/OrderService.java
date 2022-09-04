@@ -28,7 +28,7 @@ public class OrderService {
     private final CustomOrderDetailRepositoryImpl customOrderDetailRepository;
     private final OrderDetailMapper orderDetailMapper;
 
-    public Mono<Void> deleteOrderDetailById(final Long id) {
+    public Mono<Void> deleteById(final Long id) {
         return orderDetailRepository.deleteById(id);
     }
 

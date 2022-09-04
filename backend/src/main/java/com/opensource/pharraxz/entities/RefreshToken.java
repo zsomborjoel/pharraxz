@@ -21,7 +21,7 @@ public class RefreshToken {
 
     @Id
     @Column("refresh_token_id")
-    private Long refreshTokenId;
+    private Long id;
 
     @Column("user_id")
     private Long userId;

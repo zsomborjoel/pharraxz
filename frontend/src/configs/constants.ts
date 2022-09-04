@@ -7,6 +7,7 @@ export const ENDPOINTS = {
     ORDER: `${SERVER_URL}/orders`,
     USER: `${SERVER_URL}/users`,
     PRODUCT: `${SERVER_URL}/products`,
+    SUPPLIER: `${SERVER_URL}/suppliers`,
 };
 
 export const ROUTES = {
@@ -14,6 +15,7 @@ export const ROUTES = {
     HOME: '/home',
     ORDER: '/order',
     PRODUCT: '/product',
+    SUPPLIER: '/supplier',
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

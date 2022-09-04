@@ -19,7 +19,7 @@ public class Supplier {
 
     @Id
     @Column("supplier_id")
-    private Long supplierId;
+    private Long id;
 
     @Column("name")
     private String name;

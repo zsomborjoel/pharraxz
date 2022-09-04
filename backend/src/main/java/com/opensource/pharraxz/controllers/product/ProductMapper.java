@@ -8,4 +8,5 @@ public interface ProductMapper {
 
     ProductDTO toDTO(Product product);
 
+    Product fromDTO(ProductDTO productDTO);
 }

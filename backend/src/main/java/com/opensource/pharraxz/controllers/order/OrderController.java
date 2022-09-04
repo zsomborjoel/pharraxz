@@ -22,7 +22,7 @@ public class OrderController {
 
     @DeleteMapping("/detail/{id}")
     public Mono<Void> deleteOrderDetail(@PathVariable Long id) {
-        return orderService.deleteOrderDetailById(id);
+        return orderService.deleteById(id);
     }
 
     @PostMapping

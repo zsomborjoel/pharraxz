@@ -17,7 +17,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class HospitalWard {
 
     @Column("ward_id")
-    private Long wardId;
+    private Long id;
 
     @Column("name")
     private String name;

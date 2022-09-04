@@ -1,7 +1,5 @@
 package com.opensource.pharraxz.controllers.product;
 
-import com.opensource.pharraxz.controllers.order.*;
-import com.opensource.pharraxz.services.OrderService;
 import com.opensource.pharraxz.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +17,19 @@ public class ProductController {
     @GetMapping
     public Flux<ProductDTO> getAllProducts() {
         return productService.getAll()
+                .map(productMapper::toDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> deleteProduct(@PathVariable String id) {
+        return productService.deleteById(id);
+    }
+
+    @PostMapping
+    public Mono<ProductDTO> save(@RequestBody ProductDTO productDTO) {
+        return Mono.just(productDTO)
+                .map(productMapper::fromDTO)
+                .flatMap(productService::save)
                 .map(productMapper::toDTO);
     }
 

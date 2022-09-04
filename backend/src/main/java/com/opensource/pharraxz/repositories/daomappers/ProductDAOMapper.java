@@ -13,7 +13,7 @@ public class ProductDAOMapper implements Function<Row, Product> {
     public Product apply(final Row row) {
         final String name = row.get("name", String.class);
         final String atc = row.get("atc", String.class);
-        final String supplierId = row.get("supplier_id", String.class);
+        final Long supplierId = row.get("supplier_id", Long.class);
         final String packaging = row.get("packaging", String.class);
         final String description = row.get("description", String.class);
         final String distributor = row.get("distributor", String.class);
