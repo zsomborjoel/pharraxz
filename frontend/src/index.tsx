@@ -4,6 +4,7 @@ import './index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -25,15 +26,27 @@ const theme = createTheme({
     },
 });
 
+const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            staleTime: twentyFourHoursInMs,
+        },
+    },
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <React.StrictMode>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <ThemeProvider theme={theme}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
                 <App />
-            </ThemeProvider>
-        </LocalizationProvider>
-    </React.StrictMode>
+            </QueryClientProvider>
+        </ThemeProvider>
+    </LocalizationProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,7 +3,7 @@ import AuthHeader from '../utils/AuthHeader';
 import { Product } from './model/Product';
 import { ENDPOINTS } from '../configs/constants';
 
-const getAll = async (): Promise<AxiosResponse<Product[]>> => axios.get(ENDPOINTS.PRODUCT, { headers: AuthHeader() });
+const getAll = (): Promise<AxiosResponse<Product[]>> => axios.get(ENDPOINTS.PRODUCT, { headers: AuthHeader() });
 
 const del = async (id: string): Promise<AxiosResponse<void>> =>
     axios.delete(`${ENDPOINTS.PRODUCT}/${id}`, { headers: AuthHeader() });

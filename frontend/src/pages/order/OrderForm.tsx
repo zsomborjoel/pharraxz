@@ -1,14 +1,17 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import { Box, Grid, TextField, Button, Collapse, Typography, Autocomplete } from '@mui/material';
+import React, { FC, useEffect, useState, useContext } from 'react';
+import { Box, Grid, TextField, Button, Autocomplete } from '@mui/material';
 import { OrderDetail } from '../../services/model/OrderDetail';
 import { Product } from '../../services/model/Product';
-import OrderService from '../../services/OrderService';
 import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
 import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
 import DatePicker from '../../components/DatePicker';
-import { ProductContext } from '../../contexts/ProductContext';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useDeleteOrder, useSaveOrder } from '../../queries/OrderQuery';
+import { useGetAllProducts } from '../../queries/ProductQuery';
+import SnackbarContext from '../../utils/snackbar/SnackbarContext';
+import { handleError } from '../../utils/ErrorHandler';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -26,9 +29,12 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [startDate, setStartDate] = useState<Date | null>(selectedElement?.startDate || null);
     const [endDate, setEndDate] = useState<Date | null>(selectedElement?.endDate || null);
     const [isSaveable, setIsSaveable] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const { products } = useContext(ProductContext);
+    const { showSnackbar } = useContext(SnackbarContext);
+
+    const { isLoading, data: products } = useGetAllProducts();
+    const { mutate: deleteOrderMutate } = useDeleteOrder();
+    const { mutate: saveOrderMutate } = useSaveOrder();
 
     const initializeForm = (): void => {
         setOrderId(selectedElement?.orderId || null);
@@ -53,7 +59,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setEndDate(null);
     };
 
-    const getProduct = (): Product | null | undefined => products.find((product) => product?.name === productName);
+    const getProduct = (): Product | null | undefined => products!.find((product) => product?.name === productName);
 
     const getOrderDetail = (): OrderDetail =>
         ({
@@ -74,30 +80,29 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const deleteOrderDetail = (): void => {
         if (orderDetailId) {
-            OrderService.del(orderDetailId).finally(() => onDelete(selectedElement));
+            deleteOrderMutate(orderDetailId, {
+                onSuccess: () => {
+                    onDelete(selectedElement);
+                    showSnackbar({ severity: 'success', text: 'Successfully deleted.' });
+                },
+                onError: (error) => {
+                    handleError(error);
+                },
+            });
         }
     };
 
-    const saveOrder = (): void => {
-        OrderService.save(getOrderSaveRequest())
-            .then((result) => {
-                onSave(result.data);
-            })
-            .catch((error) => {
-                switch (error.response.status) {
-                    case 400: {
-                        setErrorMessage('Order already exists!');
-                        setIsSaveable(false);
-                        break;
-                    }
-
-                    default: {
-                        setErrorMessage('Unexpected error!');
-                        setIsSaveable(false);
-                    }
-                }
-            });
-    };
+    const saveOrder = (): void =>
+        saveOrderMutate(getOrderSaveRequest(), {
+            onSuccess(data) {
+                onSave(data);
+                setIsSaveable(false);
+                showSnackbar({ severity: 'success', text: 'Successfully saved.' });
+            },
+            onError(error) {
+                handleError(error);
+            },
+        });
 
     useEffect(() => {
         initializeForm();
@@ -123,93 +128,98 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             endDate !== null;
 
         setIsSaveable(changed && mandatoryExists);
-        setErrorMessage(null);
     }, [orderId, description, productName, orderType, quantity, startDate, endDate]);
+
+    if (isLoading) {
+        return <LoadingIndicator loading />;
+    }
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
-            <Grid container spacing={1} sx={{ mb: 2 }}>
-                <Grid item xs={4} display="flex">
-                    <TextField
-                        type="number"
-                        label="Order Id"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        required
-                        value={orderId}
-                        onChange={(e) => setOrderId(parseInt(e.target.value, 10))}
-                    />
+            <Box>
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            type="number"
+                            label="Order Id"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            required
+                            value={orderId}
+                            onChange={(e) => setOrderId(parseInt(e.target.value, 10))}
+                        />
+                    </Grid>
+                    <Grid item xs={8} display="flex">
+                        <TextField
+                            label="Order Description"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            maxRows={3}
+                            multiline
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={8} display="flex">
-                    <TextField
-                        label="Order Description"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={4} display="flex">
+                        <Autocomplete
+                            sx={{ pt: 1 }}
+                            fullWidth
+                            size="small"
+                            options={products!.map((product) => product.name)}
+                            value={productName}
+                            onChange={(_e, v) => setProductName(v!)}
+                            renderInput={(params) => <TextField {...params} label="Product Name" />}
+                        />
+                    </Grid>
+                    <Grid item xs={5} display="flex">
+                        <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
+                    </Grid>
+                    <Grid item xs={3} display="flex">
+                        <TextField
+                            type="number"
+                            label="Quantity"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            required
+                            value={quantity}
+                            onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container spacing={1} sx={{ mb: 2 }}>
-                <Grid item xs={4} display="flex">
-                    <Autocomplete
-                        sx={{ pt: 1 }}
-                        fullWidth
-                        size="small"
-                        options={products.map((product) => product?.name)}
-                        value={productName}
-                        onChange={(_e, v) => setProductName(v!)}
-                        renderInput={(params) => <TextField {...params} label="Product Name" />}
-                    />
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={3} display="flex">
+                        <DatePicker required label="Start Date" value={startDate} onChange={setStartDate} />
+                    </Grid>
+                    <Grid item xs={3} display="flex">
+                        <DatePicker required label="End Date" value={endDate} onChange={setEndDate} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={5} display="flex">
-                    <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
-                </Grid>
-                <Grid item xs={3} display="flex">
-                    <TextField
-                        type="number"
-                        label="Quantity"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        required
-                        value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={1} sx={{ mb: 2 }}>
-                <Grid item xs={3} display="flex">
-                    <DatePicker required label="Start Date" value={startDate} onChange={setStartDate} />
-                </Grid>
-                <Grid item xs={3} display="flex">
-                    <DatePicker required label="End Date" value={endDate} onChange={setEndDate} />
-                </Grid>
-            </Grid>
-            <Grid container spacing={1}>
-                <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                    <Box>
-                        <Button sx={{ width: 140 }} variant="contained" disabled={!isSaveable} onClick={saveOrder}>
+                <Grid container spacing={1}>
+                    <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
+                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveOrder} variant="contained">
                             Save
                         </Button>
-                        <Collapse collapsedSize={0} in={!!errorMessage} sx={{ position: 'fixed' }}>
-                            <Typography color="error">{errorMessage}</Typography>
-                        </Collapse>
-                    </Box>
-                    <Button sx={{ width: 140, ml: 1 }} variant="outlined" disabled={!orderId} onClick={resetForm}>
-                        Add new
-                    </Button>
+                        <Button sx={{ width: 140, ml: 1 }} variant="outlined" disabled={!orderId} onClick={resetForm}>
+                            Add new
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
+                        <Button
+                            sx={{ mr: 6, width: 140 }}
+                            variant="contained"
+                            color="error"
+                            onClick={deleteOrderDetail}
+                        >
+                            Delete
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteOrderDetail}>
-                        Delete
-                    </Button>
-                </Grid>
-            </Grid>
+            </Box>
         </Box>
     );
 };

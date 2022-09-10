@@ -18,4 +18,12 @@ export const ROUTES = {
     SUPPLIER: '/supplier',
 };
 
+export const QUERIES = {
+    GET_ALL_PRODUCTS: 'getAllProducts',
+    DELETE_PRODUCT: 'deleteProduct',
+    GET_ALL_ORDERS: 'getAllOrders',
+    DELETE_ORDER: 'deleteOrder',
+    SAVE_ORDER: 'saveOrder',
+};
+
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
