@@ -25,7 +25,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     (res) => res,
-    async(err) => {
+    async (err) => {
         const originalConfig = err.config;
 
         if (originalConfig.url !== '/auth/login' && err.response) {
@@ -49,7 +49,7 @@ instance.interceptors.response.use(
         }
 
         return Promise.reject(err);
-    },
+    }
 );
 
 export default instance;

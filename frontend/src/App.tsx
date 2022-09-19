@@ -6,8 +6,8 @@ import NotFound from './pages/notfound/NotFoundPage';
 import LoginPage from './pages/login/LoginPage';
 import RequireAuth from './components/RequireAuth';
 import routes from './configs/routes';
-import { SnackbarContent } from './utils/snackbar/SnackbarContent';
-import SnackbarsContext from './utils/snackbar/SnackbarContext';
+import { SnackbarContent } from './contexts/snackbar/SnackbarContent';
+import SnackbarsContext from './contexts/snackbar/SnackbarContext';
 
 const App: FC = () => {
     const [isLogInStarted, setIsLogInStarted] = useState(false);

@@ -1,10 +1,17 @@
 import { useMutation, UseMutationResult, useQuery, UseQueryResult } from 'react-query';
 import { Product } from '../services/model/Product';
-import { QUERIES } from '../configs/constants';
-import ProductService from '../services/ProductService';
+import { ENDPOINTS, QUERIES } from '../configs/constants';
+import GenericService from '../services/GenericService';
 
-export const useGetAllProducts = (): UseQueryResult<Product[]> =>
-    useQuery(QUERIES.GET_ALL_PRODUCTS, async () => ProductService.getAll().then((res) => res.data));
+export const useGetAllProduct = (): UseQueryResult<Product[]> =>
+    useQuery(QUERIES.GET_ALL_PRODUCT, async () => GenericService.getAll(ENDPOINTS.PRODUCT).then((res) => res.data));
 
 export const useDeleteProduct = (): UseMutationResult<void, unknown, string, unknown> =>
-    useMutation(QUERIES.DELETE_PRODUCT, (id: string) => ProductService.del(id).then((res) => res.data));
+    useMutation(QUERIES.DELETE_PRODUCT, async (id: string) =>
+        GenericService.del(ENDPOINTS.PRODUCT, id).then((res) => res.data)
+    );
+
+export const useSaveProduct = (): UseMutationResult<Product, string, Product> =>
+    useMutation(QUERIES.SAVE_PRODUCT, (request: Product) =>
+        GenericService.save(ENDPOINTS.PRODUCT, request).then((res) => res.data)
+    );

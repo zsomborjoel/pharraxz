@@ -26,14 +26,11 @@ const theme = createTheme({
     },
 });
 
-const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
+const twentySecondsInMs = 1000 * 20;
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            staleTime: twentyFourHoursInMs,
+            staleTime: twentySecondsInMs,
         },
     },
 });

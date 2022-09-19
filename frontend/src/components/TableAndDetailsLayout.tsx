@@ -31,7 +31,7 @@ const TableAndDetailsLayout: FC<Props> = ({
     const [tableRows, setTableRows] = useState<any[]>(rows);
     const [selectedRow, setSelectedRow] = useState<any>();
     const [sortModel, setSortModel] = useState<GridSortModel | undefined>(sortModelInitialState);
-    const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
     const { id } = useParams<UrlParams>();
 
@@ -82,6 +82,10 @@ const TableAndDetailsLayout: FC<Props> = ({
         setSelectionModel([elementId]);
         selectRow(elementId);
     }, []);
+
+    useEffect(() => {
+        setTableRows(rows);
+    }, [rows]);
 
     return (
         <div className="reflex">

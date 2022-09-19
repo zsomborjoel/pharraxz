@@ -1,29 +1,23 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
 import { GridColDef, GridSortModel } from '@mui/x-data-grid';
-import OrderService from '../../services/OrderService';
-import { OrderView } from '../../services/model/OrderView';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
 import OrderForm from './OrderForm';
 import { OrderType } from '../../services/enum/OrderType';
+import { useGetAllOrder } from '../../queries/OrderQuery';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const [orderViews, setOrderViews] = useState<OrderView[]>([]);
+    const { isLoading, data: orderViews } = useGetAllOrder();
     const [sortModel] = useState<GridSortModel>([
         {
             field: 'orderId',
             sort: 'desc',
         },
     ]);
-
-    useEffect(() => {
-        OrderService.getAll().then((result) => {
-            setOrderViews(result.data);
-        });
-    }, []);
 
     const rows = orderViews;
 
@@ -97,9 +91,13 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         },
     ];
 
+    if (isLoading) {
+        return <LoadingIndicator loading />;
+    }
+
     return (
         <TableAndDetailsLayout
-            rows={rows}
+            rows={rows!}
             columns={columns}
             pageUrl="/order"
             sortModelInitialState={sortModel}

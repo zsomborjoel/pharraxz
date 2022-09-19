@@ -9,8 +9,8 @@ import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
 import DatePicker from '../../components/DatePicker';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useDeleteOrder, useSaveOrder } from '../../queries/OrderQuery';
-import { useGetAllProducts } from '../../queries/ProductQuery';
-import SnackbarContext from '../../utils/snackbar/SnackbarContext';
+import { useGetAllProduct } from '../../queries/ProductQuery';
+import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { handleError } from '../../utils/ErrorHandler';
 
 export type OrderFormProps = {
@@ -32,7 +32,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const { showSnackbar } = useContext(SnackbarContext);
 
-    const { isLoading, data: products } = useGetAllProducts();
+    const { isLoading, data: products } = useGetAllProduct();
     const { mutate: deleteOrderMutate } = useDeleteOrder();
     const { mutate: saveOrderMutate } = useSaveOrder();
 

@@ -19,11 +19,15 @@ export const ROUTES = {
 };
 
 export const QUERIES = {
-    GET_ALL_PRODUCTS: 'getAllProducts',
+    GET_ALL_PRODUCT: 'getAllProduct',
     DELETE_PRODUCT: 'deleteProduct',
-    GET_ALL_ORDERS: 'getAllOrders',
+    SAVE_PRODUCT: 'saveProduct',
+    GET_ALL_ORDER: 'getAllOrder',
     DELETE_ORDER: 'deleteOrder',
     SAVE_ORDER: 'saveOrder',
+    GET_ALL_SUPPLIER: 'getAllSupplier',
+    DELETE_SUPPLIER: 'deleteSupplier',
+    SAVE_SUPPLIER: 'saveSupplier',
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

@@ -1,18 +1,19 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
 import { GridColDef } from '@mui/x-data-grid';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
-import { ProductContext } from '../../contexts/ProductContext';
 import ProductForm from './ProductForm';
-import { SupplierContext } from '../../contexts/SupplierContext';
 import { Supplier } from '../../services/model/Supplier';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useGetAllProduct } from '../../queries/ProductQuery';
+import { useGetAllSupplier } from '../../queries/SupplierQuery';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const { products } = useContext(ProductContext);
-    const { suppliers } = useContext(SupplierContext);
+    const { isLoading: isLoadingProducts, data: products } = useGetAllProduct();
+    const { isLoading: isLoadingSuppliers, data: suppliers } = useGetAllSupplier();
 
     const getSupplierName = (suppliers: Supplier[], e: any): any => {
         if (e.row.supplierId === null) {
@@ -39,7 +40,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'supplierId',
             headerName: 'Supplier',
             width: 130,
-            valueGetter: (e) => getSupplierName(suppliers, e),
+            valueGetter: (e) => getSupplierName(suppliers!, e),
         },
         {
             field: 'packaging',
@@ -73,7 +74,11 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         },
     ];
 
-    return <TableAndDetailsLayout rows={rows} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
+    if (isLoadingProducts || isLoadingSuppliers) {
+        return <LoadingIndicator loading />;
+    }
+
+    return <TableAndDetailsLayout rows={rows!} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
 };
 
 export default OrderPage;
