@@ -4,7 +4,11 @@ import { ENDPOINTS, QUERIES } from '../configs/constants';
 import GenericService from '../services/GenericService';
 
 export const useGetAllProduct = (): UseQueryResult<Product[]> =>
-    useQuery(QUERIES.GET_ALL_PRODUCT, async () => GenericService.getAll(ENDPOINTS.PRODUCT).then((res) => res.data));
+    useQuery(QUERIES.GET_ALL_PRODUCT, async () =>
+        GenericService.getAll<Product>(ENDPOINTS.PRODUCT).then((res) =>
+            res.data.map((product) => ({ ...product, id: product.name }))
+        )
+    );
 
 export const useDeleteProduct = (): UseMutationResult<void, unknown, string, unknown> =>
     useMutation(QUERIES.DELETE_PRODUCT, async (id: string) =>

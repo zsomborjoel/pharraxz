@@ -1,6 +1,6 @@
 import axios from 'axios';
 import TokenService from './TokenService';
-import { ENDPOINTS } from '../configs/constants';
+import { ENDPOINTS, URL_PATHS } from '../configs/constants';
 
 const instance = axios.create({
     baseURL: ENDPOINTS.BASE,
@@ -28,7 +28,7 @@ instance.interceptors.response.use(
     async (err) => {
         const originalConfig = err.config;
 
-        if (originalConfig.url !== '/auth/login' && err.response) {
+        if (originalConfig.url !== URL_PATHS.LOGIN_PATH && err.response) {
             // Access Token was expired
             // eslint-disable-next-line no-underscore-dangle
             if (err.response.status === 401 && !originalConfig._retry) {
@@ -36,7 +36,7 @@ instance.interceptors.response.use(
                 originalConfig._retry = true;
 
                 try {
-                    const rs = await instance.post('/auth/refreshtoken', {
+                    const rs = await instance.post(URL_PATHS.REFRESH_TOKEN_PATH, {
                         refreshToken: TokenService.getLocalRefreshToken(),
                     });
                     const { accessToken } = rs.data;

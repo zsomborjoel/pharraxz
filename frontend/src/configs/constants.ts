@@ -1,9 +1,14 @@
 import { SERVER_URL } from './env';
 
+export const URL_PATHS = {
+    REFRESH_TOKEN_PATH: '/auth/refreshtoken',
+    LOGIN_PATH: '/auth/login',
+};
+
 export const ENDPOINTS = {
     BASE: SERVER_URL,
-    REFRESH_TOKEN: `${SERVER_URL}/auth/refreshtoken`,
-    LOGIN: `${SERVER_URL}/auth/login`,
+    REFRESH_TOKEN: SERVER_URL + URL_PATHS.REFRESH_TOKEN_PATH,
+    LOGIN: SERVER_URL + URL_PATHS.LOGIN_PATH,
     ORDER: `${SERVER_URL}/orders`,
     USER: `${SERVER_URL}/users`,
     PRODUCT: `${SERVER_URL}/products`,
