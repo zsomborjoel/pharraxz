@@ -35,32 +35,56 @@ const TableAndDetailsLayout: FC<Props> = ({
 
     const { id } = useParams<UrlParams>();
 
-    const selectRow = (elementId: string): void => {
-        const newUrl = `${pageUrl}/${encodeURIComponent(elementId ?? '')}`;
+    const getFirstElement = (): any => {
+        if (tableRows.length > 0) {
+            return tableRows[0];
+        }
+
+        return null;
+    };
+
+    const selectRow = (element: any): void => {
+        const newUrl = `${pageUrl}/${encodeURIComponent(element?.id ?? '')}`;
         window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
 
-        const selectedElement = tableRows.find((element) => element.id === elementId);
-        setSelectedRow(selectedElement);
+        setSelectionModel([element?.id ?? '']);
+        setSelectedRow(element);
     };
 
     const updateElementInTableView = (element: any): void => {
-        const updatedTableRows = tableRows.map((row) => (row.id === element.id ? element : row));
+        let isExistingElement = false;
 
-        if (updatedTableRows.indexOf(element) === -1) {
+        const updatedTableRows = tableRows.map((row) => {
+            if (row.id === element.id) {
+                isExistingElement = true;
+                return element;
+            }
+
+            return row;
+        });
+
+        if (!isExistingElement) {
             updatedTableRows.push(element);
         }
 
         setTableRows(updatedTableRows);
+        selectRow(element);
     };
 
-    const deleteElementInTableView = (element: any): void => {
-        const filteredTableRows = tableRows.filter((row) => row.id !== element.id);
+    const deleteElementInTableView = (elementId: string): void => {
+        const filteredTableRows = tableRows.filter((row) => row.id !== elementId);
+
         setTableRows(filteredTableRows);
+        selectRow(null);
     };
 
     const renderDetailedView = (): ReactElement => {
         if (!selectedRow) {
-            return <LoadingIndicator loading />;
+            return (
+                <Box display="flex" justifyContent="center">
+                    No row selected
+                </Box>
+            );
         }
 
         return (
@@ -73,19 +97,22 @@ const TableAndDetailsLayout: FC<Props> = ({
     };
 
     useEffect(() => {
-        let elementId = tableRows[0].id;
-
-        if (id) {
-            elementId = id;
-        }
-
-        setSelectionModel([elementId]);
-        selectRow(elementId);
-    }, []);
-
-    useEffect(() => {
         setTableRows(rows);
     }, [rows]);
+
+    useEffect(() => {
+        if (tableRows.length > 0 && !selectedRow) {
+            let selectedElement;
+
+            if (id) {
+                selectedElement = tableRows.find((element) => element.id.toString() === id);
+            } else {
+                selectedElement = getFirstElement();
+            }
+
+            selectRow(selectedElement);
+        }
+    }, [tableRows]);
 
     return (
         <div className="reflex">
