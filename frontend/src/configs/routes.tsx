@@ -13,7 +13,7 @@ export default [
         name: 'Order',
     },
     {
-        path: `${ROUTES.ORDER}:id`,
+        path: `${ROUTES.ORDER}/:id`,
         element: <OrderPage />,
         name: 'Order',
     },
@@ -23,7 +23,7 @@ export default [
         name: 'Product',
     },
     {
-        path: `${ROUTES.PRODUCT}:id`,
+        path: `${ROUTES.PRODUCT}/:id`,
         element: <ProductPage />,
         name: 'Product',
     },

@@ -36,7 +36,7 @@ const TableAndDetailsLayout: FC<Props> = ({
     const { id } = useParams<UrlParams>();
 
     const selectRow = (elementId: string): void => {
-        const newUrl = `${pageUrl}/${elementId}`;
+        const newUrl = `${pageUrl}/${encodeURIComponent(elementId ?? '')}`;
         window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
 
         const selectedElement = tableRows.find((element) => element.id === elementId);
