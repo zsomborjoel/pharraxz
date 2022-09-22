@@ -8,12 +8,17 @@ import { Supplier } from '../../services/model/Supplier';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useGetAllProduct } from '../../queries/ProductQuery';
 import { useGetAllSupplier } from '../../queries/SupplierQuery';
+import { Product } from '../../services/model/Product';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const { isLoading: isLoadingProducts, data: products } = useGetAllProduct();
-    const { isLoading: isLoadingSuppliers, data: suppliers } = useGetAllSupplier();
+    const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
+    const { isLoading: isLoadingSuppliers, isFetching: isFetchingSuppliers, data: suppliers } = useGetAllSupplier();
+
+    if (isLoadingProducts || isFetchingProducts || isLoadingSuppliers || isFetchingSuppliers) {
+        return <LoadingIndicator loading />;
+    }
 
     const getSupplierName = (suppliers: Supplier[], e: any): any => {
         if (e.row.supplierId === null) {
@@ -23,7 +28,9 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         return suppliers.find((supplier) => supplier.id === e.row.supplierId)?.name;
     };
 
-    const rows = products;
+    const getProductsWithId = (): Product[] => products!.map((product) => ({ ...product, id: product.name }));
+
+    const rows = getProductsWithId();
 
     const columns: GridColDef[] = [
         {
@@ -66,6 +73,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'releasable',
             headerName: 'Releasable',
             width: 130,
+            type: 'boolean',
         },
         {
             field: 'releasableBy',
@@ -74,11 +82,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         },
     ];
 
-    if (isLoadingProducts || isLoadingSuppliers) {
-        return <LoadingIndicator loading />;
-    }
-
-    return <TableAndDetailsLayout rows={rows!} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
+    return <TableAndDetailsLayout rows={rows} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
 };
 
 export default OrderPage;

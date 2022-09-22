@@ -7,6 +7,8 @@ import OrderForm from './OrderForm';
 import { OrderType } from '../../services/enum/OrderType';
 import { useGetAllOrder } from '../../queries/OrderQuery';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import DateFilterOperator from '../../components/grid-operators/DateFilterOperator';
+import OrderTypeOperator from '../../components/grid-operators/OrderTypeOperator';
 
 export type OrderPageProps = {};
 
@@ -26,6 +28,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'orderId',
             headerName: 'Order id',
             width: 130,
+            type: 'number',
         },
         {
             field: 'description',
@@ -37,6 +40,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             headerName: 'Order detail id',
             width: 130,
             valueGetter: (e) => e.row.id,
+            type: 'number',
         },
         {
             field: 'product.name',
@@ -67,27 +71,32 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             headerName: 'Releasable',
             width: 130,
             valueGetter: (e) => e.row.product.releasable,
+            type: 'boolean',
         },
         {
             field: 'quantity',
             headerName: 'Quantity',
             width: 130,
+            type: 'number',
         },
         {
             field: 'oderType',
             headerName: 'Oder type',
             width: 130,
             valueGetter: (e) => OrderType[e.row.orderType as keyof typeof OrderType],
+            filterOperators: OrderTypeOperator,
         },
         {
             field: 'startDate',
             headerName: 'Order start date',
             width: 130,
+            filterOperators: DateFilterOperator(),
         },
         {
             field: 'endDate',
             headerName: 'Order end date',
             width: 130,
+            filterOperators: DateFilterOperator(),
         },
     ];
 

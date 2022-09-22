@@ -7,7 +7,7 @@ const getAll = async <T>(endpoint: string): Promise<AxiosResponse<T[]>> =>
 const del = async (endpoint: string, id: string | number): Promise<AxiosResponse<void>> =>
     axios.delete(`${endpoint}/${id}`, { headers: AuthHeader() });
 
-const save = async <T>(endpoint: string, request: T): Promise<AxiosResponse<T>> =>
+const save = async <T, U>(endpoint: string, request: T): Promise<AxiosResponse<U>> =>
     axios.post(endpoint, request, { headers: AuthHeader() });
 
 const GenericService = {

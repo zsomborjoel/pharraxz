@@ -72,7 +72,7 @@ const TableAndDetailsLayout: FC<Props> = ({
     };
 
     const deleteElementInTableView = (elementId: string): void => {
-        const filteredTableRows = tableRows.filter((row) => row.id !== elementId);
+        const filteredTableRows = tableRows.filter((row) => row.id.toString() !== elementId);
 
         setTableRows(filteredTableRows);
         selectRow(null);
@@ -125,7 +125,7 @@ const TableAndDetailsLayout: FC<Props> = ({
                             columns={columns}
                             pageSize={100}
                             rowsPerPageOptions={[100]}
-                            onRowClick={(params) => selectRow(params.row.id)}
+                            onRowClick={(params) => selectRow(params.row)}
                             sortModel={sortModel}
                             onSortModelChange={setSortModel}
                             selectionModel={selectionModel}

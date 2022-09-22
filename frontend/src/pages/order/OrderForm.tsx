@@ -23,7 +23,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
-    const [productName, setProductName] = useState<string | null>(selectedElement?.product.name || '');
+    const [productName, setProductName] = useState<string | null>(selectedElement?.product?.name || '');
     const [orderType, setOrderType] = useState<string | null>(selectedElement?.orderType || '');
     const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
     const [startDate, setStartDate] = useState<Date | null>(selectedElement?.startDate || null);
@@ -40,7 +40,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setOrderId(selectedElement?.orderId || null);
         setDescription(selectedElement?.description || '');
         setOrderDetailId(selectedElement?.id || null);
-        setProductName(selectedElement?.product.name || '');
+        setProductName(selectedElement?.product?.name || '');
         setOrderType(selectedElement?.orderType || '');
         setQuantity(selectedElement?.quantity || 0);
         setStartDate(selectedElement?.startDate || null);
@@ -82,7 +82,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         if (orderDetailId) {
             deleteOrderMutate(orderDetailId, {
                 onSuccess: () => {
-                    onDelete(selectedElement);
+                    onDelete(selectedElement.id);
                     showSnackbar({ severity: 'success', text: 'Successfully deleted.' });
                 },
                 onError: (error) => {
@@ -112,7 +112,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         const changed =
             orderId !== (selectedElement?.orderId || null) ||
             description !== (selectedElement?.description || '') ||
-            productName !== (selectedElement?.product.name || '') ||
+            productName !== (selectedElement?.product?.name || '') ||
             orderType !== (selectedElement?.orderType || '') ||
             quantity !== (selectedElement?.quantity || null) ||
             startDate !== (selectedElement?.startDate || null) ||

@@ -10,12 +10,12 @@ export const useGetAllProduct = (): UseQueryResult<Product[]> =>
         )
     );
 
-export const useDeleteProduct = (): UseMutationResult<void, unknown, string, unknown> =>
+export const useDeleteProduct = (): UseMutationResult<void, string, string, unknown> =>
     useMutation(QUERIES.DELETE_PRODUCT, async (id: string) =>
         GenericService.del(ENDPOINTS.PRODUCT, id).then((res) => res.data)
     );
 
-export const useSaveProduct = (): UseMutationResult<Product, string, Product> =>
+export const useSaveProduct = (): UseMutationResult<string, string, Product> =>
     useMutation(QUERIES.SAVE_PRODUCT, (request: Product) =>
-        GenericService.save(ENDPOINTS.PRODUCT, request).then((res) => res.data)
+        GenericService.save<Product, string>(ENDPOINTS.PRODUCT, request).then((res) => res.data)
     );
