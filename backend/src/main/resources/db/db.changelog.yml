@@ -43,4 +43,5 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-products-modification-20220903-1.yml
   - include:
       file: classpath*:db/load/changelog-load-products-20220831-1.yml
-
+  - include:
+      file: classpath*:db/schema/changelog-products-modification-20220924-1.yml

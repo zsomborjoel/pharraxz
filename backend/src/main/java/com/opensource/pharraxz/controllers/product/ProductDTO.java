@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ProductDTO {
+    private Long id;
     private String name;
     private String atc;
     private Long supplierId;

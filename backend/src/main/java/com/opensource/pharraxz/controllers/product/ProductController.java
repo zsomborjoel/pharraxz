@@ -1,5 +1,6 @@
 package com.opensource.pharraxz.controllers.product;
 
+import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +22,16 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<Void> deleteProduct(@PathVariable String id) {
+    public Mono<Void> deleteProduct(@PathVariable Long id) {
         return productService.deleteById(id);
     }
 
     @PostMapping
-    public Mono<ProductDTO> save(@RequestBody ProductDTO productDTO) {
+    public Mono<Long> save(@RequestBody ProductDTO productDTO) {
         return Mono.just(productDTO)
                 .map(productMapper::fromDTO)
                 .flatMap(productService::save)
-                .map(productMapper::toDTO);
+                .map(Product::getId);
     }
 
 }

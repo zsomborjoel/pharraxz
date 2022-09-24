@@ -1,0 +1,50 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 0839e084-52f1-4f72-8f2c-dd7d5a636af1
+      author: zsomborjoel
+      changes:
+        - dropColumn:
+            columnName: product_id
+            schemaName: public
+            tableName: order_details
+        - dropColumn:
+            columnName: product_id
+            schemaName: public
+            tableName: stock
+        - dropPrimaryKey:
+            constraintName: products_pkey
+            dropIndex: true
+            schemaName: public
+            tableName: products
+        - addColumn:
+            tableName: products
+            columns:
+              - column:
+                  name: product_id
+                  type: int
+                  autoIncrement: true
+                  startWith: 100
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addColumn:
+            tableName: order_details
+            columns:
+              - column:
+                  name: product_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_details_product_id
+                    references: products(product_id)
+        - addColumn:
+            tableName: stock
+            columns:
+              - column:
+                  name: product_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stock_product_id
+                    references: products(product_id)

@@ -31,7 +31,7 @@ public class OrderDetail  {
     private Long orderId;
 
     @Column("product_id")
-    private String productId;
+    private Long productId;
 
     @Transient
     private Product product;

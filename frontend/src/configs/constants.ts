@@ -10,9 +10,11 @@ export const ENDPOINTS = {
     REFRESH_TOKEN: SERVER_URL + URL_PATHS.REFRESH_TOKEN_PATH,
     LOGIN: SERVER_URL + URL_PATHS.LOGIN_PATH,
     ORDER: `${SERVER_URL}/orders`,
+    ORDER_DETAIL: `${SERVER_URL}/orders/detail`,
     USER: `${SERVER_URL}/users`,
     PRODUCT: `${SERVER_URL}/products`,
     SUPPLIER: `${SERVER_URL}/suppliers`,
+    RELEASEABLECODE: `${SERVER_URL}/release-able-codes`,
 };
 
 export const ROUTES = {
@@ -33,6 +35,7 @@ export const QUERIES = {
     GET_ALL_SUPPLIER: 'getAllSupplier',
     DELETE_SUPPLIER: 'deleteSupplier',
     SAVE_SUPPLIER: 'saveSupplier',
+    GET_ALL_RELEASEABLECODE: 'getAllReleaseAbleCode',
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

@@ -106,7 +106,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
 
     return (
         <TableAndDetailsLayout
-            rows={rows!}
+            rows={rows ?? [{}]}
             columns={columns}
             pageUrl="/order"
             sortModelInitialState={sortModel}

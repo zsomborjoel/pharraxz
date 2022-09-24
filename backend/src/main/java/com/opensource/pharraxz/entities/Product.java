@@ -17,6 +17,9 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Product {
 
     @Id
+    @Column("product_id")
+    private Long id;
+
     @Column("name")
     private String name;
 

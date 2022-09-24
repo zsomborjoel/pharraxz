@@ -14,17 +14,17 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Mono<Product> findById(final String name) {
-        return productRepository.findById(name)
-                .switchIfEmpty(Mono.error(new EntityNotFoundException(Product.class, name)));
+    public Mono<Product> findById(final Long id) {
+        return productRepository.findById(id)
+                .switchIfEmpty(Mono.error(new EntityNotFoundException(Product.class, id)));
     }
 
     public Flux<Product> getAll() {
         return productRepository.findAll();
     }
 
-    public Mono<Void> deleteById(final String name) {
-        return productRepository.deleteById(name);
+    public Mono<Void> deleteById(final Long id) {
+        return productRepository.deleteById(id);
     }
 
     public Mono<Product> save(final Product product) {

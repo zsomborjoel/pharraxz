@@ -4,33 +4,39 @@ import '../../styles.css';
 import { GridColDef } from '@mui/x-data-grid';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
 import ProductForm from './ProductForm';
-import { Supplier } from '../../services/model/Supplier';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useGetAllProduct } from '../../queries/ProductQuery';
 import { useGetAllSupplier } from '../../queries/SupplierQuery';
-import { Product } from '../../services/model/Product';
+import { useGetAllReleaseAbleCode } from '../../queries/ReleaseAbleCodeQuery';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
     const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
     const { isLoading: isLoadingSuppliers, isFetching: isFetchingSuppliers, data: suppliers } = useGetAllSupplier();
+    const {
+        isLoading: isLoadingReleaseAbleCodes,
+        isFetching: isFetchingReleaseAbleCodes,
+        data: releaseAbleCodes,
+    } = useGetAllReleaseAbleCode();
 
-    if (isLoadingProducts || isFetchingProducts || isLoadingSuppliers || isFetchingSuppliers) {
-        return <LoadingIndicator loading />;
-    }
-
-    const getSupplierName = (suppliers: Supplier[], e: any): any => {
+    const getSupplierName = (e: any): any => {
         if (e.row.supplierId === null) {
             return null;
         }
 
-        return suppliers.find((supplier) => supplier.id === e.row.supplierId)?.name;
+        return suppliers?.find((supplier) => supplier.id === e.row.supplierId)?.name;
     };
 
-    const getProductsWithId = (): Product[] => products!.map((product) => ({ ...product, id: product.name }));
+    const getReleaseAbleCodeDesc = (e: any): any => {
+        if (e.row.releasableBy === null) {
+            return null;
+        }
 
-    const rows = getProductsWithId();
+        return releaseAbleCodes?.find((releaseAbleCode) => releaseAbleCode.code === e.row.releasableBy)?.description;
+    };
+
+    const rows = products;
 
     const columns: GridColDef[] = [
         {
@@ -47,7 +53,7 @@ const OrderPage: FC<OrderPageProps> = (): any => {
             field: 'supplierId',
             headerName: 'Supplier',
             width: 130,
-            valueGetter: (e) => getSupplierName(suppliers!, e),
+            valueGetter: (e) => getSupplierName(e),
         },
         {
             field: 'packaging',
@@ -78,11 +84,25 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         {
             field: 'releasableBy',
             headerName: 'Releasable By',
-            width: 130,
+            width: 1005,
+            valueGetter: (e) => `${e.value} - (${getReleaseAbleCodeDesc(e)})`,
         },
     ];
 
-    return <TableAndDetailsLayout rows={rows} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
+    if (
+        isLoadingProducts &&
+        isFetchingProducts &&
+        isLoadingSuppliers &&
+        isFetchingSuppliers &&
+        isLoadingReleaseAbleCodes &&
+        isFetchingReleaseAbleCodes
+    ) {
+        return <LoadingIndicator loading />;
+    }
+
+    return (
+        <TableAndDetailsLayout rows={rows ?? [{}]} columns={columns} pageUrl="/product" detailedView={ProductForm} />
+    );
 };
 
 export default OrderPage;

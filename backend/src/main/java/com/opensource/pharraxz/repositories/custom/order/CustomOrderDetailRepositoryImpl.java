@@ -19,7 +19,7 @@ public class CustomOrderDetailRepositoryImpl implements CustomOrderDetailReposit
                 select od.*, p.*
                 from order_details od
                 join products p
-                on od.product_id = p.name
+                on od.product_id = p.product_id
                 where od.order_id = :orderId""";
 
         return client.sql(query)

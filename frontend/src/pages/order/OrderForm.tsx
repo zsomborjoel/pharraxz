@@ -23,7 +23,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [orderId, setOrderId] = useState<number | null>(selectedElement?.orderId);
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
-    const [productName, setProductName] = useState<string | null>(selectedElement?.product?.name || '');
+    const [productId, setProductId] = useState<number | null>(selectedElement?.product?.id);
     const [orderType, setOrderType] = useState<string | null>(selectedElement?.orderType || '');
     const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
     const [startDate, setStartDate] = useState<Date | null>(selectedElement?.startDate || null);
@@ -40,7 +40,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setOrderId(selectedElement?.orderId || null);
         setDescription(selectedElement?.description || '');
         setOrderDetailId(selectedElement?.id || null);
-        setProductName(selectedElement?.product?.name || '');
+        setProductId(selectedElement?.product?.id || 0);
         setOrderType(selectedElement?.orderType || '');
         setQuantity(selectedElement?.quantity || 0);
         setStartDate(selectedElement?.startDate || null);
@@ -52,14 +52,14 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setOrderId(0);
         setDescription('');
         setOrderDetailId(null);
-        setProductName('');
+        setProductId(0);
         setOrderType('');
         setQuantity(0);
         setStartDate(null);
         setEndDate(null);
     };
 
-    const getProduct = (): Product | null | undefined => products!.find((product) => product?.name === productName);
+    const getProduct = (): Product | null | undefined => products!.find((product) => product?.id === productId);
 
     const getOrderDetail = (): OrderDetail =>
         ({
@@ -104,6 +104,12 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             },
         });
 
+    const getProductNameById = (id: number | null): string | null | undefined =>
+        products?.find((product) => product.id === id)?.name;
+
+    const getProductIdByName = (name: string | null): number | null | undefined =>
+        products?.find((product) => product.name === name)?.id;
+
     useEffect(() => {
         initializeForm();
     }, [selectedElement]);
@@ -112,15 +118,14 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         const changed =
             orderId !== (selectedElement?.orderId || null) ||
             description !== (selectedElement?.description || '') ||
-            productName !== (selectedElement?.product?.name || '') ||
+            productId !== (selectedElement?.product?.id || null) ||
             orderType !== (selectedElement?.orderType || '') ||
             quantity !== (selectedElement?.quantity || null) ||
             startDate !== (selectedElement?.startDate || null) ||
             endDate !== (selectedElement?.endDate || null);
 
         const mandatoryExists =
-            productName !== null &&
-            productName !== '' &&
+            productId !== null &&
             orderType !== null &&
             orderType !== '' &&
             quantity !== 0 &&
@@ -128,7 +133,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             endDate !== null;
 
         setIsSaveable(changed && mandatoryExists);
-    }, [orderId, description, productName, orderType, quantity, startDate, endDate]);
+    }, [orderId, description, productId, orderType, quantity, startDate, endDate]);
 
     if (isLoading) {
         return <LoadingIndicator loading />;
@@ -170,8 +175,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                             fullWidth
                             size="small"
                             options={products!.map((product) => product.name)}
-                            value={productName}
-                            onChange={(_e, v) => setProductName(v!)}
+                            value={getProductNameById(productId)}
+                            onChange={(_e, v) => setProductId(getProductIdByName(v)!)}
                             renderInput={(params) => <TextField {...params} label="Product Name" />}
                         />
                     </Grid>

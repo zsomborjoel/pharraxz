@@ -1,10 +1,13 @@
 import React, { FC, useEffect, useState, useContext } from 'react';
-import { Box, Grid, Button } from '@mui/material';
+import { Box, Grid, Button, TextField, FormControlLabel, Switch, Autocomplete } from '@mui/material';
 import { Product } from '../../services/model/Product';
 import { useDeleteProduct, useSaveProduct } from '../../queries/ProductQuery';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { handleError } from '../../utils/ErrorHandler';
 import SaveUtil from '../../utils/SaveUtil';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useGetAllSupplier } from '../../queries/SupplierQuery';
+import { useGetAllReleaseAbleCode } from '../../queries/ReleaseAbleCodeQuery';
 
 export type ProductFormProps = {
     selectedElement: Product;
@@ -19,6 +22,13 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
     const [isNewProduct, setIsNewProduct] = useState<boolean>(false);
 
     const { showSnackbar } = useContext(SnackbarContext);
+
+    const { isLoading: isLoadingSupplier, isFetching: isFetchingSupplier, data: suppliers } = useGetAllSupplier();
+    const {
+        isLoading: isLoadingReleaseAbleCode,
+        isFetching: isFetchingReleaseAbleCode,
+        data: releaseAbleCodes,
+    } = useGetAllReleaseAbleCode();
 
     const { mutate: deleteProductMutate } = useDeleteProduct();
     const { mutate: saveProductMutate } = useSaveProduct();
@@ -36,9 +46,9 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
     };
 
     const deleteProduct = (): void => {
-        deleteProductMutate(selectedElement.name!, {
+        deleteProductMutate(selectedElement.id!, {
             onSuccess: () => {
-                onDelete(selectedElement.name!);
+                onDelete(`${selectedElement.id!}`);
                 showSnackbar({ severity: 'success', text: 'Successfully deleted.' });
             },
             onError: (error) => {
@@ -48,9 +58,9 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
     };
 
     const saveProduct = (): void => {
-        saveProductMutate(selectedElement, {
-            onSuccess() {
-                onSave(selectedElement);
+        saveProductMutate(product!, {
+            onSuccess(id) {
+                onSave({ ...product!, id });
                 setIsSaveable(false);
                 showSnackbar({ severity: 'success', text: 'Successfully saved.' });
             },
@@ -60,33 +70,15 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
         });
     };
 
-    /*
+    const getSupplierNameById = (id: number | null | undefined): string | null | undefined =>
+        suppliers?.find((supplier) => supplier.id === id)?.name;
+
+    const getSupplierIdByName = (name: string | null): number | null | undefined =>
+        suppliers?.find((supplier) => supplier.name === name)?.id;
+
     const updateProduct = (property: keyof Product, value: any): void => {
         setProduct({ ...product, [property]: value } as Product);
     };
-
-    <TextField
-                        required
-                        label="Supplier Code"
-                        fullWidth
-                        margin="dense"
-                        size="small"
-                        maxRows={3}
-                        multiline
-                        value={supplier?.code ?? ''}
-                        onChange={(e) => updateSupplier('code', e.target.value)}
-                    />
-
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={supplier?.archive}
-                                onChange={(e) => updateSupplier('archive', e.target.checked)}
-                            />
-                        }
-                        label="Archive"
-                    />
-    */
 
     useEffect(() => {
         initializeForm();
@@ -96,15 +88,122 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
         const isValid = SaveUtil.isSaveEnabled(selectedElement, product, [
             'name',
             'packaging',
-            'distributor',
+            'supplierId',
             'releasable',
         ]);
         setIsSaveable(isValid ?? false);
     }, [selectedElement, product]);
 
+    if (isLoadingSupplier && isFetchingSupplier && isLoadingReleaseAbleCode && isFetchingReleaseAbleCode) {
+        return <LoadingIndicator loading />;
+    }
+
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
             <Box>
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Product Name"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            required
+                            value={product?.name ?? ''}
+                            onChange={(e) => updateProduct('name', e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Atc"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            value={product?.atc ?? ''}
+                            onChange={(e) => updateProduct('atc', e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Packaging"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            required
+                            value={product?.packaging ?? ''}
+                            onChange={(e) => updateProduct('packaging', e.target.value)}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Description"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            multiline
+                            value={product?.description ?? ''}
+                            onChange={(e) => updateProduct('description', e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <Autocomplete
+                            sx={{ pt: 1 }}
+                            fullWidth
+                            size="small"
+                            options={suppliers!.map((product) => product.name)}
+                            value={getSupplierNameById(product?.supplierId)}
+                            onChange={(_e, v) => updateProduct('supplierId', getSupplierIdByName(v))}
+                            renderInput={(params) => <TextField {...params} label="Supplier Name" />}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Distributor"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            value={product?.distributor ?? ''}
+                            onChange={(e) => updateProduct('distributor', e.target.value)}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={1} sx={{ mb: 2 }}>
+                    <Grid item xs={4} display="flex">
+                        <TextField
+                            label="Inn"
+                            fullWidth
+                            margin="dense"
+                            size="small"
+                            value={product?.inn ?? ''}
+                            onChange={(e) => updateProduct('inn', e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <Autocomplete
+                            sx={{ pt: 1 }}
+                            fullWidth
+                            size="small"
+                            options={releaseAbleCodes!.map((releaseAbleCode) => releaseAbleCode.code)}
+                            value={product?.releasableBy}
+                            onChange={(_e, v) => updateProduct('releasableBy', v)}
+                            renderInput={(params) => <TextField {...params} label="Releaseable By" />}
+                        />
+                    </Grid>
+                    <Grid item xs={4} display="flex">
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={product?.releasable ?? false}
+                                    onChange={(e) => updateProduct('releasable', e.target.checked)}
+                                    required
+                                />
+                            }
+                            label="Releasable"
+                        />
+                    </Grid>
+                </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
                         <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveProduct} variant="contained">

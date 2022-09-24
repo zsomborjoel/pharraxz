@@ -3,7 +3,6 @@ import { Box } from '@mui/material';
 import { ReflexContainer, ReflexElement, ReflexSplitter } from 'react-reflex';
 import { DataGrid, GridColDef, GridSelectionModel, GridSortModel } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
-import LoadingIndicator from './LoadingIndicator';
 
 type Props = {
     rows: any[];
@@ -24,10 +23,6 @@ const TableAndDetailsLayout: FC<Props> = ({
     sortModelInitialState,
     detailedView: DetailedView,
 }) => {
-    if (!rows.length) {
-        return <LoadingIndicator loading />;
-    }
-
     const [tableRows, setTableRows] = useState<any[]>(rows);
     const [selectedRow, setSelectedRow] = useState<any>();
     const [sortModel, setSortModel] = useState<GridSortModel | undefined>(sortModelInitialState);
@@ -72,10 +67,9 @@ const TableAndDetailsLayout: FC<Props> = ({
     };
 
     const deleteElementInTableView = (elementId: string): void => {
-        const filteredTableRows = tableRows.filter((row) => row.id.toString() !== elementId);
-
+        const filteredTableRows = tableRows.filter((row) => row.id.toString() !== elementId.toString());
         setTableRows(filteredTableRows);
-        selectRow(null);
+        selectRow({});
     };
 
     const renderDetailedView = (): ReactElement => {
@@ -97,6 +91,10 @@ const TableAndDetailsLayout: FC<Props> = ({
     };
 
     useEffect(() => {
+        if (!rows.length) {
+            setSelectedRow({});
+        }
+
         setTableRows(rows);
     }, [rows]);
 

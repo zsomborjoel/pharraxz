@@ -5,17 +5,15 @@ import GenericService from '../services/GenericService';
 
 export const useGetAllProduct = (): UseQueryResult<Product[]> =>
     useQuery(QUERIES.GET_ALL_PRODUCT, async () =>
-        GenericService.getAll<Product>(ENDPOINTS.PRODUCT).then((res) =>
-            res.data.map((product) => ({ ...product, id: product.name }))
-        )
+        GenericService.getAll<Product>(ENDPOINTS.PRODUCT).then((res) => res.data)
     );
 
-export const useDeleteProduct = (): UseMutationResult<void, string, string, unknown> =>
-    useMutation(QUERIES.DELETE_PRODUCT, async (id: string) =>
+export const useDeleteProduct = (): UseMutationResult<void, string, number, unknown> =>
+    useMutation(QUERIES.DELETE_PRODUCT, async (id: number) =>
         GenericService.del(ENDPOINTS.PRODUCT, id).then((res) => res.data)
     );
 
-export const useSaveProduct = (): UseMutationResult<string, string, Product> =>
+export const useSaveProduct = (): UseMutationResult<number, string, Product> =>
     useMutation(QUERIES.SAVE_PRODUCT, (request: Product) =>
-        GenericService.save<Product, string>(ENDPOINTS.PRODUCT, request).then((res) => res.data)
+        GenericService.save<Product, number>(ENDPOINTS.PRODUCT, request).then((res) => res.data)
     );

@@ -43,7 +43,7 @@ public class OrderService {
                 .map(updateOrder(orderRequest))
                 .flatMap(this::save);
 
-        final Mono<Product> productMono = productService.findById(orderRequest.getOrderDetail().getProduct().getName());
+        final Mono<Product> productMono = productService.findById(orderRequest.getOrderDetail().getProduct().getId());
 
         final Mono<OrderDetail> orderDetailMono = orderMono.zipWith(productMono)
                 .map(updateOrderDetail(orderRequest))
