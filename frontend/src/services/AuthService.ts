@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { User } from './model/User';
+import { Auth } from './model/Auth';
 
 const STORAGE_ITEM_USER = 'user';
 
@@ -22,7 +22,7 @@ const login = (username: string, password: string): Promise<boolean> =>
             username,
             password,
         })
-        .then((response: { data: User }) => {
+        .then((response: { data: Auth }) => {
             localStorage.setItem(STORAGE_ITEM_USER, JSON.stringify(response.data));
             setupAxiosInterceptors(response.data.jwtToken);
             return true;
@@ -32,7 +32,7 @@ const logout = (): void => {
     localStorage.removeItem(STORAGE_ITEM_USER);
 };
 
-const getCurrentUser = (): User | null => {
+const getCurrentUser = (): Auth | null => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
 
     if (user === null) {

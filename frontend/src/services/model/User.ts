@@ -1,7 +1,8 @@
 export interface User {
-    userId: number;
-    username: string;
-    roleNames?: string[] | null;
-    jwtToken: string;
-    refreshToken: string;
+    id: number | null;
+    firstname: string | null;
+    lastname: string | null;
+    username: string | null;
+    password: string | null;
+    userPositionId: number | null;
 }

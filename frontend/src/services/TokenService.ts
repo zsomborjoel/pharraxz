@@ -1,4 +1,4 @@
-import { User } from './model/User';
+import { Auth } from './model/Auth';
 
 const STORAGE_ITEM_USER = 'user';
 
@@ -34,7 +34,7 @@ const updateLocalAccessToken = (token: string): void => {
     localStorage.setItem(STORAGE_ITEM_USER, JSON.stringify(parsedUser));
 };
 
-const getUser = (): User | null => {
+const getUser = (): Auth | null => {
     const user = localStorage.getItem(STORAGE_ITEM_USER);
 
     if (user === null) {
@@ -44,7 +44,7 @@ const getUser = (): User | null => {
     return JSON.parse(user);
 };
 
-const setUser = (user: User): void => {
+const setUser = (user: Auth): void => {
     localStorage.setItem(STORAGE_ITEM_USER, JSON.stringify(user));
 };
 
