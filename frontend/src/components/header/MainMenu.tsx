@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { IconButton } from '@mui/material';
+import React, { FC, useState } from 'react';
+import { IconButton, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
@@ -7,9 +7,9 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
 import ArticleIcon from '@mui/icons-material/Article';
 import MedicationIcon from '@mui/icons-material/Medication';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export type MainMenuProps = {};
 
@@ -28,14 +28,14 @@ const menuItems = [
     },
     {
         id: 2,
-        menuLabel: 'Menu 3',
-        menuIcon: ArticleIcon,
-        link: '/menu3',
+        menuLabel: 'Supplier',
+        menuIcon: LocalShippingIcon,
+        link: '/supplier',
     },
 ];
 
 const MainMenu: FC<MainMenuProps> = () => {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleDrawer = () => () => {
         setIsMenuOpen(false);
@@ -47,16 +47,16 @@ const MainMenu: FC<MainMenuProps> = () => {
                 <MenuIcon />
             </IconButton>
             <SwipeableDrawer anchor="left" open={isMenuOpen} onClose={toggleDrawer()} onOpen={toggleDrawer()}>
-                <Box role="presentation" onClick={toggleDrawer()} onKeyDown={toggleDrawer()} sx={{ width: 300 }}>
+                <Box role="presentation" onClick={toggleDrawer()} onKeyDown={toggleDrawer()} sx={{ width: 200 }}>
                     <List>
                         {menuItems.map(({ id, menuLabel, menuIcon: Icon, link }) => (
                             <Link key={id} to={link} style={{ color: '#1976d2' }} onClick={() => setIsMenuOpen(false)}>
-                                <ListItem button key={menuLabel}>
+                                <ListItemButton key={menuLabel}>
                                     <ListItemIcon>
                                         <Icon />
                                     </ListItemIcon>
                                     <ListItemText primary={menuLabel} />
-                                </ListItem>
+                                </ListItemButton>
                             </Link>
                         ))}
                     </List>

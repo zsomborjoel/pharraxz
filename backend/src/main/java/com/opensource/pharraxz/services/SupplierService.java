@@ -1,9 +1,7 @@
 package com.opensource.pharraxz.services;
 
-import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.entities.Supplier;
 import com.opensource.pharraxz.exceptions.EntityNotFoundException;
-import com.opensource.pharraxz.repositories.ProductRepository;
 import com.opensource.pharraxz.repositories.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,14 @@ public class SupplierService {
 
     public Flux<Supplier> getAll() {
         return supplierRepository.findAll();
+    }
+
+    public Mono<Void> deleteById(final Long id) {
+        return supplierRepository.deleteById(id);
+    }
+
+    public Mono<Supplier> save(final Supplier supplier) {
+        return supplierRepository.save(supplier);
     }
 
 }

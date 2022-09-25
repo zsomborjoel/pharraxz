@@ -9,9 +9,9 @@ import { useGetAllProduct } from '../../queries/ProductQuery';
 import { useGetAllSupplier } from '../../queries/SupplierQuery';
 import { useGetAllReleaseAbleCode } from '../../queries/ReleaseAbleCodeQuery';
 
-export type OrderPageProps = {};
+export type ProductPageProps = {};
 
-const OrderPage: FC<OrderPageProps> = (): any => {
+const ProductPage: FC<ProductPageProps> = (): any => {
     const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
     const { isLoading: isLoadingSuppliers, isFetching: isFetchingSuppliers, data: suppliers } = useGetAllSupplier();
     const {
@@ -105,4 +105,4 @@ const OrderPage: FC<OrderPageProps> = (): any => {
     );
 };
 
-export default OrderPage;
+export default ProductPage;

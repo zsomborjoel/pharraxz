@@ -6,12 +6,12 @@ import GenericService from '../services/GenericService';
 export const useGetAllSupplier = (): UseQueryResult<Supplier[]> =>
     useQuery(QUERIES.GET_ALL_SUPPLIER, async () => GenericService.getAll(ENDPOINTS.SUPPLIER).then((res) => res.data));
 
-export const useDeleteSupplier = (): UseMutationResult<void, string, string, unknown> =>
-    useMutation(QUERIES.DELETE_SUPPLIER, (id: string) =>
+export const useDeleteSupplier = (): UseMutationResult<void, string, number, unknown> =>
+    useMutation(QUERIES.DELETE_SUPPLIER, (id: number) =>
         GenericService.del(ENDPOINTS.SUPPLIER, id).then((res) => res.data)
     );
 
-export const useSaveSupplier = (): UseMutationResult<string, string, Supplier> =>
+export const useSaveSupplier = (): UseMutationResult<number, string, Supplier> =>
     useMutation(QUERIES.SAVE_SUPPLIER, (request: Supplier) =>
-        GenericService.save<Supplier, string>(ENDPOINTS.SUPPLIER, request).then((res) => res.data)
+        GenericService.save<Supplier, number>(ENDPOINTS.SUPPLIER, request).then((res) => res.data)
     );

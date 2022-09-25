@@ -3,6 +3,7 @@ import HomePage from '../pages/home/HomePage';
 import OrderPage from '../pages/order/OrderPage';
 import { ROUTES } from './constants';
 import ProductPage from '../pages/product/ProductPage';
+import SupplierPage from '../pages/supplier/SupplierPage';
 
 export default [
     { path: `${ROUTES.ROOT}`, element: <HomePage />, name: 'Home' },
@@ -26,5 +27,15 @@ export default [
         path: `${ROUTES.PRODUCT}/:id`,
         element: <ProductPage />,
         name: 'Product',
+    },
+    {
+        path: `${ROUTES.SUPPLIER}`,
+        element: <SupplierPage />,
+        name: 'Supplier',
+    },
+    {
+        path: `${ROUTES.SUPPLIER}/:id`,
+        element: <SupplierPage />,
+        name: 'Supplier',
     },
 ];
