@@ -13,7 +13,7 @@ import OrderTypeOperator from '../../components/grid-operators/OrderTypeOperator
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const { isLoading, data: orderViews } = useGetAllOrder();
+    const { data: orderViews } = useGetAllOrder();
     const [sortModel] = useState<GridSortModel>([
         {
             field: 'orderId',
@@ -100,13 +100,13 @@ const OrderPage: FC<OrderPageProps> = (): any => {
         },
     ];
 
-    if (isLoading) {
+    if (orderViews === undefined) {
         return <LoadingIndicator loading />;
     }
 
     return (
         <TableAndDetailsLayout
-            rows={rows ?? [{}]}
+            rows={rows!}
             columns={columns}
             pageUrl="/order"
             sortModelInitialState={sortModel}

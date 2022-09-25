@@ -24,8 +24,8 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const { showSnackbar } = useContext(SnackbarContext);
 
-    const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
-    const { isLoading: isLoadingWards, isFetching: isFetchingWards, data: wards } = useGetAllHospitalWard();
+    const { data: products } = useGetAllProduct();
+    const { data: wards } = useGetAllHospitalWard();
 
     const { mutate: deleteStockMutate } = useDeleteStock();
     const { mutate: saveStockMutate } = useSaveStock();
@@ -80,7 +80,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setIsSaveable(isValid ?? false);
     }, [selectedElement, stock]);
 
-    if (isLoadingProducts && isFetchingProducts && isLoadingWards && isFetchingWards) {
+    if (wards === undefined || products === undefined) {
         return <LoadingIndicator loading />;
     }
 

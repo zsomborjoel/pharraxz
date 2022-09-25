@@ -13,9 +13,9 @@ import StockForm from './StockForm';
 export type StockPageProps = {};
 
 const StockPage: FC<StockPageProps> = (): any => {
-    const { isLoading: isLoadingStocks, isFetching: isFetchingStocks, data: stocks } = useGetAllStock();
-    const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
-    const { isLoading: isLoadingWards, isFetching: isFetchingWards, data: wards } = useGetAllHospitalWard();
+    const { data: stocks } = useGetAllStock();
+    const { data: products } = useGetAllProduct();
+    const { data: wards } = useGetAllHospitalWard();
 
     const rows = stocks;
 
@@ -40,18 +40,11 @@ const StockPage: FC<StockPageProps> = (): any => {
         },
     ];
 
-    if (
-        isLoadingProducts &&
-        isFetchingProducts &&
-        isLoadingStocks &&
-        isFetchingStocks &&
-        isLoadingWards &&
-        isFetchingWards
-    ) {
+    if (stocks === undefined || wards === undefined || products === undefined) {
         return <LoadingIndicator loading />;
     }
 
-    return <TableAndDetailsLayout rows={rows ?? [{}]} columns={columns} pageUrl="/stock" detailedView={StockForm} />;
+    return <TableAndDetailsLayout rows={rows!} columns={columns} pageUrl="/stock" detailedView={StockForm} />;
 };
 
 export default StockPage;

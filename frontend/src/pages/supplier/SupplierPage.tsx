@@ -10,7 +10,7 @@ import SupplierForm from './SupplierForm';
 export type SupplerPageProps = {};
 
 const SupplierPage: FC<SupplerPageProps> = (): any => {
-    const { isLoading: isLoadingSuppliers, isFetching: isFetchingSuppliers, data: suppliers } = useGetAllSupplier();
+    const { data: suppliers } = useGetAllSupplier();
 
     const rows = suppliers;
 
@@ -42,13 +42,11 @@ const SupplierPage: FC<SupplerPageProps> = (): any => {
         },
     ];
 
-    if (isLoadingSuppliers && isFetchingSuppliers) {
+    if (suppliers === undefined) {
         return <LoadingIndicator loading />;
     }
 
-    return (
-        <TableAndDetailsLayout rows={rows ?? [{}]} columns={columns} pageUrl="/supplier" detailedView={SupplierForm} />
-    );
+    return <TableAndDetailsLayout rows={rows!} columns={columns} pageUrl="/supplier" detailedView={SupplierForm} />;
 };
 
 export default SupplierPage;

@@ -32,7 +32,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     const { showSnackbar } = useContext(SnackbarContext);
 
-    const { isLoading, data: products } = useGetAllProduct();
+    const { data: products } = useGetAllProduct();
     const { mutate: deleteOrderMutate } = useDeleteOrder();
     const { mutate: saveOrderMutate } = useSaveOrder();
 
@@ -135,7 +135,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setIsSaveable(changed && mandatoryExists);
     }, [orderId, description, productId, orderType, quantity, startDate, endDate]);
 
-    if (isLoading) {
+    if (products === undefined) {
         return <LoadingIndicator loading />;
     }
 

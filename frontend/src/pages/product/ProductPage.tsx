@@ -13,13 +13,9 @@ import MapperUtil from '../../utils/MapperUtil';
 export type ProductPageProps = {};
 
 const ProductPage: FC<ProductPageProps> = (): any => {
-    const { isLoading: isLoadingProducts, isFetching: isFetchingProducts, data: products } = useGetAllProduct();
-    const { isLoading: isLoadingSuppliers, isFetching: isFetchingSuppliers, data: suppliers } = useGetAllSupplier();
-    const {
-        isLoading: isLoadingReleaseAbleCodes,
-        isFetching: isFetchingReleaseAbleCodes,
-        data: releaseAbleCodes,
-    } = useGetAllReleaseAbleCode();
+    const { data: products } = useGetAllProduct();
+    const { data: suppliers } = useGetAllSupplier();
+    const { data: releaseAbleCodes } = useGetAllReleaseAbleCode();
 
     const getReleaseAbleCodeDesc = (e: any): any => {
         if (e.row.releasableBy === null) {
@@ -82,20 +78,11 @@ const ProductPage: FC<ProductPageProps> = (): any => {
         },
     ];
 
-    if (
-        isLoadingProducts &&
-        isFetchingProducts &&
-        isLoadingSuppliers &&
-        isFetchingSuppliers &&
-        isLoadingReleaseAbleCodes &&
-        isFetchingReleaseAbleCodes
-    ) {
+    if (products === undefined || suppliers === undefined || releaseAbleCodes === undefined) {
         return <LoadingIndicator loading />;
     }
 
-    return (
-        <TableAndDetailsLayout rows={rows ?? [{}]} columns={columns} pageUrl="/product" detailedView={ProductForm} />
-    );
+    return <TableAndDetailsLayout rows={rows!} columns={columns} pageUrl="/product" detailedView={ProductForm} />;
 };
 
 export default ProductPage;

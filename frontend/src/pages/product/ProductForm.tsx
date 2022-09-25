@@ -24,12 +24,8 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
 
     const { showSnackbar } = useContext(SnackbarContext);
 
-    const { isLoading: isLoadingSupplier, isFetching: isFetchingSupplier, data: suppliers } = useGetAllSupplier();
-    const {
-        isLoading: isLoadingReleaseAbleCode,
-        isFetching: isFetchingReleaseAbleCode,
-        data: releaseAbleCodes,
-    } = useGetAllReleaseAbleCode();
+    const { data: suppliers } = useGetAllSupplier();
+    const { data: releaseAbleCodes } = useGetAllReleaseAbleCode();
 
     const { mutate: deleteProductMutate } = useDeleteProduct();
     const { mutate: saveProductMutate } = useSaveProduct();
@@ -89,7 +85,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
         setIsSaveable(isValid ?? false);
     }, [selectedElement, product]);
 
-    if (isLoadingSupplier && isFetchingSupplier && isLoadingReleaseAbleCode && isFetchingReleaseAbleCode) {
+    if (suppliers === undefined || releaseAbleCodes === undefined) {
         return <LoadingIndicator loading />;
     }
 
