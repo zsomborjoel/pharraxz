@@ -10,6 +10,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 export type MainMenuProps = {};
 
@@ -31,6 +32,12 @@ const menuItems = [
         menuLabel: 'Supplier',
         menuIcon: LocalShippingIcon,
         link: '/supplier',
+    },
+    {
+        id: 3,
+        menuLabel: 'Stock',
+        menuIcon: InventoryIcon,
+        link: '/stock',
     },
 ];
 

@@ -15,6 +15,8 @@ export const ENDPOINTS = {
     PRODUCT: `${SERVER_URL}/products`,
     SUPPLIER: `${SERVER_URL}/suppliers`,
     RELEASEABLECODE: `${SERVER_URL}/release-able-codes`,
+    HOSPITAL_WARD: `${SERVER_URL}/hospital-wards`,
+    STOCK: `${SERVER_URL}/stock`,
 };
 
 export const ROUTES = {
@@ -23,6 +25,7 @@ export const ROUTES = {
     ORDER: '/order',
     PRODUCT: '/product',
     SUPPLIER: '/supplier',
+    STOCK: '/stock',
 };
 
 export const QUERIES = {
@@ -36,6 +39,10 @@ export const QUERIES = {
     DELETE_SUPPLIER: 'deleteSupplier',
     SAVE_SUPPLIER: 'saveSupplier',
     GET_ALL_RELEASEABLECODE: 'getAllReleaseAbleCode',
+    GET_ALL_STOCK: 'getAllStock',
+    DELETE_STOCK: 'deleteSupplier',
+    SAVE_STOCK: 'saveSupplier',
+    GET_ALL_HOSPITAL_WARD: 'getAllHospitalWard',
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';

@@ -8,6 +8,7 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import { useGetAllProduct } from '../../queries/ProductQuery';
 import { useGetAllSupplier } from '../../queries/SupplierQuery';
 import { useGetAllReleaseAbleCode } from '../../queries/ReleaseAbleCodeQuery';
+import MapperUtil from '../../utils/MapperUtil';
 
 export type ProductPageProps = {};
 
@@ -19,14 +20,6 @@ const ProductPage: FC<ProductPageProps> = (): any => {
         isFetching: isFetchingReleaseAbleCodes,
         data: releaseAbleCodes,
     } = useGetAllReleaseAbleCode();
-
-    const getSupplierName = (e: any): any => {
-        if (e.row.supplierId === null) {
-            return null;
-        }
-
-        return suppliers?.find((supplier) => supplier.id === e.row.supplierId)?.name;
-    };
 
     const getReleaseAbleCodeDesc = (e: any): any => {
         if (e.row.releasableBy === null) {
@@ -53,7 +46,7 @@ const ProductPage: FC<ProductPageProps> = (): any => {
             field: 'supplierId',
             headerName: 'Supplier',
             width: 130,
-            valueGetter: (e) => getSupplierName(e),
+            valueGetter: (e) => MapperUtil.getEntityNameById(suppliers!, e.row.supplierId),
         },
         {
             field: 'packaging',

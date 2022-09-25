@@ -4,6 +4,7 @@ import OrderPage from '../pages/order/OrderPage';
 import { ROUTES } from './constants';
 import ProductPage from '../pages/product/ProductPage';
 import SupplierPage from '../pages/supplier/SupplierPage';
+import StockPage from '../pages/stock/StockPage';
 
 export default [
     { path: `${ROUTES.ROOT}`, element: <HomePage />, name: 'Home' },
@@ -37,5 +38,15 @@ export default [
         path: `${ROUTES.SUPPLIER}/:id`,
         element: <SupplierPage />,
         name: 'Supplier',
+    },
+    {
+        path: `${ROUTES.STOCK}`,
+        element: <StockPage />,
+        name: 'Stock',
+    },
+    {
+        path: `${ROUTES.STOCK}/:id`,
+        element: <StockPage />,
+        name: 'Stock',
     },
 ];

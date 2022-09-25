@@ -8,6 +8,7 @@ import SaveUtil from '../../utils/SaveUtil';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useGetAllSupplier } from '../../queries/SupplierQuery';
 import { useGetAllReleaseAbleCode } from '../../queries/ReleaseAbleCodeQuery';
+import MapperUtil from '../../utils/MapperUtil';
 
 export type ProductFormProps = {
     selectedElement: Product;
@@ -69,12 +70,6 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
             },
         });
     };
-
-    const getSupplierNameById = (id: number | null | undefined): string | null | undefined =>
-        suppliers?.find((supplier) => supplier.id === id)?.name;
-
-    const getSupplierIdByName = (name: string | null): number | null | undefined =>
-        suppliers?.find((supplier) => supplier.name === name)?.id;
 
     const updateProduct = (property: keyof Product, value: any): void => {
         setProduct({ ...product, [property]: value } as Product);
@@ -152,9 +147,11 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                             sx={{ pt: 1 }}
                             fullWidth
                             size="small"
-                            options={suppliers!.map((product) => product.name)}
-                            value={getSupplierNameById(product?.supplierId)}
-                            onChange={(_e, v) => updateProduct('supplierId', getSupplierIdByName(v))}
+                            options={suppliers!.map((supplier) => supplier.name)}
+                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId)}
+                            onChange={(_e, v) =>
+                                updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
+                            }
                             renderInput={(params) => <TextField {...params} label="Supplier Name" />}
                         />
                     </Grid>

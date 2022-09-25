@@ -21,8 +21,8 @@ public class Stock {
     @Column("stock_id")
     private Long id;
 
-    @Column("pharma_product_id")
-    private Long pharmaProductId;
+    @Column("product_id")
+    private Long productId;
 
     @Column("ward_id")
     private Long wardId;

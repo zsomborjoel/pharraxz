@@ -103,7 +103,7 @@ const TableAndDetailsLayout: FC<Props> = ({
             let selectedElement;
 
             if (id) {
-                selectedElement = tableRows.find((element) => element.id.toString() === id);
+                selectedElement = tableRows.find((element) => element?.id?.toString() === id);
             } else {
                 selectedElement = getFirstElement();
             }

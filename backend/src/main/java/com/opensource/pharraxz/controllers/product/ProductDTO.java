@@ -1,10 +1,8 @@
 package com.opensource.pharraxz.controllers.product;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 @Data
-@Accessors(chain = true)
 public class ProductDTO {
     private Long id;
     private String name;

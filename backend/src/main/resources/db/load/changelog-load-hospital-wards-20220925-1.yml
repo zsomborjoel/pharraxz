@@ -1,0 +1,10 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: d6f62478-c583-41fc-91d4-45ad25e1352f
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/hospital_wards.csv
+            separator: ','
+            tableName: hospital_ward

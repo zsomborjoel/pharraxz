@@ -15,9 +15,10 @@ export const isSaveEnabled = <T extends object>(
         return true;
     });
 
-    const hasDataChanged = (Object.keys(referenceObject) as Array<keyof T>).some(
-        (field) => referenceObject[field] !== currentObject[field]
-    );
+    const hasDataChanged =
+        (Object.keys(referenceObject) as Array<keyof T>).some(
+            (field) => referenceObject[field] !== currentObject[field]
+        ) || Object.keys(referenceObject).length === 0;
 
     return mandatoryExists && hasDataChanged;
 };

@@ -8,6 +8,6 @@ public interface SupplierMapper {
 
     SupplierDTO toDTO(Supplier supplier);
 
-    Supplier fromDTO(SupplierDTO supplier);
+    Supplier fromDTO(SupplierDTO supplierDTO);
 
 }

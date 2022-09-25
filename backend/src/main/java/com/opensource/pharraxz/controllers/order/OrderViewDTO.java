@@ -5,13 +5,11 @@ import com.opensource.pharraxz.controllers.product.ProductDTO;
 import com.opensource.pharraxz.enums.OrderType;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 
 @Data
 @Builder
-@Accessors(chain = true)
 public class OrderViewDTO {
 
     private Long orderId;

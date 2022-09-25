@@ -27,7 +27,7 @@ public class SupplierController {
     }
 
     @PostMapping
-    public Mono<Long> save(@RequestBody SupplierDTO supplierDTO) {
+    public Mono<Long> saveSupplier(@RequestBody SupplierDTO supplierDTO) {
         return Mono.just(supplierDTO)
                 .map(supplierMapper::fromDTO)
                 .flatMap(supplierService::save)

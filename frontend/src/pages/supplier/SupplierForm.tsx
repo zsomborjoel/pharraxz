@@ -35,7 +35,7 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
         setSupplier(null);
     };
 
-    const deleteProduct = (): void => {
+    const deleteSupplier = (): void => {
         deleteSupplierMutate(selectedElement.id!, {
             onSuccess: () => {
                 onDelete(`${selectedElement.id!}`);
@@ -47,7 +47,7 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
         });
     };
 
-    const saveProduct = (): void => {
+    const saveSupplier = (): void => {
         saveSupplierMutate(supplier!, {
             onSuccess(id) {
                 onSave({ ...supplier!, id });
@@ -136,7 +136,7 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
                 </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveProduct} variant="contained">
+                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveSupplier} variant="contained">
                             Save
                         </Button>
                         <Button
@@ -149,7 +149,7 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
                         </Button>
                     </Grid>
                     <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteProduct}>
+                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteSupplier}>
                             Delete
                         </Button>
                     </Grid>

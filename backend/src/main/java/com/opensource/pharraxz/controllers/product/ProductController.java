@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Mono<Long> save(@RequestBody ProductDTO productDTO) {
+    public Mono<Long> saveProduct(@RequestBody ProductDTO productDTO) {
         return Mono.just(productDTO)
                 .map(productMapper::fromDTO)
                 .flatMap(productService::save)
