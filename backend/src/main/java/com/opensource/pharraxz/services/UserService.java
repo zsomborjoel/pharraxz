@@ -28,4 +28,12 @@ public class UserService {
                 .switchIfEmpty(Mono.error(new EntityNotFoundException(User.class, username)));
     }
 
+    public Mono<Void> deleteById(final Long id) {
+        return userRepository.deleteById(id);
+    }
+
+    public Mono<User> save(final User user) {
+        return userRepository.save(user);
+    }
+
 }

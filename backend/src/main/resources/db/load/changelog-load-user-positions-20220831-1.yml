@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 238f8f3f-49cf-42b1-a652-8c6ef8b149f8
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/user_positions.csv
+            quotchar: '"'
+            separator: ','
+            tableName: user_positions

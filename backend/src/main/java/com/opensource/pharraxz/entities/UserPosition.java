@@ -19,7 +19,7 @@ public class UserPosition {
 
     @Id
     @Column("user_position_id")
-    private Long userPositionId;
+    private Long id;
 
     @Column("name")
     private String name;
