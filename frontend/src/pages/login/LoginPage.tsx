@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -30,7 +28,7 @@ const LoginPage: FC<LoginPageProps> = ({ setIsLogInStarted }) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): any => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        AuthService.login(data.get('email') as string, data.get('password') as string).finally(() => {
+        AuthService.login(data.get('username') as string, data.get('password') as string).finally(() => {
             setIsLogInStarted(true);
             navigate('/home');
         });
@@ -58,10 +56,10 @@ const LoginPage: FC<LoginPageProps> = ({ setIsLogInStarted }) => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
                         autoFocus
                     />
                     <TextField
@@ -74,7 +72,6 @@ const LoginPage: FC<LoginPageProps> = ({ setIsLogInStarted }) => {
                         id="password"
                         autoComplete="current-password"
                     />
-                    <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                     <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                         Sign In
                     </Button>

@@ -35,7 +35,7 @@ const StockPage: FC<StockPageProps> = (): any => {
         {
             field: 'productId',
             headerName: 'Product Name',
-            width: 255,
+            width: 600,
             valueGetter: (e) => MapperUtil.getEntityNameById(products!, e.row.productId),
         },
     ];

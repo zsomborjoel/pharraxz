@@ -64,7 +64,7 @@ const MainMenu: FC<MainMenuProps> = () => {
                 <Box role="presentation" onClick={toggleDrawer()} onKeyDown={toggleDrawer()} sx={{ width: 200 }}>
                     <List>
                         {menuItems.map(({ id, menuLabel, menuIcon: Icon, link }) => (
-                            <Link key={id} to={link} style={{ color: '#1976d2' }} onClick={() => setIsMenuOpen(false)}>
+                            <Link key={id} to={link} style={{ color: '#008080' }} onClick={() => setIsMenuOpen(false)}>
                                 <ListItemButton key={menuLabel}>
                                     <ListItemIcon>
                                         <Icon />

@@ -25,7 +25,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public Mono<Void> deleteUser(@PathVariable Long id) {
-        return userService.deleteById(id);
+        return userRoleService.delete(id)
+                .then(userService.deleteById(id));
     }
 
     @PostMapping

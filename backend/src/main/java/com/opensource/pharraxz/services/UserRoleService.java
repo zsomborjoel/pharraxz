@@ -14,6 +14,10 @@ public class UserRoleService {
 
     private final UserRoleRepository userRoleRepository;
 
+    public Mono<Void> delete(final Long userId) {
+        return userRoleRepository.deleteById(userId);
+    }
+
     @Transactional
     public Mono<UserRole> save(final User user) {
         return Mono.just(user)
