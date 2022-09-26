@@ -18,9 +18,9 @@ public class Role {
 
     @Id
     @Column("role_id")
-    private Long roleId;
+    private Long id;
 
-    @Column("role_name")
-    private RoleName roleName;
+    @Column("name")
+    private RoleName name;
 
 }

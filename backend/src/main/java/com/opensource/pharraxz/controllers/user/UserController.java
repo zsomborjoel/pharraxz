@@ -1,11 +1,13 @@
 package com.opensource.pharraxz.controllers.user;
 
+import com.opensource.pharraxz.entities.User;
+import com.opensource.pharraxz.entities.UserRole;
+import com.opensource.pharraxz.services.UserRoleService;
 import com.opensource.pharraxz.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/users")
@@ -13,11 +15,28 @@ import reactor.core.publisher.Flux;
 public class UserController {
 
     private final UserService userService;
+    private final UserRoleService userRoleService;
     private final UserMapper userMapper;
 
     @GetMapping
     public Flux<UserDTO> getAllUser() {
         return userService.findAll().map(userMapper::toDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> deleteUser(@PathVariable Long id) {
+        return userService.deleteById(id);
+    }
+
+    @PostMapping
+    public Mono<Long> saveUser(@RequestBody UserDTO userDTO) {
+        Mono<User> userMono = Mono.just(userDTO)
+                .map(userMapper::fromDTO);
+
+        return userMono
+                .flatMap(userService::save)
+                .flatMap(userRoleService::save)
+                .map(UserRole::getUserId);
     }
 
 }

@@ -24,7 +24,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public Mono<Tuple2<CustomUserDetails, RefreshToken>> prepareAuthDetails(final User user) {
-        final CustomUserDetails userDetails = new CustomUserDetails(user.getUserId(), user.getUsername(), user.getPassword());
+        final CustomUserDetails userDetails = new CustomUserDetails(user.getId(), user.getUsername(), user.getPassword());
         return Mono.just(userDetails)
                 .zipWith(roleService.getRoleNamesFromUsername(userDetails.getUsername()).collectList())
                 .map(result -> {
@@ -40,7 +40,7 @@ public class AuthService {
                 .build();
 
         final CustomUserDetails userDetails = CustomUserDetails.builder()
-                .userId(user.getUserId())
+                .userId(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .build();

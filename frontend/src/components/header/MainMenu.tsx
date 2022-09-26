@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import PersonIcon from '@mui/icons-material/Person';
 
 export type MainMenuProps = {};
 
@@ -38,6 +39,12 @@ const menuItems = [
         menuLabel: 'Stock',
         menuIcon: InventoryIcon,
         link: '/stock',
+    },
+    {
+        id: 4,
+        menuLabel: 'User',
+        menuIcon: PersonIcon,
+        link: '/user',
     },
 ];
 

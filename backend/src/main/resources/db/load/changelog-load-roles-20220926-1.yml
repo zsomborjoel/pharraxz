@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: d3a44e5d-ab8a-4281-b980-175caada0752
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/roles.csv
+            quotchar: '"'
+            separator: ','
+            tableName: roles

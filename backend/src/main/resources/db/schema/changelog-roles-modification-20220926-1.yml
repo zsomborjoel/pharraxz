@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 987623e0-4e40-47cd-8224-91012629c73c
+      author: zsomborjoel
+      changes:
+        - renameColumn:
+            columnDataType: varchar(50)
+            newColumnName: name
+            oldColumnName: role_name
+            tableName: roles

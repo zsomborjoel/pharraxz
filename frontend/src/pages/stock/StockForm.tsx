@@ -42,7 +42,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setStock(null);
     };
 
-    const deleteProduct = (): void => {
+    const deleteStock = (): void => {
         deleteStockMutate(selectedElement.id!, {
             onSuccess: () => {
                 onDelete(`${selectedElement.id!}`);
@@ -54,7 +54,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
         });
     };
 
-    const saveProduct = (): void => {
+    const saveStock = (): void => {
         saveStockMutate(stock!, {
             onSuccess(id) {
                 onSave({ ...stock!, id });
@@ -125,7 +125,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
                 </Grid>
                 <Grid container spacing={1}>
                     <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveProduct} variant="contained">
+                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveStock} variant="contained">
                             Save
                         </Button>
                         <Button
@@ -138,7 +138,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
                         </Button>
                     </Grid>
                     <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteProduct}>
+                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteStock}>
                             Delete
                         </Button>
                     </Grid>

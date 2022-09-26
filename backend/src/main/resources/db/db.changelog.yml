@@ -49,3 +49,7 @@ databaseChangeLog:
       file: classpath*:db/load/changelog-load-hospital-wards-20220925-1.yml
   - include:
       file: classpath*:db/load/changelog-load-user-positions-20220831-1.yml
+  - include:
+      file: classpath*:db/load/changelog-load-roles-20220926-1.yml
+  - include:
+      file: classpath*:db/schema/changelog-roles-modification-20220926-1.yml

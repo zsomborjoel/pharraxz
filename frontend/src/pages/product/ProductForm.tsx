@@ -148,7 +148,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                             onChange={(_e, v) =>
                                 updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
                             }
-                            renderInput={(params) => <TextField {...params} label="Supplier Name" />}
+                            renderInput={(params) => <TextField required {...params} label="Supplier Name" />}
                         />
                     </Grid>
                     <Grid item xs={4} display="flex">
@@ -193,7 +193,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                                     required
                                 />
                             }
-                            label="Releasable"
+                            label="Releasable *"
                         />
                     </Grid>
                 </Grid>

@@ -18,6 +18,7 @@ export const ENDPOINTS = {
     HOSPITAL_WARD: `${SERVER_URL}/hospital-wards`,
     STOCK: `${SERVER_URL}/stock`,
     USER_POSITION: `${SERVER_URL}/user-positions`,
+    ROLE: `${SERVER_URL}/roles`,
 };
 
 export const ROUTES = {
@@ -27,6 +28,7 @@ export const ROUTES = {
     PRODUCT: '/product',
     SUPPLIER: '/supplier',
     STOCK: '/stock',
+    USER: '/user',
 };
 
 export const QUERIES = {
@@ -48,6 +50,7 @@ export const QUERIES = {
     GET_ALL_USER: 'getAllUser',
     DELETE_USER: 'deleteUser',
     SAVE_USER: 'saveUser',
+    GET_ALL_ROLE: 'getAllRole',
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
