@@ -1,7 +1,6 @@
 package com.opensource.pharraxz.entities;
 
 import com.opensource.pharraxz.enums.OrderType;
-import com.opensource.pharraxz.enums.converters.OrderTypeConverter;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +9,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.Convert;
 import java.time.LocalDate;
 
 @Getter
@@ -40,7 +38,6 @@ public class OrderDetail  {
     private Long quantity;
 
     @Builder.Default
-    @Convert(converter = OrderTypeConverter.class)
     @Column("order_type")
     private OrderType orderType = OrderType.OTHER;
 

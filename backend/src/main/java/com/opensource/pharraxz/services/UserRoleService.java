@@ -5,7 +5,6 @@ import com.opensource.pharraxz.entities.UserRole;
 import com.opensource.pharraxz.repositories.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -18,7 +17,6 @@ public class UserRoleService {
         return userRoleRepository.deleteById(userId);
     }
 
-    @Transactional
     public Mono<UserRole> save(final User user) {
         return Mono.just(user)
                 .zipWith(userRoleRepository.findById(user.getId())
