@@ -14,6 +14,7 @@ public class ProductDAOMapper implements Function<Row, Product> {
         final Long productId = row.get("product_id", Long.class);
         final String name = row.get("name", String.class);
         final String atc = row.get("atc", String.class);
+        final String atc_description = row.get("atc_description", String.class);
         final Long supplierId = row.get("supplier_id", Long.class);
         final String packaging = row.get("packaging", String.class);
         final String description = row.get("description", String.class);
@@ -26,6 +27,7 @@ public class ProductDAOMapper implements Function<Row, Product> {
                 .id(productId)
                 .name(name)
                 .atc(atc)
+                .atc_description(atc_description)
                 .supplierId(supplierId)
                 .packaging(packaging)
                 .description(description)

@@ -7,6 +7,7 @@ public class ProductDTO {
     private Long id;
     private String name;
     private String atc;
+    private String atc_description;
     private Long supplierId;
     private String packaging;
     private String description;

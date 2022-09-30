@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
 import { GridColDef } from '@mui/x-data-grid';
+import { Tooltip } from '@mui/material';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
 import ProductForm from './ProductForm';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -19,7 +20,7 @@ const ProductPage: FC<ProductPageProps> = (): any => {
 
     const getReleaseAbleCodeDesc = (e: any): any => {
         if (e.row.releasableBy === null) {
-            return null;
+            return 'Unkown';
         }
 
         return releaseAbleCodes?.find((releaseAbleCode) => releaseAbleCode.code === e.row.releasableBy)?.description;
@@ -37,6 +38,11 @@ const ProductPage: FC<ProductPageProps> = (): any => {
             field: 'atc',
             headerName: 'Atc code',
             width: 130,
+            renderCell: (e) => (
+                <Tooltip title={e.row.atc_description}>
+                    <span>{e.value}</span>
+                </Tooltip>
+            ),
         },
         {
             field: 'supplierId',
@@ -73,8 +79,12 @@ const ProductPage: FC<ProductPageProps> = (): any => {
         {
             field: 'releasableBy',
             headerName: 'Releasable By',
-            width: 1005,
-            valueGetter: (e) => `${e.value} - (${getReleaseAbleCodeDesc(e)})`,
+            width: 130,
+            renderCell: (e) => (
+                <Tooltip title={getReleaseAbleCodeDesc(e)}>
+                    <span>{e.value}</span>
+                </Tooltip>
+            ),
         },
     ];
 
