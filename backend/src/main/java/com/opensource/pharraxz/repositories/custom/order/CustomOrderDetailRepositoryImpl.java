@@ -16,7 +16,7 @@ public class CustomOrderDetailRepositoryImpl implements CustomOrderDetailReposit
 
     public Flux<OrderDetail> findAllByOrderId(final Long orderId) {
         final String query = """
-                select od.*, p.*
+                select od.*, p.*, '' atc_description
                 from order_details od
                 join products p
                 on od.product_id = p.product_id
