@@ -27,6 +27,7 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-products-modification-20220828-1.yml
   - include:
       file: classpath*:db/load/changelog-load-atc-codes-20220828-1.yml
+      context: local,dev
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220828-2.yml
   - include:
@@ -37,19 +38,24 @@ databaseChangeLog:
       file: classpath*:db/schema/changelog-products-modification-20220831-1.yml
   - include:
       file: classpath*:db/load/changelog-load-releasable-codes-20220831-1.yml
+      context: local,dev
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220831-2.yml
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220903-1.yml
   - include:
       file: classpath*:db/load/changelog-load-products-20220831-1.yml
+      context: local,dev
   - include:
       file: classpath*:db/schema/changelog-products-modification-20220924-1.yml
   - include:
       file: classpath*:db/load/changelog-load-hospital-wards-20220925-1.yml
+      context: local,dev
   - include:
       file: classpath*:db/load/changelog-load-user-positions-20220831-1.yml
+      context: local,dev
   - include:
       file: classpath*:db/load/changelog-load-roles-20220926-1.yml
+      context: local,dev,prod
   - include:
       file: classpath*:db/schema/changelog-roles-modification-20220926-1.yml
