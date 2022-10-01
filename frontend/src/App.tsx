@@ -42,7 +42,7 @@ const App: FC = () => {
                             />
                         ))}
                         <Route path="/login" element={<LoginPage setIsLogInStarted={setIsLogInStarted} />} />
-                        <Route element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>
                 {snackbars}
