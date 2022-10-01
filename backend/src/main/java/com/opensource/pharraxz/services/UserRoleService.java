@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class UserRoleService {
@@ -18,6 +20,10 @@ public class UserRoleService {
     }
 
     public Mono<UserRole> save(final User user) {
+        if (Objects.isNull(user.getId())) {
+            throw new IllegalArgumentException("User id should not be null");
+        }
+
         return Mono.just(user)
                 .zipWith(userRoleRepository.findById(user.getId())
                         .switchIfEmpty(userRoleRepository.save(

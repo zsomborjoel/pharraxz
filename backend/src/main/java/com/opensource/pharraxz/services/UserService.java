@@ -54,7 +54,9 @@ public class UserService {
                 .flatMap(tuple -> {
                     final User userRequest = tuple.getT1();
                     final User userDatabase = tuple.getT2();
-                    userRequest.setPassword(userDatabase.getPassword());
+                    if (Objects.isNull(userRequest.getPassword())) {
+                        userRequest.setPassword(userDatabase.getPassword());
+                    }
 
                     return userRepository.save(userRequest);
                 });

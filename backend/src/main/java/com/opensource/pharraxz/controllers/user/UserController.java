@@ -31,6 +31,7 @@ public class UserController {
 
     @PostMapping
     public Mono<Long> saveUser(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO);
         Mono<User> userMono = Mono.just(userDTO)
                 .map(userMapper::fromDTO);
 
