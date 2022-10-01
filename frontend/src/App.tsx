@@ -34,8 +34,12 @@ const App: FC = () => {
                 <Router>
                     <Header isLogInStarted={isLogInStarted} setIsLogInStarted={setIsLogInStarted} />
                     <Routes>
-                        {routes.map(({ path, element }) => (
-                            <Route key={path} path={path} element={<RequireAuth>{element}</RequireAuth>} />
+                        {routes.map(({ path, element, requiredUserRoles }) => (
+                            <Route
+                                key={path}
+                                path={path}
+                                element={<RequireAuth requiredUserRoles={requiredUserRoles}>{element}</RequireAuth>}
+                            />
                         ))}
                         <Route path="/login" element={<LoginPage setIsLogInStarted={setIsLogInStarted} />} />
                         <Route element={<NotFound />} />
