@@ -89,8 +89,6 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
         return <LoadingIndicator loading />;
     }
 
-    console.log(product);
-
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
             <Box>

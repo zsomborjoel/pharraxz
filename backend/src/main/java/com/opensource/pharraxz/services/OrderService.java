@@ -7,7 +7,7 @@ import com.opensource.pharraxz.entities.OrderDetail;
 import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.repositories.OrderDetailRepository;
 import com.opensource.pharraxz.repositories.OrderRepository;
-import com.opensource.pharraxz.repositories.custom.order.CustomOrderDetailRepositoryImpl;
+import com.opensource.pharraxz.repositories.custom.order.CustomOrderDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -25,7 +25,7 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final CustomOrderDetailRepositoryImpl customOrderDetailRepository;
+    private final CustomOrderDetailRepository customOrderDetailRepository;
     private final OrderDetailMapper orderDetailMapper;
 
     public Mono<Void> deleteById(final Long id) {

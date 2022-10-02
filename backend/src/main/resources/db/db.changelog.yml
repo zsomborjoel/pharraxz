@@ -59,3 +59,6 @@ databaseChangeLog:
       context: local,dev,prod
   - include:
       file: classpath*:db/schema/changelog-roles-modification-20220926-1.yml
+  - include:
+      file: classpath*:db/load/changelog-load-suppliers-20221002-1.yml
+      context: local,dev

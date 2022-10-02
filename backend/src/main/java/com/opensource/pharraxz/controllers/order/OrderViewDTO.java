@@ -15,6 +15,7 @@ public class OrderViewDTO {
     private Long orderId;
     private String description;
     private Long id;
+    private Long userId;
     private ProductDTO product;
     private Long quantity;
     private OrderType orderType;

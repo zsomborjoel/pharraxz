@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: f35b108c-b12a-4668-a361-05045fb2da0e
+      author: zsomborjoel
+      changes:
+        - loadData:
+            file: classpath*:db/data/suppliers.csv
+            quotchar: '"'
+            separator: ','
+            tableName: suppliers

@@ -19,6 +19,7 @@ public class OrderViewMapper {
         order.getOrderDetails().forEach(od -> orderViewDTOS.add(OrderViewDTO.builder()
                         .id(od.getOrderDetailId())
                         .orderId(order.getOrderId())
+                        .userId(order.getUserId())
                         .description(order.getDescription())
                         .product(productMapper.toDTO(od.getProduct()))
                         .orderType(od.getOrderType())

@@ -9,23 +9,6 @@ interface RequireAuthProps {
     children: ReactNode;
 }
 
-const hasUserValidRole = (requiredUserRoles: RoleName[] | undefined): boolean => {
-    if (requiredUserRoles === undefined) {
-        return true;
-    }
-
-    if (requiredUserRoles) {
-        const roles = AuthService.getCurrentUser()?.roleNames;
-
-        if (roles) {
-            const found = roles.find((role) => requiredUserRoles.includes(RoleName[role as keyof typeof RoleName]));
-            if (found) return true;
-        }
-    }
-
-    return false;
-};
-
 const RequireAuth: FC<RequireAuthProps> = ({ requiredUserRoles, children }): JSX.Element => {
     const { showSnackbar } = useContext(SnackbarContext);
 
@@ -34,7 +17,7 @@ const RequireAuth: FC<RequireAuthProps> = ({ requiredUserRoles, children }): JSX
         return <Navigate to="/login" />;
     }
 
-    if (!hasUserValidRole(requiredUserRoles)) {
+    if (!AuthService.hasUserValidRole(requiredUserRoles)) {
         showSnackbar({ severity: 'error', text: 'You are not authorized to visit!' });
         return <Navigate to="/home" />;
     }

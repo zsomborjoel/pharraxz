@@ -5,6 +5,7 @@ export interface OrderView {
     orderId: number;
     description: string;
     id: number;
+    userId: number;
     product: Product;
     quantity: number;
     orderType: OrderType;

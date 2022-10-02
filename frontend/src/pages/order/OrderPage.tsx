@@ -9,11 +9,30 @@ import { useGetAllOrder } from '../../queries/OrderQuery';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import DateFilterOperator from '../../components/grid-operators/DateFilterOperator';
 import OrderTypeOperator from '../../components/grid-operators/OrderTypeOperator';
+import { OrderView } from '../../services/model/OrderView';
+import AuthService from '../../services/AuthService';
+import { RoleName } from '../../services/enum/RoleName';
 
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const { data: orderViews } = useGetAllOrder();
+    const { data } = useGetAllOrder();
+
+    const getRoleAssingedOrderViews = (): OrderView[] | undefined => {
+        const currentUser = AuthService.getCurrentUser();
+        const requiredUserRoles = [RoleName.ROLE_ADMIN];
+
+        if (!AuthService.hasUserValidRole(requiredUserRoles)) {
+            if (currentUser?.userId) {
+                return data?.filter((orderView) => orderView.userId === currentUser?.userId);
+            }
+        }
+
+        return data;
+    };
+
+    const orderViews = getRoleAssingedOrderViews();
+
     const [sortModel] = useState<GridSortModel>([
         {
             field: 'orderId',

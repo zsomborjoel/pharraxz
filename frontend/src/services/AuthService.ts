@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { RoleName } from './enum/RoleName';
 import { Auth } from './model/Auth';
 
 const STORAGE_ITEM_USER = 'user';
@@ -42,11 +43,29 @@ const getCurrentUser = (): Auth | null => {
     return JSON.parse(user);
 };
 
+const hasUserValidRole = (requiredUserRoles: RoleName[] | undefined): boolean => {
+    if (requiredUserRoles === undefined) {
+        return true;
+    }
+
+    if (requiredUserRoles) {
+        const roles = getCurrentUser()?.roleNames;
+
+        if (roles) {
+            const found = roles.find((role) => requiredUserRoles.includes(RoleName[role as keyof typeof RoleName]));
+            if (found) return true;
+        }
+    }
+
+    return false;
+};
+
 const AuthService = {
     login,
     logout,
     getCurrentUser,
     isUserLoggedIn,
+    hasUserValidRole,
 };
 
 export default AuthService;
