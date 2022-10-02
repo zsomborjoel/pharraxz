@@ -76,12 +76,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
     }, [selectedElement]);
 
     useEffect(() => {
-        const isValid = SaveUtil.isSaveEnabled(selectedElement, product, [
-            'name',
-            'packaging',
-            'supplierId',
-            'releasable',
-        ]);
+        const isValid = SaveUtil.isSaveEnabled(selectedElement, product, ['name', 'packaging', 'supplierId']);
         setIsSaveable(isValid ?? false);
     }, [selectedElement, product]);
 
@@ -105,13 +100,16 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                         />
                     </Grid>
                     <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Atc"
+                        <Autocomplete
+                            sx={{ pt: 1 }}
                             fullWidth
-                            margin="dense"
                             size="small"
-                            value={product?.atc ?? ''}
-                            onChange={(e) => updateProduct('atc', e.target.value)}
+                            options={suppliers!.map((supplier) => supplier.name)}
+                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId) ?? ''}
+                            onChange={(_e, v) =>
+                                updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
+                            }
+                            renderInput={(params) => <TextField required {...params} label="Supplier Name" />}
                         />
                     </Grid>
                     <Grid item xs={4} display="flex">
@@ -139,16 +137,13 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                         />
                     </Grid>
                     <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
+                        <TextField
+                            label="Atc"
                             fullWidth
+                            margin="dense"
                             size="small"
-                            options={suppliers!.map((supplier) => supplier.name)}
-                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId) ?? ''}
-                            onChange={(_e, v) =>
-                                updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
-                            }
-                            renderInput={(params) => <TextField required {...params} label="Supplier Name" />}
+                            value={product?.atc ?? ''}
+                            onChange={(e) => updateProduct('atc', e.target.value)}
                         />
                     </Grid>
                     <Grid item xs={4} display="flex">
@@ -193,7 +188,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                                     required
                                 />
                             }
-                            label="Releasable *"
+                            label="Releasable"
                         />
                     </Grid>
                 </Grid>

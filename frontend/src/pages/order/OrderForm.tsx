@@ -12,6 +12,7 @@ import { useDeleteOrder, useSaveOrder } from '../../queries/OrderQuery';
 import { useGetAllProduct } from '../../queries/ProductQuery';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { handleError } from '../../utils/ErrorHandler';
+import MapperUtil from '../../utils/MapperUtil';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -104,12 +105,6 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             },
         });
 
-    const getProductNameById = (id: number | null): string | null | undefined =>
-        products?.find((product) => product.id === id)?.name;
-
-    const getProductIdByName = (name: string | null): number | null | undefined =>
-        products?.find((product) => product.name === name)?.id;
-
     useEffect(() => {
         initializeForm();
     }, [selectedElement]);
@@ -175,8 +170,8 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                             fullWidth
                             size="small"
                             options={products!.map((product) => product.name)}
-                            value={getProductNameById(productId)}
-                            onChange={(_e, v) => setProductId(getProductIdByName(v)!)}
+                            value={MapperUtil.getEntityNameById(products, productId) ?? ''}
+                            onChange={(_e, v) => setProductId(MapperUtil.getEntityIdByName(products, v)!)}
                             renderInput={(params) => <TextField {...params} label="Product Name" />}
                         />
                     </Grid>

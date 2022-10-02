@@ -18,5 +18,5 @@ export const useDeleteOrder = (): UseMutationResult<void, string, number> =>
 
 export const useSaveOrder = (): UseMutationResult<OrderView[], string, OrderSaveRequest> =>
     useMutation(QUERIES.SAVE_ORDER, (request: OrderSaveRequest) =>
-        OrderService.save(ENDPOINTS.ORDER_DETAIL, request).then((res) => res.data)
+        OrderService.save(ENDPOINTS.ORDER, request).then((res) => res.data)
     );
