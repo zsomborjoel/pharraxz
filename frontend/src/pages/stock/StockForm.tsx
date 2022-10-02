@@ -94,7 +94,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
                             fullWidth
                             size="small"
                             options={wards!.map((ward) => ward.name)}
-                            value={MapperUtil.getEntityNameById(wards!, stock?.wardId)}
+                            value={MapperUtil.getEntityNameById(wards!, stock?.wardId) ?? ''}
                             onChange={(_e, v) => updateStock('wardId', MapperUtil.getEntityIdByName(wards!, v))}
                             renderInput={(params) => <TextField required {...params} label="Ward Name" />}
                         />
@@ -117,7 +117,7 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
                             fullWidth
                             size="small"
                             options={products!.map((product) => product.name)}
-                            value={MapperUtil.getEntityNameById(products!, stock?.productId)}
+                            value={MapperUtil.getEntityNameById(products!, stock?.productId) ?? ''}
                             onChange={(_e, v) => updateStock('productId', MapperUtil.getEntityIdByName(products!, v))}
                             renderInput={(params) => <TextField required {...params} label="Product Name" />}
                         />

@@ -89,6 +89,8 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
         return <LoadingIndicator loading />;
     }
 
+    console.log(product);
+
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
             <Box>
@@ -144,7 +146,7 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                             fullWidth
                             size="small"
                             options={suppliers!.map((supplier) => supplier.name)}
-                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId)}
+                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId) ?? ''}
                             onChange={(_e, v) =>
                                 updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
                             }

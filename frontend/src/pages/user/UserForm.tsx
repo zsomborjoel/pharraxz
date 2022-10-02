@@ -139,7 +139,7 @@ const UserForm: FC<UserFormProps> = ({ selectedElement, onSave, onDelete }) => {
                             fullWidth
                             size="small"
                             options={userPositions!.map((userPosition) => userPosition.name)}
-                            value={MapperUtil.getEntityNameById(userPositions!, user?.userPositionId)}
+                            value={MapperUtil.getEntityNameById(userPositions!, user?.userPositionId) ?? ''}
                             onChange={(_e, v) =>
                                 updateUser('userPositionId', MapperUtil.getEntityIdByName(userPositions!, v))
                             }
@@ -152,7 +152,7 @@ const UserForm: FC<UserFormProps> = ({ selectedElement, onSave, onDelete }) => {
                             fullWidth
                             size="small"
                             options={roles!.map((role) => role.name)}
-                            value={MapperUtil.getEntityNameById(roles!, user?.roleId)}
+                            value={MapperUtil.getEntityNameById(roles!, user?.roleId) ?? ''}
                             onChange={(_e, v) => updateUser('roleId', MapperUtil.getEntityIdByName(roles!, v))}
                             renderInput={(params) => <TextField required {...params} label="Roles" />}
                         />
