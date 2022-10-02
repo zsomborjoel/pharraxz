@@ -73,5 +73,16 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
   </tr>
  </table>
 
+## ER diagram 📙
+
+  <table>
+  <tr>
+    <td>DB schema</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/zsomborjoel/pharraxz/blob/main/documentation/db/er_diagram.png" width="600"></td>
+  </tr>
+ </table>
+
 ## 🚀 Build Instructions / How to start the project 
 TODO
