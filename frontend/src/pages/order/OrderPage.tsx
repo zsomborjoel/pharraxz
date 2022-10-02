@@ -2,10 +2,11 @@ import React, { FC, useState } from 'react';
 import 'react-reflex/styles.css';
 import '../../styles.css';
 import { GridColDef, GridSortModel } from '@mui/x-data-grid';
+import { UseQueryResult } from 'react-query';
 import TableAndDetailsLayout from '../../components/TableAndDetailsLayout';
 import OrderForm from './OrderForm';
 import { OrderType } from '../../services/enum/OrderType';
-import { useGetAllOrder } from '../../queries/OrderQuery';
+import { useGetAllOrder, useGetAllOrderByUserId } from '../../queries/OrderQuery';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import DateFilterOperator from '../../components/grid-operators/DateFilterOperator';
 import OrderTypeOperator from '../../components/grid-operators/OrderTypeOperator';
@@ -16,22 +17,20 @@ import { RoleName } from '../../services/enum/RoleName';
 export type OrderPageProps = {};
 
 const OrderPage: FC<OrderPageProps> = (): any => {
-    const { data } = useGetAllOrder();
-
-    const getRoleAssingedOrderViews = (): OrderView[] | undefined => {
+    const getRoleAssingedOrderViews = (): UseQueryResult<OrderView[], unknown> => {
         const currentUser = AuthService.getCurrentUser();
         const requiredUserRoles = [RoleName.ROLE_ADMIN];
 
         if (!AuthService.hasUserValidRole(requiredUserRoles)) {
             if (currentUser?.userId) {
-                return data?.filter((orderView) => orderView.userId === currentUser?.userId);
+                return useGetAllOrderByUserId(currentUser?.userId);
             }
         }
 
-        return data;
+        return useGetAllOrder();
     };
 
-    const orderViews = getRoleAssingedOrderViews();
+    const { data: orderViews } = getRoleAssingedOrderViews();
 
     const [sortModel] = useState<GridSortModel>([
         {

@@ -8,6 +8,7 @@ import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.repositories.OrderDetailRepository;
 import com.opensource.pharraxz.repositories.OrderRepository;
 import com.opensource.pharraxz.repositories.custom.order.CustomOrderDetailRepository;
+import com.opensource.pharraxz.repositories.custom.order.CustomOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -24,6 +25,7 @@ public class OrderService {
 
     private final ProductService productService;
     private final OrderRepository orderRepository;
+    private final CustomOrderRepository customOrderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final CustomOrderDetailRepository customOrderDetailRepository;
     private final OrderDetailMapper orderDetailMapper;
@@ -34,6 +36,11 @@ public class OrderService {
 
     public Flux<Order> getAll() {
         Flux<Order> orderFlux = orderRepository.findAll();
+        return orderFlux.flatMap(this::loadRelations);
+    }
+
+    public Flux<Order> getAllByUserId(final Long userId) {
+        Flux<Order> orderFlux = customOrderRepository.findAllByUserId(userId);
         return orderFlux.flatMap(this::loadRelations);
     }
 

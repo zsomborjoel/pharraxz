@@ -20,6 +20,12 @@ public class OrderController {
                 .flatMapIterable(orderViewMapper::toDTOList);
     }
 
+    @GetMapping("/user/{id}")
+    public Flux<OrderViewDTO> getAllOrdersByUser(@PathVariable Long id) {
+        return orderService.getAllByUserId(id)
+                .flatMapIterable(orderViewMapper::toDTOList);
+    }
+
     @DeleteMapping("/detail/{id}")
     public Mono<Void> deleteOrderDetail(@PathVariable Long id) {
         return orderService.deleteById(id);

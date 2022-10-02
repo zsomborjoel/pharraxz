@@ -8,6 +8,11 @@ import GenericService from '../services/GenericService';
 export const useGetAllOrder = (): UseQueryResult<OrderView[]> =>
     useQuery(QUERIES.GET_ALL_ORDER, async () => GenericService.getAll(ENDPOINTS.ORDER).then((res) => res.data));
 
+export const useGetAllOrderByUserId = (userId: number): UseQueryResult<OrderView[]> =>
+    useQuery(QUERIES.GET_ALL_ORDER_BY_USERID, async () =>
+        OrderService.getAllByUserId(ENDPOINTS.ORDER_USER, userId).then((res) => res.data)
+    );
+
 export const useDeleteOrder = (): UseMutationResult<void, string, number> =>
     useMutation(QUERIES.DELETE_ORDER, (id: number) => GenericService.del(ENDPOINTS.ORDER, id).then((res) => res.data));
 
