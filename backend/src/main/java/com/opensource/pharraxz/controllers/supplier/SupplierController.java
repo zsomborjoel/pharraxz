@@ -31,6 +31,7 @@ public class SupplierController {
         return Mono.just(supplierDTO)
                 .map(supplierMapper::fromDTO)
                 .flatMap(supplierService::save)
+                .log()
                 .map(Supplier::getId);
     }
 
