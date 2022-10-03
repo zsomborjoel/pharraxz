@@ -37,6 +37,7 @@ dependencies {
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}"
 	implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
 	implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
 
 	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
 	runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"

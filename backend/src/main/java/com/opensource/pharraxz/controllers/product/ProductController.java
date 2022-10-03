@@ -2,11 +2,13 @@ package com.opensource.pharraxz.controllers.product;
 
 import com.opensource.pharraxz.entities.Product;
 import com.opensource.pharraxz.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Tag(name = "Product Controller")
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor

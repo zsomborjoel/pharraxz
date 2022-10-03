@@ -3,6 +3,7 @@ package com.opensource.pharraxz.controllers.auth;
 import com.opensource.pharraxz.services.AuthService;
 import com.opensource.pharraxz.services.RefreshTokenService;
 import com.opensource.pharraxz.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
+@Tag(name = "Authentication Controller")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

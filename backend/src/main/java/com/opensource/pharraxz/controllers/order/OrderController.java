@@ -1,11 +1,13 @@
 package com.opensource.pharraxz.controllers.order;
 
 import com.opensource.pharraxz.services.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Tag(name = "Order Controller")
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor

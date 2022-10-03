@@ -13,7 +13,7 @@ import org.springframework.lang.NonNull;
 
 @Configuration
 @Profile(value = "!test")
-public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
+public class R2dbcConfig extends AbstractR2dbcConfiguration {
 
     @Value("${database.name}")
     private String database;

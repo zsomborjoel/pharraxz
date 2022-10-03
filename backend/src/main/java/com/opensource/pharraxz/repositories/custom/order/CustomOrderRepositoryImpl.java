@@ -15,7 +15,7 @@ public class CustomOrderRepositoryImpl implements CustomOrderRepository {
     private final OrderDAOMapper mapper;
 
     @Override
-    public Flux<Order> findAllByUserId(Long userId) {
+    public Flux<Order> findAllByUserId(final Long userId) {
         final String query = """
                 select o.*
                 from orders o
