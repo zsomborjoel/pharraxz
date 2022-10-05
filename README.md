@@ -14,6 +14,7 @@ Pharmacy Management System
 * Liquibase
     * Environment level separation
 * Docker
+* Swagger
 
 ## Functionality 🦄 
 
@@ -84,5 +85,5 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
   </tr>
  </table>
 
-## 🚀 Build Instructions / How to start the project 
+## Build Instructions / How to start the project 🚀
 TODO
