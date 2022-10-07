@@ -1,7 +1,7 @@
 # Pharraxz
 Pharmacy Management System
 
-## Technologies 💻 
+## 💻 Technologies
 
 * Spring Webflux 2.6.6 (Java 17)
     * JWT auth with refresh token
@@ -16,7 +16,7 @@ Pharmacy Management System
 * Docker
 * Swagger
 
-## Functionality 🦄 
+## 🦄 Functionality
 
 This application created for intend to help hospitals 🏥 - doctor 👨‍⚕️ or ward 🛏️ - internal drug order usage.
 
@@ -28,7 +28,7 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
 * Product management
 * Hospital inside order management
 
-## Interface snipets 📷 
+## 📷 Interface snipets 
 
 <table>
   <tr>
@@ -74,7 +74,7 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
   </tr>
  </table>
 
-## ER diagram 📙
+## 📙 ER diagram
 
   <table>
   <tr>
@@ -85,5 +85,5 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
   </tr>
  </table>
 
-## Build Instructions / How to start the project 🚀
+## 🚀 Build Instructions / How to start the project
 TODO
