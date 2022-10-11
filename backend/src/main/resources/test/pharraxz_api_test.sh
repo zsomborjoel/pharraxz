@@ -57,3 +57,8 @@ curl -X "POST" -v \
             \"endDate\": \"2021-01-02\"
         }
     }"
+
+# Get file
+curl -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" \
+localhost:8080/files/download?fileNameWithPath=/tmp/products.xlsx \
+--output test.xlsx
