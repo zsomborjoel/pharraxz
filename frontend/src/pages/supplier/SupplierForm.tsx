@@ -75,86 +75,84 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
-            <Box>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Supplier Name"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={supplier?.name ?? ''}
-                            onChange={(e) => updateSupplier('name', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Address"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={supplier?.address ?? ''}
-                            onChange={(e) => updateSupplier('address', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Email"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={supplier?.email ?? ''}
-                            onChange={(e) => updateSupplier('email', e.target.value)}
-                        />
-                    </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Supplier Name"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={supplier?.name ?? ''}
+                        onChange={(e) => updateSupplier('name', e.target.value)}
+                    />
                 </Grid>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Phone"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            value={supplier?.phone ?? ''}
-                            onChange={(e) => updateSupplier('phone', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={8} display="flex">
-                        <TextField
-                            label="Description"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            multiline
-                            value={supplier?.description ?? ''}
-                            onChange={(e) => updateSupplier('description', e.target.value)}
-                        />
-                    </Grid>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Address"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={supplier?.address ?? ''}
+                        onChange={(e) => updateSupplier('address', e.target.value)}
+                    />
                 </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveSupplier} variant="contained">
-                            Save
-                        </Button>
-                        <Button
-                            sx={{ width: 140, ml: 1 }}
-                            variant="outlined"
-                            disabled={isNewSupplier}
-                            onClick={clearFormForNewSupplier}
-                        >
-                            Add new
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteSupplier}>
-                            Delete
-                        </Button>
-                    </Grid>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Email"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={supplier?.email ?? ''}
+                        onChange={(e) => updateSupplier('email', e.target.value)}
+                    />
                 </Grid>
-            </Box>
+            </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Phone"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        value={supplier?.phone ?? ''}
+                        onChange={(e) => updateSupplier('phone', e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={8} display="flex">
+                    <TextField
+                        label="Description"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        multiline
+                        value={supplier?.description ?? ''}
+                        onChange={(e) => updateSupplier('description', e.target.value)}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
+                    <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveSupplier} variant="contained">
+                        Save
+                    </Button>
+                    <Button
+                        sx={{ width: 140, ml: 1 }}
+                        variant="outlined"
+                        disabled={isNewSupplier}
+                        onClick={clearFormForNewSupplier}
+                    >
+                        Add new
+                    </Button>
+                </Grid>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
+                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteSupplier}>
+                        Delete
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 };

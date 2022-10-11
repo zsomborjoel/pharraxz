@@ -86,64 +86,62 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
-            <Box>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
-                            fullWidth
-                            size="small"
-                            options={wards!.map((ward) => ward.name)}
-                            value={MapperUtil.getEntityNameById(wards!, stock?.wardId) ?? ''}
-                            onChange={(_e, v) => updateStock('wardId', MapperUtil.getEntityIdByName(wards!, v))}
-                            renderInput={(params) => <TextField required {...params} label="Ward Name" />}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Quantity"
-                            type="number"
-                            required
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            value={stock?.quantity ?? ''}
-                            onChange={(e) => updateStock('quantity', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
-                            fullWidth
-                            size="small"
-                            options={products!.map((product) => product.name)}
-                            value={MapperUtil.getEntityNameById(products!, stock?.productId) ?? ''}
-                            onChange={(_e, v) => updateStock('productId', MapperUtil.getEntityIdByName(products!, v))}
-                            renderInput={(params) => <TextField required {...params} label="Product Name" />}
-                        />
-                    </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <Autocomplete
+                        sx={{ pt: 1 }}
+                        fullWidth
+                        size="small"
+                        options={wards!.map((ward) => ward.name)}
+                        value={MapperUtil.getEntityNameById(wards!, stock?.wardId) ?? ''}
+                        onChange={(_e, v) => updateStock('wardId', MapperUtil.getEntityIdByName(wards!, v))}
+                        renderInput={(params) => <TextField required {...params} label="Ward Name" />}
+                    />
                 </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveStock} variant="contained">
-                            Save
-                        </Button>
-                        <Button
-                            sx={{ width: 140, ml: 1 }}
-                            variant="outlined"
-                            disabled={isNewStock}
-                            onClick={clearFormForNewProduct}
-                        >
-                            Add new
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteStock}>
-                            Delete
-                        </Button>
-                    </Grid>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Quantity"
+                        type="number"
+                        required
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        value={stock?.quantity ?? ''}
+                        onChange={(e) => updateStock('quantity', e.target.value)}
+                    />
                 </Grid>
-            </Box>
+                <Grid item xs={4} display="flex">
+                    <Autocomplete
+                        sx={{ pt: 1 }}
+                        fullWidth
+                        size="small"
+                        options={products!.map((product) => product.name)}
+                        value={MapperUtil.getEntityNameById(products!, stock?.productId) ?? ''}
+                        onChange={(_e, v) => updateStock('productId', MapperUtil.getEntityIdByName(products!, v))}
+                        renderInput={(params) => <TextField required {...params} label="Product Name" />}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
+                    <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveStock} variant="contained">
+                        Save
+                    </Button>
+                    <Button
+                        sx={{ width: 140, ml: 1 }}
+                        variant="outlined"
+                        disabled={isNewStock}
+                        onClick={clearFormForNewProduct}
+                    >
+                        Add new
+                    </Button>
+                </Grid>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
+                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteStock}>
+                        Delete
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 };

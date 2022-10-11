@@ -136,90 +136,83 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
-            <Box>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            type="number"
-                            label="Order Id"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={orderId}
-                            onChange={(e) => setOrderId(parseInt(e.target.value, 10))}
-                        />
-                    </Grid>
-                    <Grid item xs={8} display="flex">
-                        <TextField
-                            label="Order Description"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            maxRows={3}
-                            multiline
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        type="number"
+                        label="Order Id"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={orderId}
+                        onChange={(e) => setOrderId(parseInt(e.target.value, 10))}
+                    />
                 </Grid>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
-                            fullWidth
-                            size="small"
-                            options={products!.map((product) => product.name)}
-                            value={MapperUtil.getEntityNameById(products, productId) ?? ''}
-                            onChange={(_e, v) => setProductId(MapperUtil.getEntityIdByName(products, v)!)}
-                            renderInput={(params) => <TextField {...params} label="Product Name" />}
-                        />
-                    </Grid>
-                    <Grid item xs={5} display="flex">
-                        <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
-                    </Grid>
-                    <Grid item xs={3} display="flex">
-                        <TextField
-                            type="number"
-                            label="Quantity"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={quantity}
-                            onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
-                        />
-                    </Grid>
+                <Grid item xs={8} display="flex">
+                    <TextField
+                        label="Order Description"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        maxRows={3}
+                        multiline
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
                 </Grid>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={3} display="flex">
-                        <DatePicker required label="Start Date" value={startDate} onChange={setStartDate} />
-                    </Grid>
-                    <Grid item xs={3} display="flex">
-                        <DatePicker required label="End Date" value={endDate} onChange={setEndDate} />
-                    </Grid>
+            </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <Autocomplete
+                        sx={{ pt: 1 }}
+                        fullWidth
+                        size="small"
+                        options={products!.map((product) => product.name)}
+                        value={MapperUtil.getEntityNameById(products, productId) ?? ''}
+                        onChange={(_e, v) => setProductId(MapperUtil.getEntityIdByName(products, v)!)}
+                        renderInput={(params) => <TextField {...params} label="Product Name" />}
+                    />
                 </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveOrder} variant="contained">
-                            Save
-                        </Button>
-                        <Button sx={{ width: 140, ml: 1 }} variant="outlined" disabled={!orderId} onClick={resetForm}>
-                            Add new
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button
-                            sx={{ mr: 6, width: 140 }}
-                            variant="contained"
-                            color="error"
-                            onClick={deleteOrderDetail}
-                        >
-                            Delete
-                        </Button>
-                    </Grid>
+                <Grid item xs={5} display="flex">
+                    <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
                 </Grid>
-            </Box>
+                <Grid item xs={3} display="flex">
+                    <TextField
+                        type="number"
+                        label="Quantity"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={quantity}
+                        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={3} display="flex">
+                    <DatePicker required label="Start Date" value={startDate} onChange={setStartDate} />
+                </Grid>
+                <Grid item xs={3} display="flex">
+                    <DatePicker required label="End Date" value={endDate} onChange={setEndDate} />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
+                    <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveOrder} variant="contained">
+                        Save
+                    </Button>
+                    <Button sx={{ width: 140, ml: 1 }} variant="outlined" disabled={!orderId} onClick={resetForm}>
+                        Add new
+                    </Button>
+                </Grid>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
+                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteOrderDetail}>
+                        Delete
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 };

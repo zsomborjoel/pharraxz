@@ -86,133 +86,129 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
 
     return (
         <Box sx={{ flexGrow: 1, overflow: 'auto', marginTop: 1, paddingLeft: 1, paddingRight: 1 }}>
-            <Box>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Product Name"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={product?.name ?? ''}
-                            onChange={(e) => updateProduct('name', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
-                            fullWidth
-                            size="small"
-                            options={suppliers!.map((supplier) => supplier.name)}
-                            value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId) ?? ''}
-                            onChange={(_e, v) =>
-                                updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))
-                            }
-                            renderInput={(params) => <TextField required {...params} label="Supplier Name" />}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Packaging"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            required
-                            value={product?.packaging ?? ''}
-                            onChange={(e) => updateProduct('packaging', e.target.value)}
-                        />
-                    </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Product Name"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={product?.name ?? ''}
+                        onChange={(e) => updateProduct('name', e.target.value)}
+                    />
                 </Grid>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Description"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            multiline
-                            value={product?.description ?? ''}
-                            onChange={(e) => updateProduct('description', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Atc"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            value={product?.atc ?? ''}
-                            onChange={(e) => updateProduct('atc', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Distributor"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            value={product?.distributor ?? ''}
-                            onChange={(e) => updateProduct('distributor', e.target.value)}
-                        />
-                    </Grid>
+                <Grid item xs={4} display="flex">
+                    <Autocomplete
+                        sx={{ pt: 1 }}
+                        fullWidth
+                        size="small"
+                        options={suppliers!.map((supplier) => supplier.name)}
+                        value={MapperUtil.getEntityNameById(suppliers!, product?.supplierId) ?? ''}
+                        onChange={(_e, v) => updateProduct('supplierId', MapperUtil.getEntityIdByName(suppliers!, v))}
+                        renderInput={(params) => <TextField required {...params} label="Supplier Name" />}
+                    />
                 </Grid>
-                <Grid container spacing={1} sx={{ mb: 2 }}>
-                    <Grid item xs={4} display="flex">
-                        <TextField
-                            label="Inn"
-                            fullWidth
-                            margin="dense"
-                            size="small"
-                            value={product?.inn ?? ''}
-                            onChange={(e) => updateProduct('inn', e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <Autocomplete
-                            sx={{ pt: 1 }}
-                            fullWidth
-                            size="small"
-                            options={releaseAbleCodes!.map((releaseAbleCode) => releaseAbleCode.code)}
-                            value={product?.releasableBy}
-                            onChange={(_e, v) => updateProduct('releasableBy', v)}
-                            renderInput={(params) => <TextField {...params} label="Releaseable By" />}
-                        />
-                    </Grid>
-                    <Grid item xs={4} display="flex">
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={product?.releasable ?? false}
-                                    onChange={(e) => updateProduct('releasable', e.target.checked)}
-                                    required
-                                />
-                            }
-                            label="Releasable"
-                        />
-                    </Grid>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Packaging"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        required
+                        value={product?.packaging ?? ''}
+                        onChange={(e) => updateProduct('packaging', e.target.value)}
+                    />
                 </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
-                        <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveProduct} variant="contained">
-                            Save
-                        </Button>
-                        <Button
-                            sx={{ width: 140, ml: 1 }}
-                            variant="outlined"
-                            disabled={isNewProduct}
-                            onClick={clearFormForNewProduct}
-                        >
-                            Add new
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                        <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteProduct}>
-                            Delete
-                        </Button>
-                    </Grid>
+            </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Description"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        multiline
+                        value={product?.description ?? ''}
+                        onChange={(e) => updateProduct('description', e.target.value)}
+                    />
                 </Grid>
-            </Box>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Atc"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        value={product?.atc ?? ''}
+                        onChange={(e) => updateProduct('atc', e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Distributor"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        value={product?.distributor ?? ''}
+                        onChange={(e) => updateProduct('distributor', e.target.value)}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={4} display="flex">
+                    <TextField
+                        label="Inn"
+                        fullWidth
+                        margin="dense"
+                        size="small"
+                        value={product?.inn ?? ''}
+                        onChange={(e) => updateProduct('inn', e.target.value)}
+                    />
+                </Grid>
+                <Grid item xs={4} display="flex">
+                    <Autocomplete
+                        sx={{ pt: 1 }}
+                        fullWidth
+                        size="small"
+                        options={releaseAbleCodes!.map((releaseAbleCode) => releaseAbleCode.code)}
+                        value={product?.releasableBy}
+                        onChange={(_e, v) => updateProduct('releasableBy', v)}
+                        renderInput={(params) => <TextField {...params} label="Releaseable By" />}
+                    />
+                </Grid>
+                <Grid item xs={4} display="flex">
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={product?.releasable ?? false}
+                                onChange={(e) => updateProduct('releasable', e.target.checked)}
+                                required
+                            />
+                        }
+                        label="Releasable"
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }}>
+                    <Button sx={{ width: 140 }} disabled={!isSaveable} onClick={saveProduct} variant="contained">
+                        Save
+                    </Button>
+                    <Button
+                        sx={{ width: 140, ml: 1 }}
+                        variant="outlined"
+                        disabled={isNewProduct}
+                        onClick={clearFormForNewProduct}
+                    >
+                        Add new
+                    </Button>
+                </Grid>
+                <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
+                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteProduct}>
+                        Delete
+                    </Button>
+                </Grid>
+            </Grid>
         </Box>
     );
 };
