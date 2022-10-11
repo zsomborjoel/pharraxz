@@ -148,7 +148,13 @@ const SupplierForm: FC<SupplierFormProps> = ({ selectedElement, onSave, onDelete
                     </Button>
                 </Grid>
                 <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteSupplier}>
+                    <Button
+                        sx={{ mr: 6, width: 140 }}
+                        disabled={!supplier}
+                        variant="contained"
+                        color="error"
+                        onClick={deleteSupplier}
+                    >
                         Delete
                     </Button>
                 </Grid>

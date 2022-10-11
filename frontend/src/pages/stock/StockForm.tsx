@@ -137,7 +137,13 @@ const StockForm: FC<StockFormProps> = ({ selectedElement, onSave, onDelete }) =>
                     </Button>
                 </Grid>
                 <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteStock}>
+                    <Button
+                        sx={{ mr: 6, width: 140 }}
+                        disabled={!stock}
+                        variant="contained"
+                        color="error"
+                        onClick={deleteStock}
+                    >
                         Delete
                     </Button>
                 </Grid>

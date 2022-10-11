@@ -204,7 +204,13 @@ const ProductForm: FC<ProductFormProps> = ({ selectedElement, onSave, onDelete }
                     </Button>
                 </Grid>
                 <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteProduct}>
+                    <Button
+                        sx={{ mr: 6, width: 140 }}
+                        disabled={!product}
+                        variant="contained"
+                        color="error"
+                        onClick={deleteProduct}
+                    >
                         Delete
                     </Button>
                 </Grid>

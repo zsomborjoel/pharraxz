@@ -208,7 +208,13 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                     </Button>
                 </Grid>
                 <Grid item xs={6} display="flex" sx={{ mt: 6 }} justifyContent="flex-end">
-                    <Button sx={{ mr: 6, width: 140 }} variant="contained" color="error" onClick={deleteOrderDetail}>
+                    <Button
+                        sx={{ mr: 6, width: 140 }}
+                        disabled={!orderId}
+                        variant="contained"
+                        color="error"
+                        onClick={deleteOrderDetail}
+                    >
                         Delete
                     </Button>
                 </Grid>
