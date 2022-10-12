@@ -8,6 +8,7 @@ import List from '@mui/material/List';
 import ArticleIcon from '@mui/icons-material/Article';
 import MedicationIcon from '@mui/icons-material/Medication';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import ListItemText from '@mui/material/ListItemText';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -45,6 +46,12 @@ const menuItems = [
         menuLabel: 'User',
         menuIcon: PersonIcon,
         link: '/user',
+    },
+    {
+        id: 5,
+        menuLabel: 'File',
+        menuIcon: DriveFolderUploadIcon,
+        link: '/file',
     },
 ];
 

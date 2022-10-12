@@ -20,6 +20,7 @@ export const ENDPOINTS = {
     STOCK: `${SERVER_URL}/stock`,
     USER_POSITION: `${SERVER_URL}/user-positions`,
     ROLE: `${SERVER_URL}/roles`,
+    FILE: `${SERVER_URL}/files`,
 };
 
 export const ROUTES = {
@@ -30,6 +31,7 @@ export const ROUTES = {
     SUPPLIER: '/supplier',
     STOCK: '/stock',
     USER: '/user',
+    FILE: '/file',
 };
 
 export const QUERIES = {

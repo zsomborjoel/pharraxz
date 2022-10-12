@@ -63,4 +63,14 @@ export default [
         name: 'User',
         requiredUserRoles: [RoleName.ROLE_ADMIN],
     },
+    {
+        path: `${ROUTES.FILE}`,
+        element: <UserPage />,
+        name: 'File',
+    },
+    {
+        path: `${ROUTES.FILE}/:id`,
+        element: <UserPage />,
+        name: 'File',
+    },
 ];

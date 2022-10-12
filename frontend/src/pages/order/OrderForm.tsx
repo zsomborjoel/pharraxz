@@ -5,7 +5,7 @@ import { Product } from '../../services/model/Product';
 import AuthService from '../../services/AuthService';
 import { OrderSaveRequest } from '../../services/model/OrderSaveRequest';
 import { OrderView } from '../../services/model/OrderView';
-import OrderTypeDropdown from '../../components/order/OrderTypeDropdown';
+import OrderTypeDropdown from '../../components/OrderTypeDropdown';
 import DatePicker from '../../components/DatePicker';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useDeleteOrder, useSaveOrder } from '../../queries/OrderQuery';
@@ -13,6 +13,7 @@ import { useGetAllProduct } from '../../queries/ProductQuery';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { handleError } from '../../utils/ErrorHandler';
 import MapperUtil from '../../utils/MapperUtil';
+import { OrderType } from '../../services/enum/OrderType';
 
 export type OrderFormProps = {
     selectedElement: OrderView;
@@ -25,7 +26,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
     const [orderDetailId, setOrderDetailId] = useState<number | null>(selectedElement?.id);
     const [description, setDescription] = useState<string | null>(selectedElement?.description || '');
     const [productId, setProductId] = useState<number | null>(selectedElement?.product?.id);
-    const [orderType, setOrderType] = useState<string | null>(selectedElement?.orderType || '');
+    const [orderType, setOrderType] = useState<OrderType | null>(selectedElement?.orderType || '');
     const [quantity, setQuantity] = useState<number | null>(selectedElement?.quantity || null);
     const [startDate, setStartDate] = useState<Date | null>(selectedElement?.startDate || null);
     const [endDate, setEndDate] = useState<Date | null>(selectedElement?.endDate || null);
@@ -54,7 +55,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
         setDescription('');
         setOrderDetailId(null);
         setProductId(0);
-        setOrderType('');
+        setOrderType(null);
         setQuantity(0);
         setStartDate(null);
         setEndDate(null);
@@ -120,12 +121,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
             endDate !== (selectedElement?.endDate || null);
 
         const mandatoryExists =
-            productId !== null &&
-            orderType !== null &&
-            orderType !== '' &&
-            quantity !== 0 &&
-            startDate !== null &&
-            endDate !== null;
+            productId !== null && orderType !== null && quantity !== 0 && startDate !== null && endDate !== null;
 
         setIsSaveable(changed && mandatoryExists);
     }, [orderId, description, productId, orderType, quantity, startDate, endDate]);
@@ -175,7 +171,7 @@ const OrderForm: FC<OrderFormProps> = ({ selectedElement, onSave, onDelete }) =>
                     />
                 </Grid>
                 <Grid item xs={5} display="flex">
-                    <OrderTypeDropdown label="Order Type" value={orderType} setValue={setOrderType} />
+                    <OrderTypeDropdown label="Order Type" value={orderType as OrderType} onSelect={setOrderType} />
                 </Grid>
                 <Grid item xs={3} display="flex">
                     <TextField
