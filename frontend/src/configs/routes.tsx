@@ -7,6 +7,7 @@ import SupplierPage from '../pages/supplier/SupplierPage';
 import StockPage from '../pages/stock/StockPage';
 import UserPage from '../pages/user/UserPage';
 import { RoleName } from '../services/enum/RoleName';
+import FilePage from '../pages/file/FilePage';
 
 export default [
     { path: `${ROUTES.ROOT}`, element: <HomePage />, name: 'Home' },
@@ -65,12 +66,7 @@ export default [
     },
     {
         path: `${ROUTES.FILE}`,
-        element: <UserPage />,
-        name: 'File',
-    },
-    {
-        path: `${ROUTES.FILE}/:id`,
-        element: <UserPage />,
+        element: <FilePage />,
         name: 'File',
     },
 ];

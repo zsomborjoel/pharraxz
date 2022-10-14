@@ -58,3 +58,5 @@ export const QUERIES = {
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
+
+export const ROOT_FOLDER = '/home/zsomborjoel/Apps/pharraxz';
