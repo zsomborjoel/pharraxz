@@ -10,20 +10,11 @@ import { File } from '../../services/model/File';
 import FileDownloadDialog from './FileDownloadDialog';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 
-export type TreeDirectoryProps = {};
+export type TreeDirectoryProps = {
+    setPwd(pwd: string): void;
+};
 
-/*
-const styler = withStyles((theme: any) => ({
-    root: {
-        width: 900,
-    },
-    list: {
-        marginLeft: theme.spacing(4),
-    },
-}));
-*/
-
-const TreeDirectory: FC<TreeDirectoryProps> = (): any => {
+const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd }): any => {
     const [paths, setPaths] = useState<string[]>([]);
     const [unfolded, setUnfolded] = useState<any[]>([]);
 
@@ -97,6 +88,7 @@ const TreeDirectory: FC<TreeDirectoryProps> = (): any => {
         } else {
             setUnfolded([...unfolded, path]);
             fetchNewFiles(path);
+            setPwd(path);
         }
     };
 

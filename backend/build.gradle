@@ -38,6 +38,7 @@ dependencies {
 	implementation 'io.projectreactor.tools:blockhound:1.0.6.RELEASE'
 	implementation "io.jsonwebtoken:jjwt-api:${jjwtVersion}"
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+	implementation 'commons-io:commons-io:2.11.0'
 
 	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
 	runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"

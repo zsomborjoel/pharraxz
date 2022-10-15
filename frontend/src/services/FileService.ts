@@ -13,9 +13,13 @@ const download = (fileNameWithPath: string): Promise<AxiosResponse<Blob>> =>
 const list = (path: string): Promise<AxiosResponse<File[]>> =>
     axios.get(`${ENDPOINTS.FILE}/list`, { params: { path }, headers: AuthHeader() });
 
+const del = (path: string): Promise<AxiosResponse<void>> =>
+    axios.delete(`${ENDPOINTS.FILE}/delete`, { params: { path }, headers: AuthHeader() });
+
 const FileService = {
     download,
     list,
+    del,
 };
 
 export default FileService;

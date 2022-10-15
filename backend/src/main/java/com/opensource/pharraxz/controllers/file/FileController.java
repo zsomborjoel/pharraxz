@@ -23,7 +23,7 @@ public class FileController {
     private final FileService fileService;
 
     @GetMapping("/download")
-    public ResponseEntity<byte[]> download(@RequestParam String fileNameWithPath) throws IOException {
+    public ResponseEntity<byte[]> downloadFile(@RequestParam String fileNameWithPath) throws IOException {
         log.info("Download requested for file with path [{}]", fileNameWithPath);
         final File file = new File(fileNameWithPath);
 
@@ -53,9 +53,17 @@ public class FileController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception exc) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteFile(@RequestParam String path) throws IOException {
+        log.info("Deletion path is [{}]", path);
+        fileService.delete(path);
+        return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<String> handleIoException(IOException exc) {
         log.error(String.valueOf(exc));
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(String.format("IOException occurred: Message: [%s]", exc.getMessage()));
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                .body(String.format("IOException occurred. Message: [%s]", exc.getMessage()));
     }
 }

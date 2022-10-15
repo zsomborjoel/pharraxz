@@ -71,3 +71,7 @@ localhost:8080/files/list?path=/tmp
 curl -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" \
 localhost:8080/files/download?fileNameWithPath=/tmp/products.xlsx \
 --output test.xlsx
+
+# Delete file
+curl -X "DELETE" -v -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJ1c2VyIiwiaWF0IjoxNjU1NTQ1MDU3LCJleHAiOjEwMDAwMTY1NTU0NTA1Nn0.WpK6QQtuu5yDXAt8h_txtCr-Xeauk0LSRTGhw7AzvwmcttsrCJnCRs8BrCFJmWNIFb-9Z04umu4xN8IxZ4vbFg" \
+localhost:8080/files/delete?path=/home/zsomborjoel/Apps/pharraxz/test.txt
