@@ -3,3 +3,7 @@
     grid-template-areas: "main";
     height: 100%;
 }
+
+.li {
+    margin-left: 4rem;
+}

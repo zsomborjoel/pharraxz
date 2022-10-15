@@ -1,35 +1,29 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import Folder from '@material-ui/icons/Folder';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Description from '@material-ui/icons/Description';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { v4 as uuidv4 } from 'uuid';
 import { AxiosResponse } from 'axios';
+import { ExpandLess, ExpandMore, Description, Folder } from '@mui/icons-material';
+import { Box } from '@mui/system';
 import FileService from '../../services/FileService';
 import { ROOT_FOLDER } from '../../configs/constants';
 import { File } from '../../services/model/File';
 import FileDownloadDialog from './FileDownloadDialog';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 
-export type TreeDirectoryProps = {
-    classes: {
-        root: string;
-        list: string;
-    };
-};
+export type TreeDirectoryProps = {};
 
+/*
 const styler = withStyles((theme: any) => ({
     root: {
-        width: 800,
+        width: 900,
     },
     list: {
         marginLeft: theme.spacing(4),
     },
 }));
+*/
 
-const TreeDirectory: FC<TreeDirectoryProps> = ({ classes }): any => {
+const TreeDirectory: FC<TreeDirectoryProps> = (): any => {
     const [paths, setPaths] = useState<string[]>([]);
     const [unfolded, setUnfolded] = useState<any[]>([]);
 
@@ -106,7 +100,7 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ classes }): any => {
         }
     };
 
-    const handleDownloadDialog = (path: string): void => {
+    const openDownloadDialog = (path: string): void => {
         setDownloadFilePath(path);
         setIsDownloadOpen(true);
     };
@@ -122,7 +116,7 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ classes }): any => {
                 <ListItemButton
                     divider
                     dense
-                    onClick={() => (isDir ? handleToggleList(path, unfold) : handleDownloadDialog(path))}
+                    onClick={() => (isDir ? handleToggleList(path, unfold) : openDownloadDialog(path))}
                 >
                     <ListItemIcon>{isDir ? <Folder /> : <Description />}</ListItemIcon>
                     <ListItemText primary={name} />
@@ -136,7 +130,7 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ classes }): any => {
                 />
                 {isDir && (
                     <Collapse in={unfold}>
-                        <List className={classes.list}>{renderList(childrens, pwd.concat(name))}</List>
+                        <List sx={{ ml: 4 }}>{renderList(childrens, pwd.concat(name))}</List>
                     </Collapse>
                 )}
             </React.Fragment>
@@ -176,10 +170,10 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ classes }): any => {
     };
 
     return (
-        <div className={classes.root}>
+        <Box sx={{ width: 900 }}>
             <List>{renderList(paths)}</List>
-        </div>
+        </Box>
     );
 };
 
-export default styler(TreeDirectory);
+export default TreeDirectory;

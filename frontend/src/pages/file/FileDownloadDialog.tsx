@@ -19,9 +19,9 @@ const FileDownloadDialog: FC<FileDownloadDialogProps> = ({ isOpen, setIsOpen, se
 
     return (
         <Dialog open={isOpen} onClose={handleClose}>
-            <DialogTitle>Would you like download file?</DialogTitle>
+            <DialogTitle>Would you like to download the file?</DialogTitle>
             <DialogContent>
-                <DialogContentText>{`Selected file path is ${path}`}</DialogContentText>
+                <DialogContentText>{`Selected file is [${path}]`}</DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button
