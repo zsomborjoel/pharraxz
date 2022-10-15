@@ -2,6 +2,7 @@ package com.opensource.pharraxz.configs.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -23,9 +24,20 @@ import java.util.List;
 @AllArgsConstructor
 public class WebSecurityConfig {
 
-    private static final List<String> ALLOWED_HEADERS = List.of("Authorization", "Cache-Control", "Content-Type");
-    private static final List<String> ALLOWED_METHODS = List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE");
+    private static final List<String> ALLOWED_HEADERS = List.of(
+            HttpHeaders.AUTHORIZATION,
+            HttpHeaders.CACHE_CONTROL,
+            HttpHeaders.CONTENT_TYPE
+    );
+    private static final List<String> ALLOWED_METHODS = List.of(
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "OPTIONS"
+    );
     private static final List<String> ALLOWED_ORIGIN = Collections.singletonList("*");
+    private static final List<String> EXPOSED_HEADERS = Collections.singletonList("Content-Disposition");
 
     private final AuthenticationManager authenticationManager;
     private final SecurityContextRepository securityContextRepository;
@@ -41,6 +53,7 @@ public class WebSecurityConfig {
         configuration.setAllowedHeaders(ALLOWED_HEADERS);
         configuration.setAllowedMethods(ALLOWED_METHODS);
         configuration.setAllowedOrigins(ALLOWED_ORIGIN);
+        configuration.setExposedHeaders(EXPOSED_HEADERS);
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

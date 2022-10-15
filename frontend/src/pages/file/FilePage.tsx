@@ -14,7 +14,7 @@ const FilePage: FC<FilePageProps> = (): any => {
         <div className="reflex">
             <Box sx={{ height: 900 }}>
                 <ReflexContainer orientation="vertical">
-                    <ReflexElement size={850} minSize={400} className="left-pane">
+                    <ReflexElement size={800} minSize={400} className="left-pane">
                         <TreeDirectory />
                     </ReflexElement>
                     <ReflexSplitter />
