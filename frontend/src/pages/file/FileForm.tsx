@@ -6,9 +6,10 @@ import { ROOT_FOLDER } from '../../configs/constants';
 
 export type FileFormProps = {
     pwd: string;
+    setDeletedPath(path: string): void;
 };
 
-const FileForm: FC<FileFormProps> = ({ pwd }) => {
+const FileForm: FC<FileFormProps> = ({ pwd, setDeletedPath }) => {
     const [directoryPath, setDirectoryPath] = useState<string>(pwd);
 
     const { showSnackbar } = useContext(SnackbarContext);
@@ -19,7 +20,10 @@ const FileForm: FC<FileFormProps> = ({ pwd }) => {
 
     const handleDelete = (): void => {
         FileService.del(`${ROOT_FOLDER}/${directoryPath}`)
-            .then(() => showSnackbar({ severity: 'success', text: `File ${directoryPath} deleted` }))
+            .then(() => {
+                setDeletedPath(directoryPath);
+                showSnackbar({ severity: 'success', text: `File ${directoryPath} deleted` });
+            })
             .catch((error) =>
                 showSnackbar({ severity: 'error', text: `File ${directoryPath} delete failed with: ${error}` })
             );
@@ -30,7 +34,7 @@ const FileForm: FC<FileFormProps> = ({ pwd }) => {
             <Grid container spacing={1} sx={{ mb: 2 }} flexDirection="column">
                 <Grid item xs={11} display="flex">
                     <TextField
-                        label="Present working directory"
+                        label="Present working directory / File"
                         fullWidth
                         margin="dense"
                         size="small"

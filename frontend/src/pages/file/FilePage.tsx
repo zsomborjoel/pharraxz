@@ -10,17 +10,18 @@ export type FilePageProps = {};
 
 const FilePage: FC<FilePageProps> = (): any => {
     const [pwd, setPwd] = useState<string>('');
+    const [deletedPath, setDeletedPath] = useState<string>('');
 
     return (
         <div className="reflex">
             <Box sx={{ height: 900 }}>
                 <ReflexContainer orientation="vertical">
                     <ReflexElement size={900} minSize={400} className="left-pane">
-                        <TreeDirectory setPwd={setPwd} />
+                        <TreeDirectory setPwd={setPwd} deletedPath={deletedPath} />
                     </ReflexElement>
                     <ReflexSplitter />
                     <ReflexElement minSize={600} className="right-pane" propagateDimensions propagateDimensionsRate={1}>
-                        <FileForm pwd={pwd} />
+                        <FileForm pwd={pwd} setDeletedPath={setDeletedPath} />
                     </ReflexElement>
                 </ReflexContainer>
             </Box>

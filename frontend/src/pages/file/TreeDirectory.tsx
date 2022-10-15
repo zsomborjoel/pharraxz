@@ -12,9 +12,10 @@ import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 
 export type TreeDirectoryProps = {
     setPwd(pwd: string): void;
+    deletedPath: string;
 };
 
-const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd }): any => {
+const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath }): any => {
     const [paths, setPaths] = useState<string[]>([]);
     const [unfolded, setUnfolded] = useState<any[]>([]);
 
@@ -23,6 +24,10 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd }): any => {
     const [downloadFilePath, setDownloadFilePath] = useState<string>('');
     const [isDownloadOpen, setIsDownloadOpen] = useState<boolean>(false);
     const [isDownloadApproved, setIsDownloadApproved] = useState<boolean>(false);
+
+    useEffect(() => {
+        setPaths(paths.filter((path) => path !== deletedPath));
+    }, [deletedPath]);
 
     const saveFile = (response: AxiosResponse<Blob, any>): void => {
         const href = URL.createObjectURL(response.data);
