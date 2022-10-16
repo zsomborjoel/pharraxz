@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,10 +40,11 @@ public class FileService {
                 .toList();
     }
 
-    public void upload(final String path, final FilePart file) {
+    public Mono<Void> getTransferTo(final String path, final FilePart filePart) {
         validateOrCratePath(path);
-        final Path basePath = Path.of(path);
-        file.transferTo(basePath.resolve(file.filename())).doOnNext((e) -> System.out.println("Done"));
+        return filePart.transferTo(
+                Path.of(path).resolve(filePart.filename())
+        );
     }
 
     public void delete(final String path) throws IOException {

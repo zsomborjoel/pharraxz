@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,10 +48,11 @@ public class FileController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadFile(@RequestParam String path, @RequestPart("file") FilePart file) throws IOException {
-        log.info("File with path [{}] and name [{}] received for upload", path, file.filename());
-        fileService.upload(path, file);
-        return ResponseEntity.ok().build();
+    public Mono<Void> uploadFile(@RequestParam String path, @RequestPart("file") Mono<FilePart> file) {
+        log.info("File with path [{}] received for upload", path);
+        return file
+                .flatMap(filePart -> fileService.getTransferTo(path, filePart))
+                .then();
     }
 
     @DeleteMapping("/delete")
