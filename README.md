@@ -73,6 +73,15 @@ This application created for intend to help hospitals 🏥 - doctor 👨‍⚕�
     <td><img src="https://github.com/zsomborjoel/pharraxz/blob/main/documentation/ui/atc_code_description.png" width="400"></td>
   </tr>
  </table>
+ 
+ <table>
+  <tr>
+    <td>File Browser</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/zsomborjoel/pharraxz/blob/main/documentation/ui/file_page.png" width="600"></td>
+  </tr>
+ </table>
 
 ## 📙 ER diagram
 

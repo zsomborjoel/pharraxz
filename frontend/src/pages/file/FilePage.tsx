@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { ReflexContainer, ReflexElement, ReflexSplitter } from 'react-reflex';
 import TreeDirectory from './TreeDirectory';
 import FileForm from './FileForm';
-import { FileContextProvider } from '../../context/FileContextProvider';
+import { FileContextProvider } from '../../contexts/file/FileContext';
 
 export type FilePageProps = {};
 

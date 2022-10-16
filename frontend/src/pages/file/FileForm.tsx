@@ -4,7 +4,7 @@ import { Box, Grid, TextField, Button, Input } from '@mui/material';
 import FileService from '../../services/FileService';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { ROOT_FOLDER } from '../../configs/constants';
-import { FileContext } from '../../context/FileContextProvider';
+import { FileContext } from '../../contexts/file/FileContext';
 
 export type FileFormProps = {};
 

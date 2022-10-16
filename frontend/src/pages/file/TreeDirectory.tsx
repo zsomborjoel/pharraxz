@@ -10,7 +10,7 @@ import { ROOT_FOLDER } from '../../configs/constants';
 import { File } from '../../services/model/File';
 import FileDownloadDialog from './FileDownloadDialog';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
-import { FileContext } from '../../context/FileContextProvider';
+import { FileContext } from '../../contexts/file/FileContext';
 
 export type TreeDirectoryProps = {};
 
