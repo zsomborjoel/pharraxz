@@ -13,9 +13,11 @@ import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 export type TreeDirectoryProps = {
     setPwd(pwd: string): void;
     deletedPath: string;
+    isFileUploaded: boolean;
+    setIsFileUploaded(flag: boolean): void;
 };
 
-const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath }): any => {
+const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath, isFileUploaded, setIsFileUploaded }): any => {
     const [paths, setPaths] = useState<string[]>([]);
     const [unfolded, setUnfolded] = useState<any[]>([]);
 
@@ -77,9 +79,20 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath }): any => 
         return pathList;
     };
 
-    useEffect(() => {
+    const fetchRoot = (): void => {
         FileService.list(ROOT_FOLDER).then((res) => setPaths(makeItToPaths('', res.data)));
+    };
+
+    useEffect(() => {
+        fetchRoot();
     }, []);
+
+    useEffect(() => {
+        if (isFileUploaded) {
+            fetchRoot();
+            setIsFileUploaded(false);
+        }
+    }, [isFileUploaded]);
 
     const fetchNewFiles = (path: string): void => {
         FileService.list(`${ROOT_FOLDER}/${path}`).then((res) =>

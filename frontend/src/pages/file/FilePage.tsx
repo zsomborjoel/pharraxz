@@ -10,6 +10,7 @@ export type FilePageProps = {};
 
 const FilePage: FC<FilePageProps> = (): any => {
     const [pwd, setPwd] = useState<string>('');
+    const [isFileUploaded, setIsFileUploaded] = useState<boolean>(false);
     const [deletedPath, setDeletedPath] = useState<string>('');
 
     return (
@@ -17,11 +18,16 @@ const FilePage: FC<FilePageProps> = (): any => {
             <Box sx={{ height: 900 }}>
                 <ReflexContainer orientation="vertical">
                     <ReflexElement size={900} minSize={400} className="left-pane">
-                        <TreeDirectory setPwd={setPwd} deletedPath={deletedPath} />
+                        <TreeDirectory
+                            setPwd={setPwd}
+                            deletedPath={deletedPath}
+                            isFileUploaded={isFileUploaded}
+                            setIsFileUploaded={setIsFileUploaded}
+                        />
                     </ReflexElement>
                     <ReflexSplitter />
                     <ReflexElement minSize={600} className="right-pane" propagateDimensions propagateDimensionsRate={1}>
-                        <FileForm pwd={pwd} setDeletedPath={setDeletedPath} />
+                        <FileForm pwd={pwd} setDeletedPath={setDeletedPath} setIsFileUploaded={setIsFileUploaded} />
                     </ReflexElement>
                 </ReflexContainer>
             </Box>

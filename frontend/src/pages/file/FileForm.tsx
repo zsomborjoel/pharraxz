@@ -7,9 +7,10 @@ import { ROOT_FOLDER } from '../../configs/constants';
 export type FileFormProps = {
     pwd: string;
     setDeletedPath(path: string): void;
+    setIsFileUploaded(flag: boolean): void;
 };
 
-const FileForm: FC<FileFormProps> = ({ pwd, setDeletedPath }) => {
+const FileForm: FC<FileFormProps> = ({ pwd, setDeletedPath, setIsFileUploaded }) => {
     const [selectedPath, setSelectedPath] = useState<string>(pwd);
     const [selectedFile, setSelectedFile] = useState<File>();
 
@@ -35,6 +36,7 @@ const FileForm: FC<FileFormProps> = ({ pwd, setDeletedPath }) => {
         formData.append('file', selectedFile!, selectedFile?.name);
         FileService.upload(`${ROOT_FOLDER}/${selectedPath}`, formData)
             .then(() => {
+                setIsFileUploaded(true);
                 showSnackbar({ severity: 'success', text: `File ${selectedFile?.name} uploaded` });
             })
             .catch((error) =>
