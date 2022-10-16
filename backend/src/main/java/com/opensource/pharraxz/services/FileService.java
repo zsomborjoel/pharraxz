@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,9 +39,10 @@ public class FileService {
                 .toList();
     }
 
-    public void upload(final String path, final MultipartFile file) throws IOException {
+    public void upload(final String path, final FilePart file) {
         validateOrCratePath(path);
-        file.transferTo(new File(path));
+        final Path basePath = Path.of(path);
+        file.transferTo(basePath.resolve(file.filename())).doOnNext((e) -> System.out.println("Done"));
     }
 
     public void delete(final String path) throws IOException {

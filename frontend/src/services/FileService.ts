@@ -16,10 +16,20 @@ const list = (path: string): Promise<AxiosResponse<File[]>> =>
 const del = (path: string): Promise<AxiosResponse<void>> =>
     axios.delete(`${ENDPOINTS.FILE}/delete`, { params: { path }, headers: AuthHeader() });
 
+const upload = (path: string, formData: FormData): Promise<AxiosResponse<void>> =>
+    axios({
+        method: 'post',
+        url: `${ENDPOINTS.FILE}/upload`,
+        data: formData,
+        params: { path },
+        headers: { ...AuthHeader(), 'Content-Type': undefined },
+    });
+
 const FileService = {
     download,
     list,
     del,
+    upload,
 };
 
 export default FileService;

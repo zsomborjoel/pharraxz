@@ -167,7 +167,7 @@ const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath }): any => 
     };
 
     return (
-        <Box sx={{ width: 900 }}>
+        <Box sx={{ maxWidth: 900 }}>
             <List>{renderList(paths)}</List>
         </Box>
     );

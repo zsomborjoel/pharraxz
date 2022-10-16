@@ -7,8 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,9 +46,9 @@ public class FileController {
         return ResponseEntity.ok().body(fileService.list(path));
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Void> uploadFile(@RequestParam String path, @RequestParam MultipartFile file) throws IOException {
-        log.info("Received file [{}]", file.getOriginalFilename());
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> uploadFile(@RequestParam String path, @RequestPart("file") FilePart file) throws IOException {
+        log.info("File with path [{}] and name [{}] received for upload", path, file.filename());
         fileService.upload(path, file);
         return ResponseEntity.ok().build();
     }
