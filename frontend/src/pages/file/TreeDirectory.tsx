@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,19 +10,19 @@ import { ROOT_FOLDER } from '../../configs/constants';
 import { File } from '../../services/model/File';
 import FileDownloadDialog from './FileDownloadDialog';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
+import { FileContext } from '../../context/FileContextProvider';
 
-export type TreeDirectoryProps = {
-    setPwd(pwd: string): void;
-    deletedPath: string;
-    isFileUploaded: boolean;
-    setIsFileUploaded(flag: boolean): void;
-};
+export type TreeDirectoryProps = {};
 
-const TreeDirectory: FC<TreeDirectoryProps> = ({ setPwd, deletedPath, isFileUploaded, setIsFileUploaded }): any => {
+const TreeDirectory: FC<TreeDirectoryProps> = (): any => {
     const [paths, setPaths] = useState<string[]>([]);
     const [unfolded, setUnfolded] = useState<any[]>([]);
 
     const { showSnackbar } = useContext(SnackbarContext);
+    const { pwdState, deletedPathState, isFileUploadedState } = useContext(FileContext);
+    const [pwd, setPwd] = pwdState;
+    const [deletedPath] = deletedPathState;
+    const [isFileUploaded, setIsFileUploaded] = isFileUploadedState;
 
     const [downloadFilePath, setDownloadFilePath] = useState<string>('');
     const [isDownloadOpen, setIsDownloadOpen] = useState<boolean>(false);

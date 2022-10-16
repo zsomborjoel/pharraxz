@@ -1,20 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FC, useState, useEffect, useContext } from 'react';
 import { Box, Grid, TextField, Button, Input } from '@mui/material';
 import FileService from '../../services/FileService';
 import SnackbarContext from '../../contexts/snackbar/SnackbarContext';
 import { ROOT_FOLDER } from '../../configs/constants';
+import { FileContext } from '../../context/FileContextProvider';
 
-export type FileFormProps = {
-    pwd: string;
-    setDeletedPath(path: string): void;
-    setIsFileUploaded(flag: boolean): void;
-};
+export type FileFormProps = {};
 
-const FileForm: FC<FileFormProps> = ({ pwd, setDeletedPath, setIsFileUploaded }) => {
+const FileForm: FC<FileFormProps> = () => {
+    const { showSnackbar } = useContext(SnackbarContext);
+    const { pwdState, deletedPathState, isFileUploadedState } = useContext(FileContext);
+    const [pwd] = pwdState;
+    const [deletedPath, setDeletedPath] = deletedPathState;
+    const [isFileUploaded, setIsFileUploaded] = isFileUploadedState;
+
     const [selectedPath, setSelectedPath] = useState<string>(pwd);
     const [selectedFile, setSelectedFile] = useState<File>();
-
-    const { showSnackbar } = useContext(SnackbarContext);
 
     useEffect(() => {
         setSelectedPath(pwd);
